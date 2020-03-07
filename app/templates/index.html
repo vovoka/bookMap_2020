@@ -1,0 +1,67 @@
+<style>
+    #book_instances {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 40%;
+    }
+    
+    #book_instances td, #book_instances th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #book_instances tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #book_instances tr:hover {background-color: #ddd;}
+    
+    #book_instances th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+</style>
+
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if current_user.username %}
+        <h1>Hi, {{ current_user.username }}</h1>
+    {% else %}
+        <h1>Hi, anon</h1>
+    {% endif %}
+
+    <h2>Library</h2>
+    <table id="book_instances">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+        </tr>
+    {% for book in books %}
+    <tr>
+        {% include '_book.html' %}
+    </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Book instances</h2>
+
+    <table id="book_instances">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+        </tr>
+        {% for book_instance in book_instances %}
+        <tr>
+            {% include '_book_instance.html' %}
+        </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

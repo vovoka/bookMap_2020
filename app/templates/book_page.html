@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>Book page </br>{{ book.title }}</h1>
+
+    <table>
+        <tr valign="top">
+                id: {{ book.id }} </br>
+                title:<b>{{ book.title }}</b> </br>
+                by: {{ book.author }} </br>
+                editable: {{ editable }}</br>
+                <hr>
+            </tr>
+    </table>
+{% endblock %}

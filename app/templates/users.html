@@ -1,0 +1,58 @@
+<style>
+    #book_instances {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 80%;
+    }
+    
+    #book_instances td, #book_instances th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #book_instances tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #book_instances tr:hover {background-color: #ddd;}
+    
+    #book_instances th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+</style>
+
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.username %}
+        <h1>Hi, {{ current_user.username }}</h1>
+    {% else %}
+    <h1>Hi, anon</h1>
+    {% endif %}
+    <h2>Users list</h2>
+    <table id="book_instances">
+        <tr>
+            <th>Avatar</th>
+            <th>Details</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>
+                <img src="{{ user.avatar(48) }}">
+            </td>
+            <td>
+                <b>User name: {{ user.username }}</b></br>
+                User email: {{ user.email }}</br>
+                {% if user.last_seen %}
+                    Last seen on: {{ user.last_seen }}
+                {% endif %}</br>
+                latitude: {{ user.latitude }}</br>
+                longitude: {{ user.longitude }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}

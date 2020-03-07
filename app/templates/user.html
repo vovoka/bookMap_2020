@@ -1,0 +1,63 @@
+<style>
+    #book_instances {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 40%;
+    }
+    
+    #book_instances td, #book_instances th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #book_instances tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #book_instances tr:hover {background-color: #ddd;}
+    
+    #book_instances th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+</style>
+
+{% extends "base.html" %}
+
+{% block content %}
+    <table>
+        <tr valign="top">
+            <td>
+                <img src="{{ user.avatar(96) }}">
+            </td>
+            <td>
+                <h1>User: {{ user.username }}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                
+                {% if user == current_user %}
+                    <p><a href="{{ url_for('edit_profile') }}">Edit profile</a></p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <hr>
+
+    <h2>My Book instances {{ total_instances }}</h2>
+    <table id="book_instances">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Details</th>
+        </tr>
+        {% for book_instance in book_instances %}
+        <tr>
+            {% include '_book_instance.html' %}
+            <td><a href="{{ url_for('book_instance', book_instance_id=book_instance.id ) }}">Details</a></td>
+        </tr>
+            {% endfor %}
+    </table>
+{% endblock %}
