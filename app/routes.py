@@ -58,6 +58,51 @@ def location():
     return folium_map._repr_html_()
 
 
+@app.route('/location/<book_id>')
+def book_location(book_id):
+    """ Show all the book locations """
+    # TODO get all markers with one query
+    # TODO replace start_coords with user preferences location
+
+    start_coords = (50.4547, 30.524)
+    folium_map = folium.Map(location=start_coords, zoom_start=12)
+    m = folium_map
+    
+    # ? DEBUG code:
+    # number of users who have such a book
+    users = (db.session.query(User, Book, BookInstance)
+        .filter(BookInstance.owner_id == User.id)
+        .filter(BookInstance.details == Book.id)
+        .count()
+    )
+    print(f'found book?? instances: {users}', flush=True)
+    
+    # get all books by id
+    book = Book.query.get(book_id)
+    print(f'found book: {book}', flush=True)
+    
+    # get all instances of the Book:
+    for bi in book.BookInstance:
+        print(f'bi = {bi.id}', flush=True)
+        user = (User.query
+                .filter(User.id == bi.owner_id)
+                .first_or_404())
+        
+        # ? DEBUG print 
+        # if user:
+        #     print(f'user found #{user.id} name {user.username}', flush=True)
+        #     print(f'user.latitude: {user.latitude} \nuser.longitude {user.longitude}', flush=True)
+        # else:
+        #     print(f'user NOT found ', flush=True)
+        
+        folium.Marker(
+            location=[user.latitude, user.longitude],
+            popup='"' + book.title + '"</br>from <b>' + user.username + '</b></br>' + str(bi.price) + ' uah',
+            icon=folium.Icon(color='green')
+        ).add_to(m)
+    return folium_map._repr_html_()
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -115,7 +160,7 @@ def unpopulate_db():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     book_instances = db_handlers.get_book_instances_by_user_id(user.id)
-    # ! not added to html template. Delete?
+    # TODO not added to html template. Delete?
     books = db_handlers.get_books_by_user_id(user.id)
     return render_template(
         'user.html',

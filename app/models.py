@@ -106,7 +106,7 @@ def make_db_data(db):
     db.session.commit()
 
     # create boook instances
-    for book_instance in range(2):
+    for book_instance in range(25):
         book_instance=BookInstance(
             details=randint(1, 15),
             owner_id=randint(1, 8),
