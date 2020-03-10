@@ -19,43 +19,25 @@ def index():
     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
 
 
-import json
-import requests
 @app.route('/location')
-def location():
-    """ Show all users on a map (for dev reseaches only) """
+def test_index():
     start_coords = (50.4547, 30.524)
-    folium_map = folium.Map(location=start_coords, zoom_start=12)
-    m = folium_map
-    
-    # url = 'https://raw.githubusercontent.com/python-visualization/folium/master/examples/data'
-    # vis1 = json.loads(requests.get(f'{url}/vis3.json').text)
-    # folium.Marker(
-    #     location=[50.4547, 30.520],
-    #     popup=folium.Popup(max_width=450).add_child(
-    #     folium.Vega(vis1, width=450, height=250)),
-    #     icon=folium.Icon(icon='cloud')
-    # ).add_to(m)
+    m = folium.Map(width=500, height=500, location=start_coords, zoom_start=12)
     
     users = User.query.all()
     for user in users:
-        print(f'{user.username}  location=[{user.longitude}, {user.latitude}]', flush=True)
-        folium.Marker(
-            location=[user.latitude, user.longitude],
-            popup=user.username,
-            icon=folium.Icon(color='green')
-        ).add_to(m)
-
-    # folium.Marker(
-    #     location=[50.4547, 30.524],
-    #     popup='Timberline Lodge',
-    #     icon=folium.Icon(color='green')
-    # ).add_to(m)
-    
-    # m.save('./maps/map.html')
-    # return render_template('testmap.html', title='Home')
-    
-    return folium_map._repr_html_()
+        # teporary if. Delete when user coordinates will be obligatory
+        if user.longitude and user.latitude:
+            print(f'{user.username}  location=[{user.longitude}, {user.latitude}]', flush=True)
+            folium.Marker(
+                location=[user.latitude, user.longitude],
+                # for DEBUG:
+                # location=[50.4547, 30.520],
+                popup=user.username,
+                icon=folium.Icon(color='green')
+            ).add_to(m)
+    m.save('app/templates/_map.html')
+    return render_template('map.html')
 
 
 @app.route('/location/<book_id>')
@@ -65,7 +47,7 @@ def book_location(book_id):
     # TODO replace start_coords with user preferences location
 
     start_coords = (50.4547, 30.524)
-    folium_map = folium.Map(location=start_coords, zoom_start=12)
+    folium_map = folium.Map(width=1000, height=500, location=start_coords, zoom_start=12)
     m = folium_map
     
     # ? DEBUG code:

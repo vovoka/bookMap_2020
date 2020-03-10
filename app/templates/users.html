@@ -23,9 +23,9 @@
     }
 </style>
 
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
-{% block content %}
+{% block body %}
     {% if current_user.username %}
         <h1>Hi, {{ current_user.username }}</h1>
     {% else %}

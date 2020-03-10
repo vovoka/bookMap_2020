@@ -1,16 +1,8 @@
 <html>
-    <head>
-        {% if title %}
-        <title>{{ title }} - BookMap</title>
-        {% else %}
-        <title>BookMap</title>
-        {% endif %}
-    </head>
     <body>
         <div>
             BookMap:
                 <a href="{{ url_for('index') }}">Home</a>
-                <a href="{{ url_for('location') }}">TestMap</a>
                 <a href="{{ url_for('users') }}">Users</a>
                 {% if current_user.is_anonymous %}
                 <a href="{{ url_for('login') }}">Login</a>
@@ -31,6 +23,5 @@
         </ul>
         {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
     </body>
 </html>
