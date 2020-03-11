@@ -52,17 +52,17 @@ def book_location(book_id):
     
     # ? DEBUG code:
     # number of users who have such a book
-    users = (db.session.query(User, Book, BookInstance)
-        .filter(BookInstance.owner_id == User.id)
-        .filter(BookInstance.details == Book.id)
-        .count()
-    )
-    print(f'found book?? instances: {users}', flush=True)
+    # users = (db.session.query(User, Book, BookInstance)
+    #     .filter(BookInstance.owner_id == User.id)
+    #     .filter(BookInstance.details == Book.id)
+    #     .count()
+    # )
+    # print(f'CHECK! IT INCORRECT! found book?? instances: {users}', flush=True)
     
-    # get all books by id
+    # get book by its id
     book = Book.query.get(book_id)
     print(f'found book: {book}', flush=True)
-    
+
     # get all instances of the Book:
     for bi in book.BookInstance:
         print(f'bi = {bi.id}', flush=True)
@@ -76,10 +76,12 @@ def book_location(book_id):
         #     print(f'user.latitude: {user.latitude} \nuser.longitude {user.longitude}', flush=True)
         # else:
         #     print(f'user NOT found ', flush=True)
-        
+
+        book_cover = '<img src="/static/covers/' +  str(bi.details) + '.jpg" width="50" height="70" >'
+        print(f'book_cover = {book_cover}', flush=True)
         folium.Marker(
             location=[user.latitude, user.longitude],
-            popup='"' + book.title + '"</br>from <b>' + user.username + '</b></br>' + str(bi.price) + ' uah',
+            popup= book.title + '</br>' + book_cover + '</br>' + str(bi.price)  + ' uah',
             icon=folium.Icon(color='green')
         ).add_to(m)
 
