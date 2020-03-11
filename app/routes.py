@@ -82,7 +82,9 @@ def book_location(book_id):
             popup='"' + book.title + '"</br>from <b>' + user.username + '</b></br>' + str(bi.price) + ' uah',
             icon=folium.Icon(color='green')
         ).add_to(m)
-    return folium_map._repr_html_()
+
+    m.save('app/templates/_map.html')
+    return render_template('map.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -114,13 +116,29 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
+
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(
+            username=form.username.data, 
+            email=form.email.data,
+            latitude=form.latitude.data,
+            longitude=form.longitude.data
+        )
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
+
+    start_coords = (50.4547, 30.524)
+    m = folium.Map(width=300, height=300, location=start_coords, zoom_start=12)
+    folium.Marker(
+        location=[50.4547, 30.520],
+        popup='your location',
+        icon=folium.Icon(color='green'),
+        draggable=True
+    ).add_to(m)
+    m.save('app/templates/_map.html')
     return render_template('register.html', title='Register', form=form)
 
 

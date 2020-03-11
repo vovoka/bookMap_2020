@@ -21,14 +21,16 @@ def book_exist(title:str, author:str) -> bool:
     ).first())
 
 
-def get_book_id(title:str, author:str) -> int:
+# def get_book_id(title:str, author:str) -> int:
+def get_book_id(title:str, author:str):
     """ Returns Book.id or None """
     book = Book.query.filter_by(
         title=title,
         author=author
     ).first()
     book_id = book.id if book else None
-    return int(book_id)
+    res = int(book_id) if book_id else None
+    return res
 
 
 def get_books_by_user_id(user_id) -> list:
