@@ -195,15 +195,24 @@ def book_instance(book_instance_id):
 @login_required
 def edit_profile():
     form = EditProfileForm(current_user.username)
+    # fill form with current data
+    form.about_me.data = current_user.about_me
+    form.latitude.data = current_user.latitude
+    form.longitude.data = current_user.longitude
     if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.about_me = form.about_me.data
+        result = request.form
+        about_me=result.get('about_me')
+        latitude=result.get('latitude')
+        longitude=result.get('longitude')
+        
+        current_user.about_me = about_me
+        current_user.latitude = latitude
+        current_user.longitude = longitude
+        
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.about_me.data = current_user.about_me
+        return redirect(url_for('user', username=current_user.username))
+    
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 

@@ -40,26 +40,22 @@
         </p>
         (TODO: hide latitude/longitude fields from html)
         <p>
-            {{ form.latitude.label }}<br>
-            {{ form.latitude(size=32) }}<br>
+            {{ form.latitude(size=16) }}
             {% for error in form.latitude.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.longitude.label }}<br>
-            {{ form.longitude(size=32) }}<br>
+            {{ form.longitude(size=16) }}<br>
             {% for error in form.longitude.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        
         Please, put the Marker to your location:
         <div id="mapid" style="width: 300px; height: 300px;"></div>
         <p>{{ form.submit() }}</p>
         <script>
-            var mymap = L.map('mapid').setView([50.4508, 30.52706], 13);
-
+            var default_lat = 50.4508
+            var default_lon = 30.52706
+            var mymap = L.map('mapid').setView([default_lat, default_lon], 13);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -70,7 +66,7 @@
             zoomOffset: -1
             }).addTo(mymap);
         
-            var marker = L.marker([50.4508, 30.52706], {
+            var marker = L.marker([default_lat, default_lon], {
             draggable: true
             }).addTo(mymap)
                 .bindPopup("<b>You are here</b>").openPopup();

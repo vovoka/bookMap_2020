@@ -34,8 +34,10 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class EditProfileForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username')
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    latitude = StringField('Latitude', validators=[DataRequired()])
+    longitude = StringField('Longitude', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):
