@@ -164,7 +164,7 @@ def book(book_id):
     """ Shows book detailed info """
 
     book = Book.query.filter_by(id=book_id).first_or_404()
-    book_instances = BookInstance.query.filter_by(details=book_id).order_by(BookInstance.id.desc()).all()
+    book_instances = db_handlers.get_book_instances_by_book_id(book_id)
     generate_map_by_book_id(book_id)
     return render_template(
         'book_page.html',

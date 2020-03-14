@@ -15,30 +15,33 @@
                 id: {{ book.id }}</br>
                 title:<b>{{ book.title }}</b></br>
                 by: {{ book.author }}</br>
-                editable: {{ editable }}</br>
             </td>
         </tr>
     </table>
+    {% if book_instances %}
 
-    <h2>Map</h2>
-    {% include '_map.html' %}
+        <h2>Map</h2>
+        {% include '_map.html' %}
 
-    <h2>Book instances</h2>
+        <h2>Book instances</h2>
 
-    <table id="book_instances">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Price</th>
-        </tr>
-        {% for book_instance in book_instances %}
-        <tr>
-            {% include '_book_instance.html' %}
-        </tr>
-        {% endfor %}
-    </table>
+        <table id="book_instances">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>owner's name</th>
+            </tr>
+            {% for book_instance in book_instances %}
+            <tr>
+                {% include '_book_instance.html' %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        Sorry, this book is not offered now. 
+        <p><a href="{{ url_for('index') }}">Back</a></p>
+    {% endif %}
 
-
-map.html
 {% endblock %}

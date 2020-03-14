@@ -102,4 +102,21 @@ def get_book_instances_by_user_id(user_id) -> list:
     return book_instances
 
 
+def get_book_instances_by_book_id(book_id) -> list:
+    """ Returns list of BookInstance objects """
+    book_instances = (db.session.query(
+        User.username,
+        User.id,
+        BookInstance.id,
+        BookInstance.owner_id,
+        BookInstance.price,
+        BookInstance.condition,
+        BookInstance.description,
+    )
+        .filter(BookInstance.details == book_id)
+        .filter(BookInstance.owner_id == User.id)
+        .order_by(BookInstance.id.desc())
+        .all())
+    return book_instances
+
 #  ------------ USER ------------------ 
