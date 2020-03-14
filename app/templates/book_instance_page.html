@@ -1,30 +1,11 @@
-<style>
-    #book_instances {
-      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 40%;
-    }
-    #book_instances td, #book_instances th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    #book_instances tr:nth-child(even){background-color: #f2f2f2;}
-    #book_instances tr:hover {background-color: #ddd;}
-    #book_instances th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: #4CAF50;
-      color: white;
-    }
-</style>
-
 {% extends "layout.html" %}
 
 {% block body %}
 
     <h1>Book  instance page </h1>
     <h2>{{ book_instance.title }}</h2>
+    <img src="/static/covers/{{ book_instance.details }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+    </br>
     <table id="book_instances">
 
         <tr valign="top">

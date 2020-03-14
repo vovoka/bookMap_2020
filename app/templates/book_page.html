@@ -3,13 +3,22 @@
 {% block body %}
     <h1>Book page </br>{{ book.title }}</h1>
 
-    <table>
-        <tr valign="top">
-                id: {{ book.id }} </br>
-                title:<b>{{ book.title }}</b> </br>
-                by: {{ book.author }} </br>
+
+
+    <table id="book_instances">
+        <tr>
+            <th>Cover</th>
+            <th>Description</th>
+        </tr>
+
+        <tr>
+            <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
+            <td>
+                id: {{ book.id }}</br>
+                title:<b>{{ book.title }}</b></br>
+                by: {{ book.author }}</br>
                 editable: {{ editable }}</br>
-                <hr>
-            </tr>
+            </td>
+        </tr>
     </table>
 {% endblock %}
