@@ -41,8 +41,7 @@ def test_index():
     return render_template('map.html')
 
 
-@app.route('/location/<book_id>')
-def book_location(book_id):
+def generate_map_by_book_id(book_id):
     """ Show all the book locations """
     # TODO get all markers with one query
     # TODO replace start_coords with user preferences location
@@ -50,15 +49,6 @@ def book_location(book_id):
     start_coords = (50.4547, 30.524)
     folium_map = folium.Map(width=1000, height=500, location=start_coords, zoom_start=12)
     m = folium_map
-    
-    # ? DEBUG code:
-    # number of users who have such a book
-    # users = (db.session.query(User, Book, BookInstance)
-    #     .filter(BookInstance.owner_id == User.id)
-    #     .filter(BookInstance.details == Book.id)
-    #     .count()
-    # )
-    # print(f'CHECK! IT INCORRECT! found book?? instances: {users}', flush=True)
     
     # get book by its id
     book = Book.query.get(book_id)
@@ -70,14 +60,6 @@ def book_location(book_id):
         user = (User.query
                 .filter(User.id == bi.owner_id)
                 .first_or_404())
-        
-        # ? DEBUG print 
-        # if user:
-        #     print(f'user found #{user.id} name {user.username}', flush=True)
-        #     print(f'user.latitude: {user.latitude} \nuser.longitude {user.longitude}', flush=True)
-        # else:
-        #     print(f'user NOT found ', flush=True)
-
         book_cover = '<img src="/static/covers/' +  str(bi.details) + '.jpg" width="50" height="70" >'
         print(f'book_cover = {book_cover}', flush=True)
         folium.Marker(
@@ -85,8 +67,12 @@ def book_location(book_id):
             popup= book.title + '</br>' + book_cover + '</br>' + str(bi.price)  + ' uah',
             icon=folium.Icon(color='green')
         ).add_to(m)
-
     m.save('app/templates/_map.html')
+
+
+@app.route('/location/<book_id>')
+def book_location(book_id):
+    generate_map_by_book_id(book_id)
     return render_template('map.html')
 
 
@@ -178,9 +164,12 @@ def book(book_id):
     """ Shows book detailed info """
 
     book = Book.query.filter_by(id=book_id).first_or_404()
+    book_instances = BookInstance.query.filter_by(details=book_id).order_by(BookInstance.id.desc()).all()
+    generate_map_by_book_id(book_id)
     return render_template(
         'book_page.html',
-        book=book
+        book=book,
+        book_instances=book_instances
     )
 
 @app.route('/bi/<book_instance_id>')

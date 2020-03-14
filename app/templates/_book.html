@@ -1,4 +1,14 @@
-<td>{{ book.id }}</td>
-<td>{{ book.title }}</td>
-<td>{{ book.author }}</td>
-<td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
+<td>
+    {{ book.id }}
+</td>
+<td>
+    {{ book.title }}
+</td>
+<td>
+    {{ book.author }}
+</td>
+<td>
+    <a href={{ url_for('book', book_id=book.id) }}>
+        <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+    </a>
+</td>
