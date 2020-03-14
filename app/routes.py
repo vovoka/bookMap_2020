@@ -1,15 +1,16 @@
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app import db
 from app  import db_handlers
 from app.forms import RegistrationForm, LoginForm, EditProfileForm, AddBookForm, BookInstanceForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Book, BookInstance, make_db_data, clear_db_data
-from flask import request
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 from datetime import datetime
 import folium
+import os
 
 @app.route('/')
 @app.route('/index')
@@ -225,6 +226,40 @@ def before_request():
         db.session.commit()
 
 
+def image_has_allowed_filesize(filesize:str) -> bool:
+    return bool(int(filesize) <= app.config["MAX_IMAGE_FILESIZE"])
+
+
+def image_has_allowed_extetion(filename:str) -> bool:
+    """ Check if filename has any of expected extention """
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    return bool(ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"])
+
+
+# TODO replace prints witn logs (logger_alchemy?)?
+def cover_upload(request, book_id) ->int:
+    """ Add book image to db """
+    if request.method == "POST" and request.files:
+        if "filesize" in request.cookies:
+            print(f'IN 2', flush=True)
+            if not image_has_allowed_filesize(request.cookies["filesize"]):
+                flash("Filesize exceeded maximum limit")
+                return 1
+            image = request.files["cover"]
+            if not image_has_allowed_extetion(image.filename):
+                flash("That file extension is not allowed")
+                return 1
+            filename = str(book_id) + '.jpg'
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+            flash('Congratulations, book cover added')
+        else:
+            flash("No filesize in cookie")
+        return 0
+    return 1
+
+
 @app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
@@ -235,7 +270,12 @@ def add_book():
         if not db_handlers.book_exist(title, author):
             db_handlers.create_book(title, author)
         book_id = db_handlers.get_book_id(title, author)
-        return redirect(url_for('book', book_id=book_id))
+        
+        if cover_upload(request, book_id):
+            return redirect(request.url)
+        else:
+            return redirect(url_for('book', book_id=book_id))
+        
     return render_template('add_book.html', title='add_book', form=form)
 
 
@@ -257,7 +297,13 @@ def add_book_instance():
             book = Book(title=title, author=author)
             db.session.add(book)
             db.session.commit()
+            
         book_id = db_handlers.get_book_id(title, author)
+        
+        # upload book image
+        cover_upload(request, book_id)
+
+        # create book instance
         book_instance=BookInstance(
             details=book_id,
             owner_id=current_user.id,
