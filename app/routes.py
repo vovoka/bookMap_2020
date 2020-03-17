@@ -47,7 +47,7 @@ def generate_map_by_book_id(book_id):
     # TODO replace start_coords with user preferences location
 
     start_coords = (50.4547, 30.524)
-    folium_map = folium.Map(width=1000, height=500, location=start_coords, zoom_start=12)
+    folium_map = folium.Map(height=500, location=start_coords, zoom_start=12)
     m = folium_map
     
     # get book by its id

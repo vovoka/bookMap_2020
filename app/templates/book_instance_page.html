@@ -1,13 +1,12 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
-{% block body %}
+{% block app_content %}
 
     <h1>Book  instance page </h1>
     <h2>{{ book_instance.title }}</h2>
     <img src="/static/covers/{{ book_instance.details }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
     </br>
-    <table id="book_instances">
-
+    <table class="table table-hover">
         <tr valign="top">
             <td>offered by user:</td><td> {{ book_instance.username }}</td>
         </tr>

@@ -3,6 +3,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 
 # create app
 app = Flask(__name__, static_url_path='/static')
@@ -14,20 +15,6 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
+bootstrap = Bootstrap(app)
 
 from app import routes, models, errors
-
-def create_app():
-    app = Flask(__name__)
-    
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
-    login = LoginManager(app)
-
-    from . import db
-    db.init_app(app)
-
-    return app
-
-
-from app import routes, models
