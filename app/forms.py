@@ -6,6 +6,7 @@ from flask_wtf.file import FileField
 
 from app.models import User
 
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -33,6 +34,7 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+
 class EditProfileForm(FlaskForm):
     username = StringField('Username')
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
@@ -58,11 +60,12 @@ class AddBookForm(FlaskForm):
     submit = SubmitField('Add Book')
     # TODO add validators
 
+
 class BookInstanceForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
     price = StringField('Price', validators=[DataRequired()])
     condition = StringField('Condition', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])   
+    description = StringField('Description', validators=[DataRequired()])
     cover = FileField('Book cover')
     submit = SubmitField('Submit')
