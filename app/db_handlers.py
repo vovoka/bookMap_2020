@@ -1,4 +1,4 @@
-from app import app
+# from app import app
 from app import db
 from app.models import User, Book, BookInstance
 from random import random, randint
@@ -143,6 +143,10 @@ def create_book_instance(price, condition, description, owner_id, book_id):
     db.session.commit()
     return book_instance
 
+
+def delete_book_instance_by_id(book_instance_id: str) -> None:
+        BookInstance.query.filter_by(id=book_instance_id).delete()
+        db.session.commit()
 
 def get_book_instance_by_id(book_instance_id: str) -> object:
     """ Returns BookInstance object if exists in DB or None"""

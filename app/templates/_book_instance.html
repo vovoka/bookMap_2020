@@ -2,4 +2,4 @@
         <td>{{ book_instance.title }}</td>
         <td>{{ book_instance.author }}</td>
         <td>{{ book_instance.price }}</td>
-        <td><a href={{ url_for('user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
+        <td><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
