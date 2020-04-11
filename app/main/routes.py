@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import db
 from app import db_handlers
-from app.main.forms import AddBookForm, BookInstanceForm
+from app.main.forms import AddBookForm, BookInstanceForm, MessageForm
 from app.auth.forms import RegistrationForm, LoginForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Book, BookInstance
+from app.models import User, Book, BookInstance, Message
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -60,17 +60,19 @@ def generate_map_by_book_id(book_id):
 
     # get all instances of the Book:
     for bi in book.BookInstance:
-        print(f'bi = {bi.id}', flush=True)
         user = (User.query
                 .filter(User.id == bi.owner_id)
                 .first_or_404())
         book_cover = '<img src="/static/covers/' + \
             str(bi.details) + '.jpg" width="50" height="70" >'
-        print(f'book_cover = {book_cover}', flush=True)
+
+        # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
+        bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
+
         folium.Marker(
             location=[user.latitude, user.longitude],
-            popup=book.title + '</br>' + book_cover +
-            '</br>' + str(bi.price) + ' uah',
+            popup=book.title + '</br><a href=' + bi_link + '>' +
+            book_cover + '</a></br>' + str(bi.price) + ' uah',
             icon=folium.Icon(color='green')
         ).add_to(m)
     m.save('app/templates/_map.html')
@@ -126,15 +128,30 @@ def book(book_id):
     )
 
 
-@bp.route('/bi/<book_instance_id>')
+@bp.route('/bi/<book_instance_id>', methods=['GET', 'POST'])
 @login_required
 def book_instance(book_instance_id):
     book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
     editable = (book_instance.owner_id == current_user.id)
+    form = MessageForm()
+    if form.validate_on_submit():
+        msg = Message(
+            book_id=book_instance.details,
+            book_instance_id=book_instance_id,
+            sender_id=current_user.id,
+            recipient_id=book_instance.owner_id,
+            body=form.message.data
+        )
+        db.session.add(msg)
+        db.session.commit()
+        flash(f'Your message have been sent.')
+        return redirect(url_for('main.messages'))
+
     return render_template(
         'book_instance_page.html',
         book_instance=book_instance,
-        editable=editable
+        editable=editable,
+        form=form
     )
 
 
@@ -281,7 +298,7 @@ def edit_book_instance(book_instance_id):
         condition = result.get('condition')
         description = result.get('description')
         book_id = db_handlers.get_book_id(title, author)
-        
+
         if not book_id:
             db_handlers.create_book(title, author)
             book_id = db_handlers.get_book_id(title, author)
@@ -297,3 +314,78 @@ def edit_book_instance(book_instance_id):
 def users():
     users = User.query.all()
     return render_template('users.html', title='User list', users=users)
+
+
+@bp.route('/all_msgs')
+def all_msgs():
+    """ For debug only """
+    msgs = Message.query.all()
+    msgs_total = Message.query.count()
+    print(f'messages found = {msgs_total}', flush=True)
+    return render_template('all_messages.html', title='Messages list', msgs=msgs)
+
+
+@bp.route('/send_message/<recipient>/<prev_message_id>', methods=['GET', 'POST'])
+@login_required
+def send_message(recipient, prev_message_id):
+    user = User.query.filter_by(username=recipient).first_or_404()
+    form = MessageForm()
+    if prev_message_id == 0:
+        prev_message = Message(
+            book_instance_id=0,
+            book_id=0,
+            author=current_user,
+            recipient=user,
+            body=''
+        )
+    else:
+        prev_message = db_handlers.get_message(prev_message_id)
+
+    if form.validate_on_submit():
+        msg = Message(
+            book_instance_id=prev_message.book_instance_id,
+            book_id=prev_message.book_id,
+            author=current_user,
+            recipient=user,
+            body=form.message.data
+        )
+        db.session.add(msg)
+        db.session.commit()
+        flash('Your message has been sent.')
+        return redirect(url_for('main.messages'))
+    return render_template('send_message.html',
+                           title='Send Message',
+                           form=form,
+                           recipient=recipient,
+                           prev_message_id=prev_message.id
+                           )
+
+
+@bp.route('/delete_message/<message_id>', methods=['GET', 'POST'])
+@login_required
+def delete_message(message_id):
+    """ Delete message from visible for current user """
+    message = db_handlers.get_message(message_id)
+    if current_user.id == message.sender_id:
+        message.exists_for_sender = 0
+    if current_user.id == message.recipient_id:
+        message.exists_for_recipient = 0
+    if message.exists_for_recipient == message.exists_for_sender == 0:
+        # delete message, as far as noone wants to see it any more.
+        Message.query.filter_by(id=message_id).delete()
+    db.session.commit()
+    flash('Your message has been deleted.')
+    return redirect(url_for('main.messages'))
+
+
+@bp.route('/messages', methods=['GET', 'POST'])
+@login_required
+def messages():
+    current_user.last_message_read_time = datetime.utcnow()
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = db_handlers.get_messages_by_user(current_user.id)
+
+    return render_template('messages.html',
+                           messages=messages,
+                           form=MessageForm)

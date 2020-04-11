@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    {% if current_user.username %}
+        <h1>Hi, {{ current_user.username }}</h1>
+    {% else %}
+    <h1>Hi, anon</h1>
+    {% endif %}
+    <h2>DEBUG all messages list</h2>
+    <table class="table table-hover">
+        <tr>
+            <th>id</th>
+            <th>author</th>
+            <th>recipient</th>
+            <th>body</th>
+            <th>exist for sender</th>
+            <th>exist for recipient</th>
+            <th>book_id</th>
+            <th>book_isntnace_id</th>
+
+        </tr>
+        {% for msg in msgs %}
+        <tr>
+            <td>
+                {{ msg.id }}
+            </td>
+            <td>
+                {{ msg.author }}
+            </td>
+            <td>
+                {{ msg.recipient }}
+            </td>
+            <td>
+                {{ msg.body }}
+            </td>
+            <td>
+                {{ msg.exists_for_sender }}
+            </td>
+            <td>
+                {{ msg.exists_for_recipient }}
+            </td>
+            <td>
+                {{ msg.book_id }}
+            </td>
+            <td>
+                {{ msg.book_instance_id }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}

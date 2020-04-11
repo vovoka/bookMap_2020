@@ -40,5 +40,16 @@
     {% if editable %}
         <button type="button" onclick="window.location.href='{{ url_for( 'main.book_instance', book_instance_id=book_instance.id) }}';">self</button>
         <button type="button" onclick="window.location.href='{{ url_for( 'main.edit_book_instance', book_instance_id=book_instance.id) }}';">edit</button>
+    
+    {% else %}
+    <form action="" method="post" novalidate>
+        Send message to seller (User {{ book_instance.username }})
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.message.label }}<br>
+            {{ form.message(cols=50, rows=4) }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
     {% endif %}
 {% endblock %}

@@ -7,6 +7,12 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
+    <script>
+    function set_message_count(n) {
+        $('#message_count').text(n);
+        $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+    }
+    </script>
 {% endblock %}
 
 {% block navbar %}
@@ -31,6 +37,15 @@
                     {% if current_user.is_anonymous %}
                         <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                     {% else %}
+                        <li>
+                            <a href="{{ url_for('main.messages') }}">
+                                {{ ('Messages') }}
+                                {% set new_messages = current_user.new_messages() %}
+                                {% if new_messages %}
+                                    <span class="badge">{{ new_messages }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
                         <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
                         <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                         <li><a href="{{ url_for('main.add_book') }}">Add book</a></li>

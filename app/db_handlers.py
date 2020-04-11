@@ -1,12 +1,15 @@
 # from app import app
 from app import db
-from app.models import User, Book, BookInstance
+from app.models import User, Book, BookInstance, Message
 from random import random, randint
+from sqlalchemy import or_, and_
 
 #  ------------  GENERAL DB ------------------
 
+
 def make_db_data(db):
     """ Fill DB with users, Books, BookInstances """
+    db.create_all()
     # create users
     latitude = 50.4547
     longitude = 30.520
@@ -145,8 +148,8 @@ def create_book_instance(price, condition, description, owner_id, book_id):
 
 
 def delete_book_instance_by_id(book_instance_id: str) -> None:
-        BookInstance.query.filter_by(id=book_instance_id).delete()
-        db.session.commit()
+    BookInstance.query.filter_by(id=book_instance_id).delete()
+    db.session.commit()
 
 def get_book_instance_by_id(book_instance_id: str) -> object:
     """ Returns BookInstance object if exists in DB or None"""
@@ -206,3 +209,27 @@ def get_book_instances_by_book_id(book_id) -> list:
     return book_instances
 
 #  ------------ USER ------------------
+
+
+#  ------------ MESSAGE ------------------
+
+def get_message(message_id) -> object:
+    """ Returns Message object """
+    message = Message.query.filter_by(id=message_id).first_or_404()
+    return message
+
+def get_messages_by_user(user_id):
+    """ Returns non-deleted users Messages (both sent and received) """
+    messages = (
+        Message.query
+        .filter(
+            or_(
+                and_(Message.sender_id == user_id,
+                     Message.exists_for_sender == 1),
+                and_(Message.recipient_id == 1,
+                     Message.exists_for_recipient == 1)
+                )
+        )
+        .order_by(Message.timestamp.desc())
+    )
+    return messages

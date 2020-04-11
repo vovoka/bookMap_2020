@@ -42,17 +42,17 @@
             tileSize: 512,
             zoomOffset: -1
             }).addTo(mymap);
-        
+
             var marker = L.marker([_lat, _lon], {
             draggable: true
             }).addTo(mymap)
                 .bindPopup("<b>You are here</b>").openPopup();
-        
+
             marker.on('dragend', function (e) {
             document.getElementById('latitude').value = marker.getLatLng().lat;
             document.getElementById('longitude').value = marker.getLatLng().lng;
             });
-        
+
             mymap.on('click', onMapClick);
         </script>
 

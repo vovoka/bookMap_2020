@@ -5,7 +5,6 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -18,6 +17,13 @@ class User(UserMixin, db.Model):
     BookInstance = db.relationship('BookInstance', backref='xxxx',
                                    lazy='dynamic'
                                    )  # ? TODO neet it? fix backref
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='author', lazy='dynamic')
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
+    last_message_read_time = db.Column(db.DateTime, default=datetime(1900, 1, 1))
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
@@ -29,6 +35,11 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(recipient=self).filter(
+            Message.timestamp > last_read_time).count()
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -59,69 +70,22 @@ class Book(db.Model):
     def __repr__(self):
         return '<Book {}>'.format(self.title)
 
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
+    book_instance_id = db.Column(db.Integer, default=0)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    exists_for_sender = db.Column(db.Integer, default=1)
+    exists_for_recipient = db.Column(db.Integer, default=1)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)
+
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-
-# def make_db_data(db):
-#     """ Fill DB with users, Books, BookInstances """
-
-#     # create users
-#     latitude = 50.4547
-#     longitude = 30.520
-#     for i in 'cdefghikz':
-#         user = User(
-#             username=i*3,
-#             email=i*3 + '@gmail.com',
-#             latitude=latitude + (random() - 0.5)/10,
-#             longitude=longitude + (random() - 0.5)/10,
-#             about_me='No info about the uses yet.'
-#         )
-#         user.set_password(i*3)
-#         db.session.add(user)
-#     db.session.commit()
-
-#     # create boooks
-#     books = [
-#         ('In Search of Lost Time', 'Marcel Proust'),
-#         ('Ulysses', 'James Joyce'),
-#         ('Don Quixote', 'Miguel de Cervantes'),
-#         ('The Great Gatsby', 'F. Scott Fitzgerald'),
-#         ('One Hundred Years of Solitude', 'Gabriel Garcia Marquez'),
-#         ('Moby Dick', 'Herman Melville'),
-#         ('War and Peace', 'Leo Tolstoy'),
-#         ('Lolita', 'Vladimir Nabokov'),
-#         ('Hamlet', 'William Shakespeare'),
-#         ('The Catcher in the Rye', 'J. D. Salinger'),
-#         ('The Odyssey', 'Homer'),
-#         ('The Brothers Karamazov', 'Fyodor Dostoyevsky'),
-#         ('Crime and Punishment', 'Fyodor Dostoyevsky'),
-#         ('Madame Bovary', 'Gustave Flaubert'),
-#         ('The Divine Comedy', 'Dante Alighieri'),
-#     ]
-#     for book in books:
-#         book = Book(title=book[0], author=book[1])
-#         db.session.add(book)
-#     db.session.commit()
-
-#     # create boook instances
-#     for book_instance in range(25):
-#         book_instance = BookInstance(
-#             details=randint(1, 15),
-#             owner_id=randint(1, 8),
-#             price=randint(20, 200),
-#             condition=randint(1, 12),
-#             description='Lorem ipsum...'
-#         )
-#         db.session.add(book_instance)
-#     db.session.commit()
-
-
-# def clear_db_data(db):
-#     """ clear all rows from listed db tables """
-#     tables = [BookInstance, Book, User]
-#     for table in tables:
-#         db.session.query(table).delete()
-#     db.session.commit()
