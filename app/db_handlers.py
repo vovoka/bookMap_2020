@@ -70,6 +70,18 @@ def clear_db_data(db):
 #  ------------  BOOK ------------------
 
 
+def get_books_by_kw(key_word):
+
+    search = "%{}%".format(key_word)
+    # todo fix request contained part of Author and part of book_title returns None
+    # for example 'Hamlet William' --> None
+    books_by_title = Book.query.filter(Book.title.like(search)).all()
+    if books_by_title == []:
+        books_by_author = Book.query.filter(Book.author.like(search)).all()
+        return books_by_author
+    return books_by_title
+
+
 def create_book(title: str, author: str) -> object:
     if not book_exist(title, author):
         book = Book(title=title, author=author)
@@ -110,6 +122,8 @@ def get_books_by_user_id(user_id) -> list:
     return books
 
 
+#  ------------  BOOK INSTANCE ------------------
+
 def get_all_book_instances() -> list:
     """ Returns all BookInstances """
     book_instances = (db.session.query(
@@ -124,8 +138,6 @@ def get_all_book_instances() -> list:
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.details == Book.id))
     return book_instances
-
-#  ------------  BOOK INSTANCE ------------------
 
 
 def create_book_instance(price, condition, description, owner_id, book_id):

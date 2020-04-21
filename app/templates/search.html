@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>{{ 'Search Results' }}</h1>
+    {% for book in books %}
+        {% include '_book.html' %}</br>
+    {% endfor %}
+{% endblock %}

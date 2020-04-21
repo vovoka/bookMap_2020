@@ -23,6 +23,43 @@ def index():
     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
 
 
+from flask import g
+from app.main.forms import SearchForm
+
+@bp.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+        g.search_form = SearchForm()
+    # g.locale = str(get_locale())
+    
+    
+@bp.route('/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+    key_word = 'Madame'
+    key_word = g.search_form.q.data
+    books = db_handlers.get_books_by_kw(key_word)
+    book_instances = []
+    book_instances=book_instances
+    return render_template('search.html', title='Search', books=books)
+
+
+# @bp.route('/search/<key_word>')
+# @login_required
+# def search_res(key_word):
+
+#     books = db_handlers.get_books_by_kw(key_word)
+    
+#     # book_instances = db_handlers.get_all_book_instances()
+#     book_instances = []
+#     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
+
+
+
 @bp.route('/location')
 def test_index():
     start_coords = (50.4547, 30.524)
