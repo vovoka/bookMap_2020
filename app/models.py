@@ -63,6 +63,7 @@ class Book(db.Model):
     title = db.Column(db.String(140))
     author = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    instance_counter = db.Column(db.Integer, default=0)
     # TODO fix backref
     BookInstance = db.relationship(
         'BookInstance', backref='aaaaa', lazy='dynamic')

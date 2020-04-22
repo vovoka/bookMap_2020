@@ -7,7 +7,7 @@
                 <img src="{{ user.avatar(96) }}">
             </td>
             <td>
-                <h1>User: {{ user.username }}</h1>
+                <h2>Users {{ user.username }} offers {{ total_instances }} books</h2>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
                 
@@ -17,23 +17,18 @@
             </td>
         </tr>
     </table>
-    <hr>
 
-    <h2>My Book instances {{ total_instances }}</h2>
     <table class="table table-hover">
         <tr>
             <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Price</th>
-            <th>Details</th>
+            <th>Owner</th>
         </tr>
         <p><a href="{{ url_for('main.edit_profile') }}">Edit profile</a></p>
         {% for book_instance in book_instances %}
-        <tr>
             {% include '_book_instance.html' %}
-            <td><a href="{{ url_for('main.book_instance', book_instance_id=book_instance.id ) }}">Details</a></td>
-        </tr>
-            {% endfor %}
+        {% endfor %}
     </table>
 {% endblock %}

@@ -14,11 +14,10 @@
             <th>Title</th>
             <th>Author</th>
             <th>Cover</th>
+            <th>Instances</th>
         </tr>
     {% for book in books %}
-    <tr>
         {% include '_book.html' %}
-    </tr>
     {% endfor %}
     </table>
 
@@ -32,9 +31,7 @@
             <th>Price</th>
         </tr>
         {% for book_instance in book_instances %}
-        <tr>
             {% include '_book_instance.html' %}
-        </tr>
         {% endfor %}
     </table>
 {% endblock %}

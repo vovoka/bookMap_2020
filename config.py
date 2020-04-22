@@ -12,5 +12,5 @@ class Config(object):
 
     # image upload settings
     MAX_IMAGE_FILESIZE = 2 * 1024 * 1024 # first multiplier = 1 Mb
-    IMAGE_UPLOADS = "/home/vk/Desktop/2020-02-07_book_v8/app/static/covers"
+    IMAGE_UPLOADS = os.path.join(basedir, 'app/static/covers')
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]

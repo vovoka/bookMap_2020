@@ -1,5 +1,7 @@
-        <td>{{ book_instance.id }}</td>
-        <td>{{ book_instance.title }}</td>
-        <td>{{ book_instance.author }}</td>
-        <td>{{ book_instance.price }}</td>
-        <td><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
+<tr onclick='location.href="{{ url_for('main.book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+    <td>{{ book_instance.id }}</td>
+    <td>{{ book_instance.title }}</td>
+    <td>{{ book_instance.author }}</td>
+    <td>{{ book_instance.price }}</td>
+    <td><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
+</tr>

@@ -48,13 +48,15 @@ def make_db_data(db):
     db.session.commit()
     # create boook instances
     for book_instance in range(25):
+        book_id=randint(1, 15)
         book_instance = BookInstance(
-            details=randint(1, 15),
+            details=book_id,
             owner_id=randint(1, 8),
             price=randint(20, 200),
             condition=randint(1, 12),
             description='Lorem ipsum...'
         )
+        incr_instance_counter(book_id)
         db.session.add(book_instance)
     db.session.commit()
 
@@ -121,6 +123,23 @@ def get_books_by_user_id(user_id) -> list:
         .filter(BookInstance.details == Book.id))
     return books
 
+def incr_instance_counter(book_id) -> int:
+    """ Icrement book.instance_counter by 1.
+    Return new value (int)"""
+    book = Book.query.filter_by(id=book_id).first()
+    book.instance_counter += 1
+    db.session.commit()
+    return book.instance_counter
+
+
+def decr_instance_counter(book_id) -> int:
+    """ Decrement book.instance_counter by 1. Return new value (int)"""
+    book = Book.query.filter_by(id=book_id).first()
+    if book.instance_counter > 0:
+        book.instance_counter -= 1
+        db.session.commit()
+        return book.instance_counter
+    raise ValueError(f'instance_counter Value error for book_id={book_id}')
 
 #  ------------  BOOK INSTANCE ------------------
 
@@ -155,11 +174,14 @@ def create_book_instance(price, condition, description, owner_id, book_id):
         description=description
     )
     db.session.add(book_instance)
+    incr_instance_counter(book_id)
     db.session.commit()
     return book_instance
 
 
 def delete_book_instance_by_id(book_instance_id: str) -> None:
+    bi = get_book_instance_by_id(book_instance_id)
+    decr_instance_counter(bi.details)
     BookInstance.query.filter_by(id=book_instance_id).delete()
     db.session.commit()
 
