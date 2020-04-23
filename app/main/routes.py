@@ -47,7 +47,7 @@ def search():
     key_word = g.search_form.q.data
     books = db_handlers.get_books_by_kw(key_word)
     book_instances = []
-    book_instances=book_instances
+    book_instances = book_instances
     return render_template('search.html', title='Search', books=books)
 
 
@@ -73,18 +73,15 @@ def test_index():
     return render_template('map.html')
 
 
-def generate_map_by_book_id(book_ids:list):
-    """ Show all the books locations """
-    # TODO get all markers with one query
-    # TODO replace start_coords with user preferences location
+def generate_map_by_book_id(book_ids: list):
+    """ Show all book instances locations """
 
-    start_coords = (50.4547, 30.524)
-    folium_map = folium.Map(height=500, location=start_coords, zoom_start=12)
-    m = folium_map
-
-    # book = Book.query.get(book_id)
+    m = folium.Map(
+        height=500,
+        location=(current_user.latitude, current_user.longitude),
+        zoom_start=12
+    )
     books = Book.query.filter(Book.id.in_(book_ids)).all()
-
     # create a marker cluster
     marker_cluster = folium.plugins.MarkerCluster().add_to(m)
 
@@ -93,16 +90,13 @@ def generate_map_by_book_id(book_ids:list):
 
     for book in books:
         for bi in book.BookInstance:
-
-            if bi.owner_id in users_coord_cache.keys():
-                bi_coord = users_coord_cache[bi.owner_id]
-            else:
+            if not bi.owner_id in users_coord_cache.keys():
                 user = (User.query
                         .filter(User.id == bi.owner_id)
                         .first())
-                bi_coord = (user.latitude, user.longitude)
                 # update dict
-                users_coord_cache[bi.owner_id] = (user.latitude, user.longitude)
+                users_coord_cache[bi.owner_id] = (
+                    user.latitude, user.longitude)
 
             book_cover = '<img src="/static/covers/' + \
                 str(bi.details) + '.jpg" width="50" height="70" >'
@@ -110,14 +104,12 @@ def generate_map_by_book_id(book_ids:list):
             # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
             bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
             popup = (book.title + '</br><a href=' + bi_link + '>' +
-                book_cover + '</a></br>' + str(bi.price) + ' uah')
+                     book_cover + '</a></br>' + str(bi.price) + ' uah')
             folium.Marker(
-                location=list(bi_coord),
+                location=list(users_coord_cache[bi.owner_id]),
                 icon=folium.Icon(color='green'),
-                popup = popup
+                popup=popup
             ).add_to(marker_cluster)
-
-
     m.save('app/templates/_map.html')
 
 
