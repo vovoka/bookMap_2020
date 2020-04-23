@@ -7,6 +7,23 @@
         <h1>Hi, anon</h1>
     {% endif %}
 
+    {% include '_map.html' %}
+
+    <h2>Recently added Book instances</h2>
+
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>owner's name</th>
+        </tr>
+        {% for book_instance in book_instances %}
+            {% include '_book_instance.html' %}
+        {% endfor %}
+    </table>
+
     <h2>Library</h2>
     <table class="table table-hover">
         <tr>
@@ -21,17 +38,4 @@
     {% endfor %}
     </table>
 
-    <h2>Book instances</h2>
-
-    <table class="table table-hover">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Price</th>
-        </tr>
-        {% for book_instance in book_instances %}
-            {% include '_book_instance.html' %}
-        {% endfor %}
-    </table>
 {% endblock %}

@@ -2,7 +2,7 @@
 from app import db
 from app.models import User, Book, BookInstance, Message
 from random import random, randint
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, desc
 
 #  ------------  GENERAL DB ------------------
 
@@ -156,6 +156,27 @@ def get_all_book_instances() -> list:
     )
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.details == Book.id))
+    return book_instances
+
+
+def get_freshest_book_instances(items:int) -> list:
+    """ Returns n freshest BookInstances """
+    book_instances = (db.session.query(
+        User.username,
+        User.latitude,
+        User.longitude,
+        BookInstance.details,
+        Book.title,
+        Book.author,
+        BookInstance.id,
+        BookInstance.price,
+        BookInstance.condition,
+        BookInstance.description,
+        BookInstance.timestamp,
+    )
+        .filter(BookInstance.owner_id == User.id)
+        .filter(BookInstance.details == Book.id)
+        .order_by(desc(BookInstance.timestamp)).limit(items).all())
     return book_instances
 
 

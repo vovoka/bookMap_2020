@@ -10,8 +10,11 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from app.main import bp
 import folium
+import folium.plugins
 import os
 from flask import current_app
+from flask import g
+from app.main.forms import SearchForm
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -19,12 +22,13 @@ from flask import current_app
 @login_required
 def index():
     books = Book.query.all()
-    book_instances = db_handlers.get_all_book_instances()
+    # book_instances = db_handlers.get_all_book_instances()
+    book_instances = db_handlers.get_freshest_book_instances(10)
+    books_ids = [bi.details for bi in book_instances]
+
+    generate_map_by_book_id(list(books_ids))
     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
 
-
-from flask import g
-from app.main.forms import SearchForm
 
 @bp.before_app_request
 def before_request():
@@ -32,9 +36,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
         g.search_form = SearchForm()
-    # g.locale = str(get_locale())
-    
-    
+
+
 @bp.route('/search')
 @login_required
 def search():
@@ -46,18 +49,6 @@ def search():
     book_instances = []
     book_instances=book_instances
     return render_template('search.html', title='Search', books=books)
-
-
-# @bp.route('/search/<key_word>')
-# @login_required
-# def search_res(key_word):
-
-#     books = db_handlers.get_books_by_kw(key_word)
-    
-#     # book_instances = db_handlers.get_all_book_instances()
-#     book_instances = []
-#     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
-
 
 
 @bp.route('/location')
@@ -82,8 +73,8 @@ def test_index():
     return render_template('map.html')
 
 
-def generate_map_by_book_id(book_id):
-    """ Show all the book locations """
+def generate_map_by_book_id(book_ids:list):
+    """ Show all the books locations """
     # TODO get all markers with one query
     # TODO replace start_coords with user preferences location
 
@@ -91,33 +82,48 @@ def generate_map_by_book_id(book_id):
     folium_map = folium.Map(height=500, location=start_coords, zoom_start=12)
     m = folium_map
 
-    # get book by its id
-    book = Book.query.get(book_id)
-    print(f'found book: {book}', flush=True)
+    # book = Book.query.get(book_id)
+    books = Book.query.filter(Book.id.in_(book_ids)).all()
 
-    # get all instances of the Book:
-    for bi in book.BookInstance:
-        user = (User.query
-                .filter(User.id == bi.owner_id)
-                .first_or_404())
-        book_cover = '<img src="/static/covers/' + \
-            str(bi.details) + '.jpg" width="50" height="70" >'
+    # create a marker cluster
+    marker_cluster = folium.plugins.MarkerCluster().add_to(m)
 
-        # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
-        bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
+    # used to decrease db load
+    users_coord_cache = dict()
 
-        folium.Marker(
-            location=[user.latitude, user.longitude],
-            popup=book.title + '</br><a href=' + bi_link + '>' +
-            book_cover + '</a></br>' + str(bi.price) + ' uah',
-            icon=folium.Icon(color='green')
-        ).add_to(m)
+    for book in books:
+        for bi in book.BookInstance:
+
+            if bi.owner_id in users_coord_cache.keys():
+                bi_coord = users_coord_cache[bi.owner_id]
+            else:
+                user = (User.query
+                        .filter(User.id == bi.owner_id)
+                        .first())
+                bi_coord = (user.latitude, user.longitude)
+                # update dict
+                users_coord_cache[bi.owner_id] = (user.latitude, user.longitude)
+
+            book_cover = '<img src="/static/covers/' + \
+                str(bi.details) + '.jpg" width="50" height="70" >'
+
+            # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
+            bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
+            popup = (book.title + '</br><a href=' + bi_link + '>' +
+                book_cover + '</a></br>' + str(bi.price) + ' uah')
+            folium.Marker(
+                location=list(bi_coord),
+                icon=folium.Icon(color='green'),
+                popup = popup
+            ).add_to(marker_cluster)
+
+
     m.save('app/templates/_map.html')
 
 
 @bp.route('/location/<book_id>')
 def book_location(book_id):
-    generate_map_by_book_id(book_id)
+    generate_map_by_book_id([book_id])
     return render_template('map.html')
 
 
@@ -157,7 +163,7 @@ def book(book_id):
 
     book = Book.query.filter_by(id=book_id).first_or_404()
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
-    generate_map_by_book_id(book_id)
+    generate_map_by_book_id([book_id])
     return render_template(
         'book_page.html',
         book=book,
