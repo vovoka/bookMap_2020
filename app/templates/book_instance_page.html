@@ -44,6 +44,7 @@
             <button type="button" onclick="window.location.href='{{ url_for( "main.activate_book_instance", book_instance_id=book_instance.id) }}';">activate</button>
         {% endif %}
             <button type="button" onclick="window.location.href='{{ url_for( 'main.edit_book_instance', book_instance_id=book_instance.id) }}';">edit</button>
+            <button type="button" onclick="window.location.href='{{ url_for( 'main.delete_book_instance', book_instance_id=book_instance.id) }}';">delete</button>
 
     {% else %}
     <form action="" method="post" novalidate>

@@ -367,6 +367,16 @@ def deactivate_book_instance(book_instance_id):
     return redirect(request.referrer)
 
 
+@bp.route('/delete_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@login_required
+def delete_book_instance(book_instance_id):
+    # check the user is a bi owner
+    bi = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != bi.owner_id:
+        return redirect(url_for('main.index'))
+    db_handlers.delete_book_instance_by_id(book_instance_id)
+    return redirect(request.referrer)
+
 @bp.route('/users')
 def users():
     users = User.query.all()
