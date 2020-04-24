@@ -24,7 +24,7 @@ def index():
     books = Book.query.all()
     # book_instances = db_handlers.get_all_book_instances()
     book_instances = db_handlers.get_freshest_book_instances(10)
-    books_ids = [bi.details for bi in book_instances]
+    books_ids = [bi.book_id for bi in book_instances]
 
     generate_map_by_book_id(list(books_ids))
     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
@@ -99,7 +99,7 @@ def generate_map_by_book_id(book_ids: list):
                     user.latitude, user.longitude)
 
             book_cover = '<img src="/static/covers/' + \
-                str(bi.details) + '.jpg" width="50" height="70" >'
+                str(bi.book_id) + '.jpg" width="50" height="70" >'
 
             # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
             bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
@@ -171,7 +171,7 @@ def book_instance(book_instance_id):
     form = MessageForm()
     if form.validate_on_submit():
         msg = Message(
-            book_id=book_instance.details,
+            book_id=book_instance.book_id,
             book_instance_id=book_instance_id,
             sender_id=current_user.id,
             recipient_id=book_instance.owner_id,
@@ -306,7 +306,7 @@ def edit_book_instance(book_instance_id):
 
     If "title" or "author" is changed then look for the Book or create it.
     It seems not optimal to overwrite whole row. I didn't success with updating
-    book_instance.details. So, decide to overwrite whole row."""
+    book_instance.book_id. So, decide to overwrite whole row."""
 
     form = BookInstanceForm()
     book_instance = db_handlers.get_book_instance_by_id(book_instance_id)

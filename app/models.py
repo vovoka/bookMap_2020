@@ -52,7 +52,7 @@ class BookInstance(db.Model):
     description = db.Column(db.String(2000))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    details = db.Column(db.Integer, db.ForeignKey('book.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
 
     def __repr__(self):
         return '<BookInstance {}>'.format(self.description)

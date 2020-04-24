@@ -50,7 +50,7 @@ def make_db_data(db):
     for book_instance in range(25):
         book_id=randint(1, 15)
         book_instance = BookInstance(
-            details=book_id,
+            book_id=book_id,
             owner_id=randint(1, 8),
             price=randint(20, 200),
             condition=randint(1, 12),
@@ -120,7 +120,7 @@ def get_books_by_user_id(user_id) -> list:
         Book.author,
     )
         .filter(BookInstance.owner_id == user_id)
-        .filter(BookInstance.details == Book.id))
+        .filter(BookInstance.book_id == Book.id))
     return books
 
 def incr_instance_counter(book_id) -> int:
@@ -155,7 +155,7 @@ def get_all_book_instances() -> list:
         BookInstance.description,
     )
         .filter(BookInstance.owner_id == User.id)
-        .filter(BookInstance.details == Book.id))
+        .filter(BookInstance.book_id == Book.id))
     return book_instances
 
 
@@ -165,7 +165,7 @@ def get_freshest_book_instances(items:int) -> list:
         User.username,
         User.latitude,
         User.longitude,
-        BookInstance.details,
+        BookInstance.book_id,
         Book.title,
         Book.author,
         BookInstance.id,
@@ -175,7 +175,7 @@ def get_freshest_book_instances(items:int) -> list:
         BookInstance.timestamp,
     )
         .filter(BookInstance.owner_id == User.id)
-        .filter(BookInstance.details == Book.id)
+        .filter(BookInstance.book_id == Book.id)
         .order_by(desc(BookInstance.timestamp)).limit(items).all())
     return book_instances
 
@@ -188,7 +188,7 @@ def create_book_instance(price, condition, description, owner_id, book_id):
     """
     # create book instance
     book_instance = BookInstance(
-        details=book_id,
+        book_id=book_id,
         owner_id=owner_id,
         price=price,
         condition=condition,
@@ -202,7 +202,7 @@ def create_book_instance(price, condition, description, owner_id, book_id):
 
 def delete_book_instance_by_id(book_instance_id: str) -> None:
     bi = get_book_instance_by_id(book_instance_id)
-    decr_instance_counter(bi.details)
+    decr_instance_counter(bi.book_id)
     BookInstance.query.filter_by(id=book_instance_id).delete()
     db.session.commit()
 
@@ -217,11 +217,11 @@ def get_book_instance_by_id(book_instance_id: str) -> object:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.details,
+        BookInstance.book_id,
     )
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.id == book_instance_id)
-        .filter(BookInstance.details == Book.id)
+        .filter(BookInstance.book_id == Book.id)
         .first_or_404())
     return book_instance
 
@@ -240,7 +240,7 @@ def get_book_instances_by_user_id(user_id) -> list:
     )
         .filter(BookInstance.owner_id == user_id)
         .filter(User.id == user_id)
-        .filter(BookInstance.details == Book.id)
+        .filter(BookInstance.book_id == Book.id)
         .order_by(BookInstance.id.desc())
         .all())
     return book_instances
@@ -257,7 +257,7 @@ def get_book_instances_by_book_id(book_id) -> list:
         BookInstance.condition,
         BookInstance.description,
     )
-        .filter(BookInstance.details == book_id)
+        .filter(BookInstance.book_id == book_id)
         .filter(BookInstance.owner_id == User.id)
         .order_by(BookInstance.id.desc())
         .all())
