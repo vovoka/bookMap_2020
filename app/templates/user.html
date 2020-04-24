@@ -18,17 +18,53 @@
         </tr>
     </table>
 
+    <h2> Active books </h2>
     <table class="table table-hover">
         <tr>
             <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Price</th>
-            <th>Owner</th>
+            <th>Actions</th>
         </tr>
-        <p><a href="{{ url_for('main.edit_profile') }}">Edit profile</a></p>
         {% for book_instance in book_instances %}
-            {% include '_book_instance.html' %}
+            {% if book_instance.is_active %}
+                <tr>
+                    <td>{{ book_instance.id }}</td>
+                    <td>{{ book_instance.title }}</td>
+                    <td>{{ book_instance.author }}</td>
+                    <td>{{ book_instance.price }}</td>
+                    <td>
+                        <button type="button" onclick='window.location.href="{{ url_for('main.deactivate_book_instance', book_instance_id=book_instance.id) }}"'>deactivate</button>
+                        <button type="button" onclick='window.location.href="{{ url_for('main.edit_book_instance', book_instance_id=book_instance.id) }}"'>edit</button>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+    <h2> Inactive books </h2>
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        {% for book_instance in book_instances %}
+            {% if not book_instance.is_active %}
+                <tr>
+                    <td>{{ book_instance.id }}</td>
+                    <td>{{ book_instance.title }}</td>
+                    <td>{{ book_instance.author }}</td>
+                    <td>{{ book_instance.price }}</td>
+                    <td>
+                        <button type="button" onclick='window.location.href="{{ url_for('main.activate_book_instance', book_instance_id=book_instance.id) }}"'>activate</button>
+                        <button type="button" onclick='window.location.href="{{ url_for('main.edit_book_instance', book_instance_id=book_instance.id) }}"'>edit</button>
+                    </td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </table>
 {% endblock %}

@@ -38,9 +38,13 @@
     </table>
     <br>
     {% if editable %}
-        <button type="button" onclick="window.location.href='{{ url_for( 'main.book_instance', book_instance_id=book_instance.id) }}';">self</button>
-        <button type="button" onclick="window.location.href='{{ url_for( 'main.edit_book_instance', book_instance_id=book_instance.id) }}';">edit</button>
-    
+        {% if book_instance.is_active %}
+            <button type="button" onclick="window.location.href='{{ url_for( "main.deactivate_book_instance", book_instance_id=book_instance.id) }}';">deactivate</button>
+        {% else %}
+            <button type="button" onclick="window.location.href='{{ url_for( "main.activate_book_instance", book_instance_id=book_instance.id) }}';">activate</button>
+        {% endif %}
+            <button type="button" onclick="window.location.href='{{ url_for( 'main.edit_book_instance', book_instance_id=book_instance.id) }}';">edit</button>
+
     {% else %}
     <form action="" method="post" novalidate>
         Send message to seller (User {{ book_instance.username }})

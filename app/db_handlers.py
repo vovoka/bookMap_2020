@@ -48,7 +48,7 @@ def make_db_data(db):
     db.session.commit()
     # create boook instances
     for book_instance in range(25):
-        book_id=randint(1, 15)
+        book_id = randint(1, 15)
         book_instance = BookInstance(
             book_id=book_id,
             owner_id=randint(1, 8),
@@ -123,6 +123,7 @@ def get_books_by_user_id(user_id) -> list:
         .filter(BookInstance.book_id == Book.id))
     return books
 
+
 def incr_instance_counter(book_id) -> int:
     """ Icrement book.instance_counter by 1.
     Return new value (int)"""
@@ -143,6 +144,7 @@ def decr_instance_counter(book_id) -> int:
 
 #  ------------  BOOK INSTANCE ------------------
 
+
 def get_all_book_instances() -> list:
     """ Returns all BookInstances """
     book_instances = (db.session.query(
@@ -159,7 +161,7 @@ def get_all_book_instances() -> list:
     return book_instances
 
 
-def get_freshest_book_instances(items:int) -> list:
+def get_freshest_book_instances(items: int) -> list:
     """ Returns n freshest BookInstances """
     book_instances = (db.session.query(
         User.username,
@@ -206,6 +208,7 @@ def delete_book_instance_by_id(book_instance_id: str) -> None:
     BookInstance.query.filter_by(id=book_instance_id).delete()
     db.session.commit()
 
+
 def get_book_instance_by_id(book_instance_id: str) -> object:
     """ Returns BookInstance object if exists in DB or None"""
     book_instance = (db.session.query(
@@ -218,6 +221,7 @@ def get_book_instance_by_id(book_instance_id: str) -> object:
         BookInstance.condition,
         BookInstance.description,
         BookInstance.book_id,
+        BookInstance.is_active,
     )
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.id == book_instance_id)
@@ -237,6 +241,7 @@ def get_book_instances_by_user_id(user_id) -> list:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
+        BookInstance.is_active,
     )
         .filter(BookInstance.owner_id == user_id)
         .filter(User.id == user_id)
@@ -256,12 +261,27 @@ def get_book_instances_by_book_id(book_id) -> list:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
+        BookInstance.is_active,
     )
         .filter(BookInstance.book_id == book_id)
         .filter(BookInstance.owner_id == User.id)
         .order_by(BookInstance.id.desc())
         .all())
     return book_instances
+
+
+def activate_book_instance(book_instance_id):
+    (db.session.query(BookInstance)
+     .filter(BookInstance.id == book_instance_id)
+     .update({BookInstance.is_active: True}, synchronize_session=False))
+    db.session.commit()
+
+
+def deactivate_book_instance(book_instance_id):
+    (db.session.query(BookInstance)
+     .filter(BookInstance.id == book_instance_id)
+     .update({BookInstance.is_active: False}, synchronize_session=False))
+    db.session.commit()
 
 #  ------------ USER ------------------
 
@@ -273,6 +293,7 @@ def get_message(message_id) -> object:
     message = Message.query.filter_by(id=message_id).first_or_404()
     return message
 
+
 def get_messages_by_user(user_id):
     """ Returns non-deleted users Messages (both sent and received) """
     messages = (
@@ -283,7 +304,7 @@ def get_messages_by_user(user_id):
                      Message.exists_for_sender == 1),
                 and_(Message.recipient_id == 1,
                      Message.exists_for_recipient == 1)
-                )
+            )
         )
         .order_by(Message.timestamp.desc())
     )

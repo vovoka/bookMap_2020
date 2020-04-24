@@ -133,7 +133,7 @@ def unpopulate_db():
     return redirect(url_for('main.index'))
 
 
-@bp.route('/user/<username>')
+@bp.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
@@ -343,6 +343,28 @@ def edit_book_instance(book_instance_id):
         db_handlers.delete_book_instance_by_id(book_instance_id)
         return redirect(url_for('main.book_instance', book_instance_id=book_instance_new.id))
     return render_template('edit_book_instance.html', title='edit_book_instance', form=form)
+
+
+@bp.route('/activate_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@login_required
+def activate_book_instance(book_instance_id):
+    # check the user is a bi owner
+    bi = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != bi.owner_id:
+        return redirect(url_for('main.index'))
+    db_handlers.activate_book_instance(book_instance_id)
+    return redirect(request.referrer)
+
+
+@bp.route('/deactivate_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@login_required
+def deactivate_book_instance(book_instance_id):
+    # check the user is a bi owner
+    bi = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != bi.owner_id:
+        return redirect(url_for('main.index'))
+    db_handlers.deactivate_book_instance(book_instance_id)
+    return redirect(request.referrer)
 
 
 @bp.route('/users')
