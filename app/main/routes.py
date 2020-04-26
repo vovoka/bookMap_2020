@@ -100,6 +100,7 @@ def generate_map_by_book_id(book_ids: list):
 
             book_cover = '<img src="/static/covers/' + \
                 str(bi.book_id) + '.jpg" width="50" height="70" >'
+            icon_url = 'http://127.0.0.1:5000/static/covers/' + str(bi.book_id) + '.jpg'
 
             # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
             bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
@@ -107,7 +108,7 @@ def generate_map_by_book_id(book_ids: list):
                      book_cover + '</a></br>' + str(bi.price) + ' uah')
             folium.Marker(
                 location=list(users_coord_cache[bi.owner_id]),
-                icon=folium.Icon(color='green'),
+                icon=folium.features.CustomIcon(icon_url, icon_size=(30, 50)),
                 popup=popup
             ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
@@ -450,7 +451,6 @@ def delete_message(message_id):
 def messages():
     current_user.last_message_read_time = datetime.utcnow()
     db.session.commit()
-    page = request.args.get('page', 1, type=int)
     messages = db_handlers.get_messages_by_user(current_user.id)
 
     return render_template('messages.html',

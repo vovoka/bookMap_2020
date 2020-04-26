@@ -63,7 +63,7 @@ def make_db_data(db):
 
 def clear_db_data(db):
     """ clear all rows from listed db tables """
-    tables = [BookInstance, Book, User]
+    tables = [BookInstance, Book, User, Message]
     for table in tables:
         db.session.query(table).delete()
     db.session.commit()
@@ -302,7 +302,7 @@ def get_messages_by_user(user_id):
             or_(
                 and_(Message.sender_id == user_id,
                      Message.exists_for_sender == 1),
-                and_(Message.recipient_id == 1,
+                and_(Message.recipient_id == user_id,
                      Message.exists_for_recipient == 1)
             )
         )
