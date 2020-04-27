@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    {% if current_user.username %}
-        <h1>Hi, {{ current_user.username }}</h1>
-    {% else %}
-    <h1>Hi, anon</h1>
-    {% endif %}
     <h2>DEBUG all messages list</h2>
     <table class="table table-hover">
         <tr>

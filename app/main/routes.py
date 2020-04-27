@@ -22,10 +22,8 @@ from app.main.forms import SearchForm
 @login_required
 def index():
     books = Book.query.all()
-    # book_instances = db_handlers.get_all_book_instances()
     book_instances = db_handlers.get_freshest_book_instances(10)
     books_ids = [bi.book_id for bi in book_instances]
-
     generate_map_by_book_id(list(books_ids))
     return render_template('index.html', title='Home', books=books, book_instances=book_instances)
 
@@ -43,11 +41,10 @@ def before_request():
 def search():
     if not g.search_form.validate():
         return redirect(url_for('main.explore'))
-    key_word = 'Madame'
     key_word = g.search_form.q.data
     books = db_handlers.get_books_by_kw(key_word)
-    book_instances = []
-    book_instances = book_instances
+    books_ids = [b.id for b in books]
+    generate_map_by_book_id(list(books_ids))
     return render_template('search.html', title='Search', books=books)
 
 
