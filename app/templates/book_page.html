@@ -1,44 +1,34 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Book page </br>{{ book.title }}</h1>
-
-    <table class="table table-hover">
-        <tr>
-            <th>Cover</th>
-            <th>Description</th>
-        </tr>
-
-        <tr>
-            <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
-            <td>
-                id: {{ book.id }}</br>
-                title:<b>{{ book.title }}</b></br>
-                by: {{ book.author }}</br>
-            </td>
-        </tr>
-    </table>
     {% if book_instances %}
-
-        <h2>Map</h2>
         {% include '_map.html' %}
-
-        <h2>Book instances</h2>
 
         <table class="table table-hover">
             <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Price</th>
-                <th>owner's name</th>
+                <th>Cover</th>
+                <th>Description</th>
+                <th>Book instances</th>
             </tr>
-            {% for book_instance in book_instances %}
             <tr>
-                {% include '_book_instance.html' %}
+                <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
+                <td>
+                    title:<b>{{ book.title }}</b></br>
+                    by: {{ book.author }}</br>
+                </td>
+                <td>
+                    <table class="table table-hover">
+                            <th>Price</th>
+                            <th>owner's name</th>
+                        {% for book_instance in book_instances %}
+                            {% include '_book_instance_short.html' %}
+                        {% endfor %}
+                    </table>
+                </td>
+
             </tr>
-            {% endfor %}
         </table>
+
     {% else %}
         Sorry, this book is not offered now. 
         <p><a href="{{ url_for('main.index') }}">Back</a></p>
