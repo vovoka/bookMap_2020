@@ -19,6 +19,13 @@
             {% endfor %}
         </p>
         <p>
+            {{ form.isbn.label }}<br>
+            {{ form.isbn(size=32) }}<br>
+            {% for error in form.isbn.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
             {{ form.cover.label }}<br>
             {{ form.cover(size=32) }}<br>
             {% for error in form.author.errors %}

@@ -70,6 +70,24 @@ def test_index():
     return render_template('map.html')
 
 
+def generate_map_single_marker(
+    height=200,
+    zoom_start=12,
+    popup='popup content'
+    ):
+    m = folium.Map(
+        height=height,
+        location=(current_user.latitude, current_user.longitude),
+        zoom_start=zoom_start
+    )
+    folium.Marker(
+        location=(current_user.latitude, current_user.longitude),
+        popup=popup,
+        icon=folium.Icon(color='green')
+    ).add_to(m)
+    m.save('app/templates/_map.html')
+
+
 def generate_map_by_book_id(book_ids: list):
     """ Show all book instances locations """
 
@@ -179,7 +197,7 @@ def book_instance(book_instance_id):
         db.session.commit()
         flash(f'Your message have been sent.')
         return redirect(url_for('main.messages'))
-
+    generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
         book_instance=book_instance,
@@ -242,7 +260,7 @@ def cover_upload(request, book_id) -> int:
                 return 1
             image = request.files["cover"]
             if not image_has_allowed_extetion(image.filename):
-                flash("That file extension is not allowed")
+                flash("No book cover file or file extension is not allowed")
                 return 1
             filename = str(book_id) + '.jpg'
             image.save(os.path.join(

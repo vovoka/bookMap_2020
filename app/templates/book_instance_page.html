@@ -2,25 +2,19 @@
 
 {% block app_content %}
 
-    <h1>Book  instance page </h1>
-    <h2>{{ book_instance.title }}</h2>
-    <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
-    </br>
+    {% include '_map.html' %}
+
     <table class="table table-hover">
-        <tr valign="top">
+        <tr>
+            <td>
+                <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+            </td>
+            <td><b>{{ book_instance.title }}</b><br>
+                by {{ book_instance.author }}
+            </td>
+        </tr>
             <td>offered by user:</td><td> {{ book_instance.username }}</td>
-        </tr>
-        <tr>
-            <td>id:</td>
-            <td> {{ book_instance.id }}</td>
-        </tr>
-        <tr>
-            <td>title:</td>
-            <td>{{ book_instance.title }}</td>
-        </tr>
-        <tr>
-            <td>author:</td>
-            <td>{{ book_instance.author }} </td>
+            
         </tr>
         <tr>
             <td>price: </td>

@@ -15,6 +15,11 @@
                 <td>
                     title:<b>{{ book.title }}</b></br>
                     by: {{ book.author }}</br>
+                    {% if book.isbn %}
+                        isbn: {{ book.isbn }}</br>
+                    {% else %}
+                        isbn: not provided <small><i> (click <a href="#">here</a> to add isbn) </i></small>
+                    {% endif %}
                 </td>
                 <td>
                     <table class="table table-hover">

@@ -61,6 +61,7 @@ class BookInstance(db.Model):
 
 class Book(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    isbn = db.Column(db.String(13))
     title = db.Column(db.String(140))
     author = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
