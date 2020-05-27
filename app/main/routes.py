@@ -279,7 +279,8 @@ def add_book():
     if form.validate_on_submit():
         title = form.title.data
         author = form.author.data
-        if not db_handlers.book_exist(title, author):
+        isbn = form.isbn.data
+        if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
             db_handlers.create_book(title, author)
         book_id = db_handlers.get_book_id(title, author)
         if cover_upload(request, book_id):

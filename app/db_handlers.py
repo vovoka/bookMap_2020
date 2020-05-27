@@ -84,17 +84,21 @@ def get_books_by_kw(key_word):
     return books_by_title
 
 
-def create_book(title: str, author: str) -> object:
+def create_book(title: str, author: str, isbn='') -> object:
     if not book_exist(title, author):
-        book = Book(title=title, author=author)
+        book = Book(title=title, author=author, isbn=isbn)
         db.session.add(book)
         db.session.commit()
-        print('Book created "{title}" "{author}"', flush=True)
+        print('Book created "{title}" "{author}" isbn={isbn}', flush=True)
         return book
 
 
-def book_exist(title: str, author: str) -> bool:
+def book_exist(title: str, author: str, isbn='') -> bool:
     """ Check if book with incoming attributes is in db """
+    if isbn:
+        return bool(Book.query.filter_by(
+            isbn=isbn
+        ).first())
     return bool(Book.query.filter_by(
         title=title,
         author=author
