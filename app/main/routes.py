@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import db
 from app import db_handlers
-from app.main.forms import AddBookForm, BookInstanceForm, MessageForm
+from app.main.forms import AddBookForm, BookInstanceForm, EditBookInstanceForm, MessageForm
 from app.auth.forms import RegistrationForm, LoginForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Book, BookInstance, Message
@@ -319,15 +319,11 @@ def add_book_instance():
 @bp.route('/edit_book_instance/<book_instance_id>', methods=['GET', 'POST'])
 @login_required
 def edit_book_instance(book_instance_id):
-    """ Delete current BookInstance row and create new one.
 
-    If "title" or "author" is changed then look for the Book or create it.
-    It seems not optimal to overwrite whole row. I didn't success with updating
-    book_instance.book_id. So, decide to overwrite whole row."""
-
-    form = BookInstanceForm()
+    form = EditBookInstanceForm()
     book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
     # check if current_user that is a real book owner
+    # TODO create such a function
     if book_instance.owner_id != current_user.id:
         flash("User allowed to edit only their own book instances")
         return render_template(
@@ -335,31 +331,39 @@ def edit_book_instance(book_instance_id):
             book_instance=book_instance,
             editable=False
         )
+
+    bi_title = book_instance.title
+    bi_author = book_instance.author
+    bi_book_id = book_instance.book_id
+
     # form prefill
-    form.title.data = book_instance.title
-    form.author.data = book_instance.author
     form.price.data = book_instance.price
     form.condition.data = book_instance.condition
     form.description.data = book_instance.description
 
     if form.validate_on_submit():
         result = request.form
-        title = result.get('title')
-        author = result.get('author')
         price = result.get('price')
         condition = result.get('condition')
         description = result.get('description')
-        book_id = db_handlers.get_book_id(title, author)
+        book_id = db_handlers.get_book_id(bi_title, bi_author)
 
-        if not book_id:
-            db_handlers.create_book(title, author)
-            book_id = db_handlers.get_book_id(title, author)
+        book_instance_updated = db_handlers.update_book_instance(
+            book_instance_id=book_instance_id,
+            price=price,
+            condition=condition,
+            description=description
+        )
+        return redirect(url_for('main.book_instance', book_instance_id=book_instance_id))
 
-        book_instance_new = db_handlers.create_book_instance(
-            price=price, condition=condition, description=description, owner_id=current_user.id, book_id=book_id)
-        db_handlers.delete_book_instance_by_id(book_instance_id)
-        return redirect(url_for('main.book_instance', book_instance_id=book_instance_new.id))
-    return render_template('edit_book_instance.html', title='edit_book_instance', form=form)
+    return render_template(
+        'edit_book_instance.html',
+        title='edit_book_instance',
+        form=form,
+        bi_title=bi_title,
+        bi_author=bi_author,
+        bi_book_id=bi_book_id
+    )
 
 
 @bp.route('/activate_book_instance/<book_instance_id>', methods=['GET', 'POST'])

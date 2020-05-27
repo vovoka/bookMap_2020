@@ -1,44 +1,51 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <h1>Edit Book instance</h1>
+{% block app_content %}
+
+    {% include '_map.html' %}
+
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size=32) }}<br>
-            {% for error in form.title.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.author.label }}<br>
-            {{ form.author(size=32) }}<br>
-            {% for error in form.author.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.price.label }}<br>
-            {{ form.price(size=32) }}<br>
-            {% for error in form.price.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.condition.label }}<br>
-            {{ form.condition(size=32) }}<br>
-            {% for error in form.condition.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.description.label }}<br>
-            {{ form.description(size=32) }}<br>
-            {% for error in form.description.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+
+        <table class="table table-hover">
+            <tr>
+                <td>
+                    <img src="/static/covers/{{ bi_book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+                </td>
+                <td><b>{{ title }}</b><br>
+                    by {{ author }}
+                </td>
+            </tr>
+            <tr>
+                <td>price: </td>
+                <td>
+                    {{ form.price(size=32) }}<br>
+                    {% for error in form.price.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>condition:</td>
+                <td>
+                    {{ form.condition(size=32) }}<br>
+                    {% for error in form.condition.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>description:</td>
+                <td>
+                    {{ form.description(size=32) }}<br>
+                    {% for error in form.description.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
         <p>{{ form.submit() }}</p>
     </form>
+
 {% endblock %}
+

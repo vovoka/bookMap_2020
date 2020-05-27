@@ -206,6 +206,33 @@ def create_book_instance(price, condition, description, owner_id, book_id):
     return book_instance
 
 
+def update_book_instance(
+    book_instance_id,
+    price,
+    condition,
+    description,
+):
+
+    bi_prev_state = get_book_instance_by_id(book_instance_id)
+    if (
+        price != bi_prev_state.price or
+        condition != bi_prev_state.condition or
+        description != bi_prev_state.description
+    ):
+        (
+            db.session.query(BookInstance)
+            .filter(BookInstance.id == book_instance_id)
+            .update(
+                {
+                    BookInstance.price: price,
+                    BookInstance.condition: condition,
+                    BookInstance.description: description
+                }, synchronize_session=False
+            )
+        )
+        db.session.commit()
+
+
 def delete_book_instance_by_id(book_instance_id: str) -> None:
     bi = get_book_instance_by_id(book_instance_id)
     decr_instance_counter(bi.book_id)

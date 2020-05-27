@@ -37,6 +37,13 @@ class BookInstanceForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class EditBookInstanceForm(FlaskForm):
+    price = StringField('Price', validators=[DataRequired()])
+    condition = StringField('Condition', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
 class MessageForm(FlaskForm):
     message = TextAreaField('Message', validators=[
         DataRequired(), Length(min=0, max=140)])
