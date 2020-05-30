@@ -119,20 +119,27 @@ def generate_map_by_book_id(book_ids: list):
                     user.latitude, user.longitude)
 
             if bi.is_active:
-                book_cover = '<img src="/static/covers/' + \
-                    str(bi.book_id) + '.jpg" width="50" height="70" >'
-                icon_url = 'http://127.0.0.1:5000/static/covers/' + \
-                    str(bi.book_id) + '.jpg'
+                cover_id = bi.book_id
+                # use 'no-cover image' if no cover image found
+                if not os.path.isfile(f'app/static/covers/{cover_id}.jpg'):
+                    cover_id = 0
 
-                # ! TODO find out how to insert link to
-                # !"redirect(url_for('main.book_instance', book_instance_id=bi.id))"
-                bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
-                popup = (book.title + '</br><a href=' + bi_link + '>' +
-                         book_cover + '</a></br>' + str(bi.price) + ' uah')
+                icon_url = (
+                    'http://127.0.0.1:5000/static/covers/' +
+                    str(cover_id) + '.jpg'
+                )
+                popup = (
+                    book.title + '</br><a href=http://127.0.0.1:5000/bi/' + str(bi.id) +
+                    '><img src="/static/covers/' + str(cover_id) +
+                    '.jpg" width="50" height="70" >' +
+                    '</a></br>' + str(bi.price) + ' uah'
+                )
                 folium.Marker(
                     location=list(users_coord_cache[bi.owner_id]),
                     icon=folium.features.CustomIcon(
-                        icon_url, icon_size=(30, 50)),
+                        icon_url,
+                        icon_size=(30, 50)
+                    ),
                     popup=popup
                 ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
