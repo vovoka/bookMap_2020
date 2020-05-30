@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import db
 from app import db_handlers
 from app.main.forms import AddBookForm, BookInstanceForm, EditBookInstanceForm, MessageForm
-from app.auth.forms import RegistrationForm, LoginForm, EditProfileForm
+from app.auth.forms import EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Book, BookInstance, Message
 from werkzeug.urls import url_parse
@@ -25,7 +25,12 @@ def index():
     book_instances = db_handlers.get_freshest_book_instances(10)
     books_ids = [bi.book_id for bi in book_instances]
     generate_map_by_book_id(list(books_ids))
-    return render_template('index.html', title='Home', books=books, book_instances=book_instances)
+    return render_template(
+        'index.html',
+        title='Home',
+        books=books,
+        book_instances=book_instances
+    )
 
 
 @bp.before_app_request
@@ -74,7 +79,7 @@ def generate_map_single_marker(
     height=200,
     zoom_start=12,
     popup='popup content'
-    ):
+):
     m = folium.Map(
         height=height,
         location=(current_user.latitude, current_user.longitude),
@@ -116,15 +121,18 @@ def generate_map_by_book_id(book_ids: list):
             if bi.is_active:
                 book_cover = '<img src="/static/covers/' + \
                     str(bi.book_id) + '.jpg" width="50" height="70" >'
-                icon_url = 'http://127.0.0.1:5000/static/covers/' + str(bi.book_id) + '.jpg'
+                icon_url = 'http://127.0.0.1:5000/static/covers/' + \
+                    str(bi.book_id) + '.jpg'
 
-                # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
+                # ! TODO find out how to insert link to
+                # !"redirect(url_for('main.book_instance', book_instance_id=bi.id))"
                 bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
                 popup = (book.title + '</br><a href=' + bi_link + '>' +
-                        book_cover + '</a></br>' + str(bi.price) + ' uah')
+                         book_cover + '</a></br>' + str(bi.price) + ' uah')
                 folium.Marker(
                     location=list(users_coord_cache[bi.owner_id]),
-                    icon=folium.features.CustomIcon(icon_url, icon_size=(30, 50)),
+                    icon=folium.features.CustomIcon(
+                        icon_url, icon_size=(30, 50)),
                     popup=popup
                 ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
@@ -156,7 +164,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     book_instances = db_handlers.get_book_instances_by_user_id(user.id)
     # TODO not added to html template. Delete?
-    books = db_handlers.get_books_by_user_id(user.id)
+    # books = db_handlers.get_books_by_user_id(user.id)
     return render_template(
         'user.html',
         user=user,
@@ -229,48 +237,63 @@ def edit_profile():
         flash('Your changes have been saved.')
         return redirect(url_for('main.user', username=current_user.username))
 
-    return render_template('edit_profile.html', title='Edit Profile', form=form)
+    return render_template(
+        'edit_profile.html',
+        title='Edit Profile',
+        form=form
+    )
 
 
-@bp.before_request
-def before_request():
-    if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
-        db.session.commit()
+# @bp.before_request
+# def before_request():
+#     if current_user.is_authenticated:
+#         current_user.last_seen = datetime.utcnow()
+#         db.session.commit()
 
 
-def image_has_allowed_filesize(filesize: str) -> bool:
-    return bool(int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"])
+# ? Delete next 3 tukctions when sure not back to it.
+# def image_has_allowed_filesize(filesize: str) -> bool:
+#     return bool(int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"])
 
 
-def image_has_allowed_extetion(filename: str) -> bool:
-    """ Check if filename has any of expected extention """
-    if not "." in filename:
-        return False
-    ext = filename.rsplit(".", 1)[1]
-    return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
+# def image_has_allowed_extetion(filename: str) -> bool:
+#     """ Check if filename has any of expected extention """
+#     if not "." in filename:
+#         return False
+#     ext = filename.rsplit(".", 1)[1]
+#     return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
 
 
-# TODO replace prints witn logs (logger_alchemy?)?
-def cover_upload(request, book_id) -> int:
-    """ Add book image to db """
-    if request.method == "POST" and request.files:
-        if "filesize" in request.cookies:
-            if not image_has_allowed_filesize(request.cookies["filesize"]):
-                flash("Filesize exceeded maximum limit")
-                return 1
-            image = request.files["cover"]
-            if not image_has_allowed_extetion(image.filename):
-                flash("No book cover file or file extension is not allowed")
-                return 1
-            filename = str(book_id) + '.jpg'
-            image.save(os.path.join(
-                current_app.config["IMAGE_UPLOADS"], filename))
-            flash('Congratulations, book cover added')
-        else:
-            flash("No filesize in cookie")
-        return 0
-    return 1
+# def cover_upload(request, book_id) -> int:
+#     """ Add book image to db """
+#     if request.method == "POST" and request.files:
+#         if "filesize" in request.cookies:
+#             if not image_has_allowed_filesize(request.cookies["filesize"]):
+#                 flash("Filesize exceeded maximum limit")
+#                 return 1
+#             image = request.files["cover"]
+#             if not image_has_allowed_extetion(image.filename):
+#                 flash("No book cover file or file extension is not allowed")
+#                 return 1
+#             filename = str(book_id) + '.jpg'
+#             image.save(os.path.join(
+#                 current_app.config["IMAGE_UPLOADS"], filename))
+#             flash('Congratulations, book cover added')
+#         else:
+#             flash("No filesize in cookie")
+#         return 0
+#     return 1
+
+
+def cover_upload(cover, book_id) -> int:
+    """ upload file w/o checking size """
+
+    filename = str(book_id) + '.jpg'
+    try:
+        cover.save(os.path.join(current_app.config["IMAGE_UPLOADS"], filename))
+    except FileExistsError:
+        return 1
+    return 0
 
 
 @bp.route('/add_book', methods=['GET', 'POST'])
@@ -281,13 +304,12 @@ def add_book():
         title = form.title.data
         author = form.author.data
         isbn = form.isbn.data
+        cover = form.cover.data
         if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
             db_handlers.create_book(title, author)
         book_id = db_handlers.get_book_id(title, author)
-        if cover_upload(request, book_id):
-            return redirect(request.url)
-        else:
-            return redirect(url_for('main.book', book_id=book_id))
+        cover_upload(cover, book_id)
+        return redirect(url_for('main.book', book_id=book_id))
     return render_template('add_book.html', title='add_book', form=form)
 
 
@@ -301,20 +323,30 @@ def add_book_instance():
         price = form.price.data
         condition = form.condition.data
         description = form.description.data
-        owner_id = current_user.id
+        cover = form.cover.data
         book_id = db_handlers.get_book_id(title, author)
 
         if not book_id:
             db_handlers.create_book(title, author)
             book_id = db_handlers.get_book_id(title, author)
 
-        # upload book image
-        cover_upload(request, book_id)
+        cover_upload(cover, book_id)
         book_instance = db_handlers.create_book_instance(
-            price=price, condition=condition, description=description, owner_id=current_user.id, book_id=book_id)
-        print(f'book_instance.id = {book_instance.id}')
-        return redirect(url_for('main.book_instance', book_instance_id=book_instance.id))
-    return render_template('add_book_instance.html', title='add_book_instance', form=form)
+            price=price,
+            condition=condition,
+            description=description,
+            owner_id=current_user.id,
+            book_id=book_id
+        )
+        return redirect(url_for(
+            'main.book_instance',
+            book_instance_id=book_instance.id)
+        )
+    return render_template(
+        'add_book_instance.html',
+        title='add_book_instance',
+        form=form
+    )
 
 
 @bp.route('/edit_book_instance/<book_instance_id>', methods=['GET', 'POST'])
@@ -347,15 +379,16 @@ def edit_book_instance(book_instance_id):
         price = result.get('price')
         condition = result.get('condition')
         description = result.get('description')
-        book_id = db_handlers.get_book_id(bi_title, bi_author)
-
-        book_instance_updated = db_handlers.update_book_instance(
+        db_handlers.update_book_instance(
             book_instance_id=book_instance_id,
             price=price,
             condition=condition,
             description=description
         )
-        return redirect(url_for('main.book_instance', book_instance_id=book_instance_id))
+        return redirect(url_for(
+            'main.book_instance',
+            book_instance_id=book_instance_id)
+        )
 
     return render_template(
         'edit_book_instance.html',
@@ -367,7 +400,10 @@ def edit_book_instance(book_instance_id):
     )
 
 
-@bp.route('/activate_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@bp.route(
+    '/activate_book_instance/<book_instance_id>',
+    methods=['GET', 'POST']
+)
 @login_required
 def activate_book_instance(book_instance_id):
     # check the user is a bi owner
@@ -378,7 +414,10 @@ def activate_book_instance(book_instance_id):
     return redirect(request.referrer)
 
 
-@bp.route('/deactivate_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@bp.route(
+    '/deactivate_book_instance/<book_instance_id>',
+    methods=['GET', 'POST']
+)
 @login_required
 def deactivate_book_instance(book_instance_id):
     # check the user is a bi owner
@@ -389,7 +428,10 @@ def deactivate_book_instance(book_instance_id):
     return redirect(request.referrer)
 
 
-@bp.route('/delete_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@bp.route(
+    '/delete_book_instance/<book_instance_id>',
+    methods=['GET', 'POST']
+)
 @login_required
 def delete_book_instance(book_instance_id):
     # check the user is a bi owner
@@ -398,6 +440,7 @@ def delete_book_instance(book_instance_id):
         return redirect(url_for('main.index'))
     db_handlers.delete_book_instance_by_id(book_instance_id)
     return redirect(request.referrer)
+
 
 @bp.route('/users')
 def users():
@@ -411,10 +454,17 @@ def all_msgs():
     msgs = Message.query.all()
     msgs_total = Message.query.count()
     print(f'messages found = {msgs_total}', flush=True)
-    return render_template('all_messages.html', title='Messages list', msgs=msgs)
+    return render_template(
+        'all_messages.html',
+        title='Messages list',
+        msgs=msgs
+    )
 
 
-@bp.route('/send_message/<recipient>/<prev_message_id>', methods=['GET', 'POST'])
+@bp.route(
+    '/send_message/<recipient>/<prev_message_id>',
+    methods=['GET', 'POST']
+)
 @login_required
 def send_message(recipient, prev_message_id):
     user = User.query.filter_by(username=recipient).first_or_404()
@@ -473,7 +523,8 @@ def messages():
     current_user.last_message_read_time = datetime.utcnow()
     db.session.commit()
     messages = db_handlers.get_messages_by_user(current_user.id)
-
-    return render_template('messages.html',
-                           messages=messages,
-                           form=MessageForm)
+    return render_template(
+        'messages.html',
+        messages=messages,
+        form=MessageForm
+    )
