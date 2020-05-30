@@ -4,11 +4,17 @@
     {% if book_instances %}
         {% include '_map.html' %}
 
+    {% else %}
+        Sorry, this book is not offered now.
+        <p><a href="{{ url_for('main.index') }}">Back</a></p>
+    {% endif %}
         <table class="table table-hover">
             <tr>
                 <th>Cover</th>
                 <th>Description</th>
-                <th>Book instances</th>
+                {% if book_instances %}
+                    <th>Book instances</th>
+                {% endif %}
             </tr>
             <tr>
                 <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
@@ -21,25 +27,24 @@
                         isbn: not provided <small><i> (click <a href="#">here</a> to add isbn) </i></small>
                     {% endif %}
                 </td>
-                <td>
-                    <table class="table table-hover">
-                            <th>Price</th>
-                            <th>owner's name</th>
-                        {% for book_instance in book_instances %}
-                            {% include '_book_instance_short.html' %}
-                        {% endfor %}
-                    </table>
-                    <form action="https://google.com">
-                        <input type="submit" value="Sell the book" />
-                    </form>
-                </td>
+                {% if book_instances %}
+                    <td>
+                        <table class="table table-hover">
+                                <th>Price</th>
+                                <th>owner's name</th>
+                            {% for book_instance in book_instances %}
+                                {% include '_book_instance_short.html' %}
+                            {% endfor %}
+                        </table>
+                        <form action="https://google.com">
+                            <input type="submit" value="Sell the book" />
+                        </form>
+                    </td>
+                {% endif %}
 
             </tr>
         </table>
 
-    {% else %}
-        Sorry, this book is not offered now. 
-        <p><a href="{{ url_for('main.index') }}">Back</a></p>
-    {% endif %}
+
 
 {% endblock %}

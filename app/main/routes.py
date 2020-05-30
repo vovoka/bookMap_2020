@@ -62,8 +62,6 @@ def test_index():
     for user in users:
         # teporary if. Delete when user coordinates will be obligatory
         if user.longitude and user.latitude:
-            print(
-                f'{user.username}  location=[{user.longitude}, {user.latitude}]', flush=True)
             folium.Marker(
                 location=[user.latitude, user.longitude],
                 # for DEBUG:
@@ -110,11 +108,10 @@ def generate_map_by_book_id(book_ids: list):
 
     for book in books:
         for bi in book.BookInstance:
-            if not bi.owner_id in users_coord_cache.keys():
+            if not users_coord_cache[bi.owner_id]:
                 user = (User.query
                         .filter(User.id == bi.owner_id)
                         .first())
-                # update dict
                 users_coord_cache[bi.owner_id] = (
                     user.latitude, user.longitude)
 
@@ -129,7 +126,8 @@ def generate_map_by_book_id(book_ids: list):
                     str(cover_id) + '.jpg'
                 )
                 popup = (
-                    book.title + '</br><a href=http://127.0.0.1:5000/bi/' + str(bi.id) +
+                    book.title + '</br><a href=http://127.0.0.1:5000/bi/' +
+                    str(bi.id) +
                     '><img src="/static/covers/' + str(cover_id) +
                     '.jpg" width="50" height="70" >' +
                     '</a></br>' + str(bi.price) + ' uah'
@@ -211,7 +209,7 @@ def book_instance(book_instance_id):
         )
         db.session.add(msg)
         db.session.commit()
-        flash(f'Your message have been sent.')
+        flash('Your message have been sent.')
         return redirect(url_for('main.messages'))
     generate_map_single_marker()
     return render_template(
@@ -269,7 +267,6 @@ def edit_profile():
 #         return False
 #     ext = filename.rsplit(".", 1)[1]
 #     return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
-
 
 # def cover_upload(request, book_id) -> int:
 #     """ Add book image to db """
