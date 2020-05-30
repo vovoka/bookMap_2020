@@ -89,7 +89,7 @@ def generate_map_single_marker(
 
 
 def generate_map_by_book_id(book_ids: list):
-    """ Show all book instances locations """
+    """ Show all active book instances locations """
 
     m = folium.Map(
         height=500,
@@ -113,19 +113,20 @@ def generate_map_by_book_id(book_ids: list):
                 users_coord_cache[bi.owner_id] = (
                     user.latitude, user.longitude)
 
-            book_cover = '<img src="/static/covers/' + \
-                str(bi.book_id) + '.jpg" width="50" height="70" >'
-            icon_url = 'http://127.0.0.1:5000/static/covers/' + str(bi.book_id) + '.jpg'
+            if bi.is_active:
+                book_cover = '<img src="/static/covers/' + \
+                    str(bi.book_id) + '.jpg" width="50" height="70" >'
+                icon_url = 'http://127.0.0.1:5000/static/covers/' + str(bi.book_id) + '.jpg'
 
-            # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
-            bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
-            popup = (book.title + '</br><a href=' + bi_link + '>' +
-                     book_cover + '</a></br>' + str(bi.price) + ' uah')
-            folium.Marker(
-                location=list(users_coord_cache[bi.owner_id]),
-                icon=folium.features.CustomIcon(icon_url, icon_size=(30, 50)),
-                popup=popup
-            ).add_to(marker_cluster)
+                # ! TODO find out how to insert link to "redirect(url_for('main.book_instance', book_instance_id=bi.id))"
+                bi_link = 'http://127.0.0.1:5000/bi/' + str(bi.id)
+                popup = (book.title + '</br><a href=' + bi_link + '>' +
+                        book_cover + '</a></br>' + str(bi.price) + ' uah')
+                folium.Marker(
+                    location=list(users_coord_cache[bi.owner_id]),
+                    icon=folium.features.CustomIcon(icon_url, icon_size=(30, 50)),
+                    popup=popup
+                ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
 
 
