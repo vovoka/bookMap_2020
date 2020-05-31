@@ -293,25 +293,15 @@ def add_book():
     return render_template('add_book.html', title='add_book', form=form)
 
 
-@bp.route('/add_book_instance', methods=['GET', 'POST'])
+@bp.route('/add_book_instance/<book_id>', methods=['GET', 'POST'])
 @login_required
-def add_book_instance():
-    form = BookInstanceForm()
+def add_book_instance(book_id):
+    form = EditBookInstanceForm()
     if form.validate_on_submit():
-        title = form.title.data
-        author = form.author.data
-        isbn = form.isbn.data
         price = form.price.data
         condition = form.condition.data
         description = form.description.data
-        cover = form.cover.data
-        book_id = db_handlers.get_book_id(title, author)
 
-        if not book_id:
-            db_handlers.create_book(title, author, isbn)
-            book_id = db_handlers.get_book_id(title, author)
-
-        utils.cover_upload(cover, book_id)
         book_instance = db_handlers.create_book_instance(
             price=price,
             condition=condition,

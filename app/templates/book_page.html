@@ -36,7 +36,7 @@
                                 {% include '_book_instance_short.html' %}
                             {% endfor %}
                         </table>
-                        <form action="https://google.com">
+                        <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
                             <input type="submit" value="Sell the book" />
                         </form>
                     </td>
@@ -45,6 +45,8 @@
             </tr>
         </table>
 
-
+        <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
+            <input type="submit" value="Sell the book" />
+        </form>
 
 {% endblock %}
