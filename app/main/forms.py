@@ -32,6 +32,7 @@ class AddBookForm(FlaskForm):
 class BookInstanceForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
+    isbn = StringField('isbn', validators=[DataRequired(), NumberRange()])
     price = StringField('Price', validators=[DataRequired()])
     condition = StringField('Condition', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])

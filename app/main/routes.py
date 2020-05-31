@@ -1,19 +1,13 @@
-from flask import render_template, flash, redirect, url_for, request
-from app import db
-from app import db_handlers
+from flask import render_template, flash, redirect, url_for, request, g
+from app import db, db_handlers, utils
 from app.main.forms import AddBookForm, BookInstanceForm, EditBookInstanceForm, MessageForm
 from app.auth.forms import EditProfileForm
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Book, BookInstance, Message
-from werkzeug.urls import url_parse
-from werkzeug.utils import secure_filename
+from flask_login import current_user, login_required
+from app.models import User, Book, Message
 from datetime import datetime
 from app.main import bp
 import folium
 import folium.plugins
-import os
-from flask import current_app
-from flask import g
 from app.main.forms import SearchForm
 
 
@@ -24,7 +18,7 @@ def index():
     books = Book.query.all()
     book_instances = db_handlers.get_freshest_book_instances(10)
     books_ids = [bi.book_id for bi in book_instances]
-    generate_map_by_book_id(list(books_ids))
+    utils.generate_map_by_book_id(list(books_ids))
     return render_template(
         'index.html',
         title='Home',
@@ -49,7 +43,7 @@ def search():
     key_word = g.search_form.q.data
     books = db_handlers.get_books_by_kw(key_word)
     books_ids = [b.id for b in books]
-    generate_map_by_book_id(list(books_ids))
+    utils.generate_map_by_book_id(list(books_ids))
     return render_template('search.html', title='Search', books=books)
 
 
@@ -73,79 +67,79 @@ def test_index():
     return render_template('map.html')
 
 
-def generate_map_single_marker(
-    height=200,
-    zoom_start=12,
-    popup='popup content'
-):
-    m = folium.Map(
-        height=height,
-        location=(current_user.latitude, current_user.longitude),
-        zoom_start=zoom_start
-    )
-    folium.Marker(
-        location=(current_user.latitude, current_user.longitude),
-        popup=popup,
-        icon=folium.Icon(color='green')
-    ).add_to(m)
-    m.save('app/templates/_map.html')
+# def generate_map_single_marker(
+#     height=200,
+#     zoom_start=12,
+#     popup='popup content'
+# ):
+#     m = folium.Map(
+#         height=height,
+#         location=(current_user.latitude, current_user.longitude),
+#         zoom_start=zoom_start
+#     )
+#     folium.Marker(
+#         location=(current_user.latitude, current_user.longitude),
+#         popup=popup,
+#         icon=folium.Icon(color='green')
+#     ).add_to(m)
+#     m.save('app/templates/_map.html')
 
 
-def generate_map_by_book_id(book_ids: list):
-    """ Show all active book instances locations """
+# def generate_map_by_book_id(book_ids: list):
+#     """ Show all active book instances locations """
 
-    m = folium.Map(
-        height=500,
-        location=(current_user.latitude, current_user.longitude),
-        zoom_start=12
-    )
-    books = Book.query.filter(Book.id.in_(book_ids)).all()
-    # create a marker cluster
-    marker_cluster = folium.plugins.MarkerCluster().add_to(m)
+#     m = folium.Map(
+#         height=500,
+#         location=(current_user.latitude, current_user.longitude),
+#         zoom_start=12
+#     )
+#     books = Book.query.filter(Book.id.in_(book_ids)).all()
+#     # create a marker cluster
+#     marker_cluster = folium.plugins.MarkerCluster().add_to(m)
 
-    # used to decrease db load
-    users_coord_cache = dict()
+#     # used to decrease db load
+#     users_coord_cache = dict()
 
-    for book in books:
-        for bi in book.BookInstance:
-            if not users_coord_cache[bi.owner_id]:
-                user = (User.query
-                        .filter(User.id == bi.owner_id)
-                        .first())
-                users_coord_cache[bi.owner_id] = (
-                    user.latitude, user.longitude)
+#     for book in books:
+#         for bi in book.BookInstance:
+#             if not users_coord_cache.get(bi.owner_id):
+#                 user = (User.query
+#                         .filter(User.id == bi.owner_id)
+#                         .first())
+#                 users_coord_cache[bi.owner_id] = (
+#                     user.latitude, user.longitude)
 
-            if bi.is_active:
-                cover_id = bi.book_id
-                # use 'no-cover image' if no cover image found
-                if not os.path.isfile(f'app/static/covers/{cover_id}.jpg'):
-                    cover_id = 0
+#             if bi.is_active:
+#                 cover_id = bi.book_id
+#                 # use 'no-cover image' if no cover image found
+#                 if not os.path.isfile(f'app/static/covers/{cover_id}.jpg'):
+#                     cover_id = 0
 
-                icon_url = (
-                    'http://127.0.0.1:5000/static/covers/' +
-                    str(cover_id) + '.jpg'
-                )
-                popup = (
-                    book.title + '</br><a href=http://127.0.0.1:5000/bi/' +
-                    str(bi.id) +
-                    '><img src="/static/covers/' + str(cover_id) +
-                    '.jpg" width="50" height="70" >' +
-                    '</a></br>' + str(bi.price) + ' uah'
-                )
-                folium.Marker(
-                    location=list(users_coord_cache[bi.owner_id]),
-                    icon=folium.features.CustomIcon(
-                        icon_url,
-                        icon_size=(30, 50)
-                    ),
-                    popup=popup
-                ).add_to(marker_cluster)
-    m.save('app/templates/_map.html')
+#                 icon_url = (
+#                     'http://127.0.0.1:5000/static/covers/' +
+#                     str(cover_id) + '.jpg'
+#                 )
+#                 popup = (
+#                     book.title + '</br><a href=http://127.0.0.1:5000/bi/' +
+#                     str(bi.id) +
+#                     '><img src="/static/covers/' + str(cover_id) +
+#                     '.jpg" width="50" height="70" >' +
+#                     '</a></br>' + str(bi.price) + ' uah'
+#                 )
+#                 folium.Marker(
+#                     location=list(users_coord_cache[bi.owner_id]),
+#                     icon=folium.features.CustomIcon(
+#                         icon_url,
+#                         icon_size=(30, 50)
+#                     ),
+#                     popup=popup
+#                 ).add_to(marker_cluster)
+#     m.save('app/templates/_map.html')
 
 
 @bp.route('/location/<book_id>')
 def book_location(book_id):
-    generate_map_by_book_id([book_id])
+    utils.generate_map_by_book_id([book_id])
     return render_template('map.html')
 
 
@@ -185,7 +179,7 @@ def book(book_id):
 
     book = Book.query.filter_by(id=book_id).first_or_404()
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
-    generate_map_by_book_id([book_id])
+    utils.generate_map_by_book_id([book_id])
     return render_template(
         'book_page.html',
         book=book,
@@ -211,7 +205,7 @@ def book_instance(book_instance_id):
         db.session.commit()
         flash('Your message have been sent.')
         return redirect(url_for('main.messages'))
-    generate_map_single_marker()
+    utils.generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
         book_instance=book_instance,
@@ -249,13 +243,6 @@ def edit_profile():
     )
 
 
-# @bp.before_request
-# def before_request():
-#     if current_user.is_authenticated:
-#         current_user.last_seen = datetime.utcnow()
-#         db.session.commit()
-
-
 # ? Delete next 3 tukctions when sure not back to it.
 # def image_has_allowed_filesize(filesize: str) -> bool:
 #     return bool(int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"])
@@ -289,17 +276,6 @@ def edit_profile():
 #     return 1
 
 
-def cover_upload(cover, book_id) -> int:
-    """ upload file w/o checking size """
-
-    filename = str(book_id) + '.jpg'
-    try:
-        cover.save(os.path.join(current_app.config["IMAGE_UPLOADS"], filename))
-    except FileExistsError:
-        return 1
-    return 0
-
-
 @bp.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
@@ -307,12 +283,12 @@ def add_book():
     if form.validate_on_submit():
         title = form.title.data
         author = form.author.data
-        isbn = form.isbn.data
+        isbn = utils.get_num(form.isbn.data)
         cover = form.cover.data
         if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
-            db_handlers.create_book(title, author)
+            db_handlers.create_book(title, author, isbn)
         book_id = db_handlers.get_book_id(title, author)
-        cover_upload(cover, book_id)
+        utils.cover_upload(cover, book_id)
         return redirect(url_for('main.book', book_id=book_id))
     return render_template('add_book.html', title='add_book', form=form)
 
@@ -324,6 +300,7 @@ def add_book_instance():
     if form.validate_on_submit():
         title = form.title.data
         author = form.author.data
+        isbn = form.isbn.data
         price = form.price.data
         condition = form.condition.data
         description = form.description.data
@@ -331,10 +308,10 @@ def add_book_instance():
         book_id = db_handlers.get_book_id(title, author)
 
         if not book_id:
-            db_handlers.create_book(title, author)
+            db_handlers.create_book(title, author, isbn)
             book_id = db_handlers.get_book_id(title, author)
 
-        cover_upload(cover, book_id)
+        utils.cover_upload(cover, book_id)
         book_instance = db_handlers.create_book_instance(
             price=price,
             condition=condition,
