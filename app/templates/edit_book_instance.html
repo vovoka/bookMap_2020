@@ -8,14 +8,7 @@
         {{ form.hidden_tag() }}
 
         <table class="table table-hover">
-            <tr>
-                <td>
-                    <img src="/static/covers/{{ bi_book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
-                </td>
-                <td><b>{{ title }}</b><br>
-                    by {{ author }}
-                </td>
-            </tr>
+            {% include '_book_instance_2_column.html' %}
             <tr>
                 <td>price: </td>
                 <td>

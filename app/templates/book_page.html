@@ -45,8 +45,10 @@
             </tr>
         </table>
 
+        {% if not book_instances %}
         <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
             <input type="submit" value="Sell the book" />
         </form>
+        {% endif %}
 
 {% endblock %}

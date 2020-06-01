@@ -4,6 +4,7 @@ import folium
 import folium.plugins
 from flask_login import current_user
 from app.models import User, Book
+import sys
 
 
 def get_num(x: str) -> int:
@@ -11,13 +12,22 @@ def get_num(x: str) -> int:
     return int(''.join(ele for ele in x if ele.isdigit()))
 
 
+#! TODO write the check
+def has_allowed_filesize(obj, filesize_name) -> bool:
+    # return bool(int(sys.getsizeof(obj)) <= current_app.config[filesize_name])
+    return True
+
+
 def cover_upload(cover, book_id) -> int:
     """ Upload file w/o checking size """
     filename = str(book_id) + '.jpg'
-    try:
-        cover.save(os.path.join(current_app.config["IMAGE_UPLOADS"], filename))
-    except FileExistsError:
-        return 1
+    if has_allowed_filesize(cover, 'MAX_IMAGE_FILESIZE'):
+        try:
+            cover.save(
+                os.path.join(current_app.config["IMAGE_UPLOADS"], filename)
+                )
+        except FileExistsError:
+            return 1
     return 0
 
 

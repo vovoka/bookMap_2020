@@ -5,29 +5,18 @@
     {% include '_map.html' %}
 
     <table class="table table-hover">
+        {% include '_book_instance_2_column.html' %}
         <tr>
-            <td>
-                <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
-            </td>
-            <td><b>{{ book_instance.title }}</b><br>
-                by {{ book_instance.author }}
-            </td>
-        </tr>
             <td>offered by user:</td><td> {{ book_instance.username }}</td>
-            
         </tr>
         <tr>
-            <td>price: </td>
-            <td>{{ book_instance.price }}</td>
-            
+            <td>price: </td><td>{{ book_instance.price }}</td>
         </tr>
         <tr>
-            <td>condition:</td>
-            <td>{{ book_instance.condition }} of 12</td>
+            <td>condition:</td><td>{{ book_instance.condition }} of 12</td>
         </tr>
         <tr>
-            <td>description:</td>
-            <td>{{ book_instance.description }}</td>
+            <td>description:</td><td>{{ book_instance.description }}</td>
         </tr>
     </table>
     <br>

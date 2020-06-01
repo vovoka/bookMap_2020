@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, g
 from app import db, db_handlers, utils
-from app.main.forms import AddBookForm, BookInstanceForm, EditBookInstanceForm, MessageForm
+from app.main.forms import AddBookForm, EditBookInstanceForm, MessageForm
 from app.auth.forms import EditProfileForm
 from flask_login import current_user, login_required
 from app.models import User, Book, Message
@@ -208,6 +208,7 @@ def book_instance(book_instance_id):
     utils.generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
+        bi=book_instance,
         book_instance=book_instance,
         editable=editable,
         form=form
@@ -242,8 +243,10 @@ def edit_profile():
         form=form
     )
 
+# TODO to check file size wo request?
+# ? Delete next 3 functions when sure not back to it.
+# from flask import current_app
 
-# ? Delete next 3 tukctions when sure not back to it.
 # def image_has_allowed_filesize(filesize: str) -> bool:
 #     return bool(int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"])
 
@@ -283,7 +286,7 @@ def add_book():
     if form.validate_on_submit():
         title = form.title.data
         author = form.author.data
-        isbn = utils.get_num(form.isbn.data)
+        isbn = form.isbn.data
         cover = form.cover.data
         if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
             db_handlers.create_book(title, author, isbn)
@@ -313,10 +316,14 @@ def add_book_instance(book_id):
             'main.book_instance',
             book_instance_id=book_instance.id)
         )
+    book = db_handlers.get_book(book_id)
+
     return render_template(
         'add_book_instance.html',
         title='add_book_instance',
-        form=form
+        form=form,
+        book=book,
+        bi=book
     )
 
 
@@ -326,8 +333,6 @@ def edit_book_instance(book_instance_id):
 
     form = EditBookInstanceForm()
     book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
-    # check if current_user that is a real book owner
-    # TODO create such a function
     if book_instance.owner_id != current_user.id:
         flash("User allowed to edit only their own book instances")
         return render_template(
@@ -336,12 +341,8 @@ def edit_book_instance(book_instance_id):
             editable=False
         )
 
-    bi_title = book_instance.title
-    bi_author = book_instance.author
-    bi_book_id = book_instance.book_id
-
     # form prefill
-    form.price.data = book_instance.price
+    form.price.data = book_instance.price or '0'
     form.condition.data = book_instance.condition
     form.description.data = book_instance.description
 
@@ -365,9 +366,7 @@ def edit_book_instance(book_instance_id):
         'edit_book_instance.html',
         title='edit_book_instance',
         form=form,
-        bi_title=bi_title,
-        bi_author=bi_author,
-        bi_book_id=bi_book_id
+        bi=book_instance
     )
 
 

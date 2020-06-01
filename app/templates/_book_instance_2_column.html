@@ -1,0 +1,9 @@
+<tr onclick='location.href="{{ url_for('main.book', book_id=bi.book_id) }}"' style="cursor:pointer;">
+    <td>
+        <img src="/static/covers/{{ bi.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+    </td>
+    <td><b>{{ bi.title }}</b><br>
+        by {{ bi.author }}<br>
+        isbn: {{ bi.isbn }}
+    </td>
+</tr>

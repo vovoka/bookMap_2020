@@ -84,7 +84,7 @@ def get_books_by_kw(key_word):
     return books_by_title
 
 
-def create_book(title: str, author: str, isbn='') -> object:
+def create_book(title: str, author: str, isbn=0) -> object:
     if not book_exist(title, author):
         book = Book(title=title, author=author, isbn=isbn)
         db.session.add(book)
@@ -93,7 +93,7 @@ def create_book(title: str, author: str, isbn='') -> object:
         return book
 
 
-def book_exist(title: str, author: str, isbn='') -> bool:
+def book_exist(title: str, author: str, isbn=0) -> bool:
     """ Check if book with incoming attributes is in db """
     if isbn:
         return bool(Book.query.filter_by(
@@ -122,10 +122,18 @@ def get_books_by_user_id(user_id) -> list:
         User.username,
         Book.title,
         Book.author,
+        Book.isbn,
     )
         .filter(BookInstance.owner_id == user_id)
         .filter(BookInstance.book_id == Book.id))
     return books
+
+
+def get_book(id) -> object:
+    book = Book.query.filter_by(
+        id=id
+    ).first()
+    return book
 
 
 def incr_instance_counter(book_id) -> int:
@@ -155,6 +163,7 @@ def get_all_book_instances() -> list:
         User.username,
         Book.title,
         Book.author,
+        Book.isbn,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,
@@ -174,6 +183,7 @@ def get_freshest_book_instances(items: int) -> list:
         BookInstance.book_id,
         Book.title,
         Book.author,
+        Book.isbn,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,
@@ -246,6 +256,7 @@ def get_book_instance_by_id(book_instance_id: str) -> object:
         User.username,
         Book.title,
         Book.author,
+        Book.isbn,
         BookInstance.id,
         BookInstance.owner_id,
         BookInstance.price,
@@ -268,6 +279,7 @@ def get_book_instances_by_user_id(user_id) -> list:
         User.id,
         Book.title,
         Book.author,
+        Book.isbn,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,

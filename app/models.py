@@ -5,6 +5,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -61,7 +62,7 @@ class BookInstance(db.Model):
 
 class Book(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    isbn = db.Column(db.String(13))
+    isbn = db.Column(db.Integer())
     title = db.Column(db.String(140))
     author = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -73,6 +74,7 @@ class Book(db.Model):
     def __repr__(self):
         return '<Book {}>'.format(self.title)
 
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
@@ -83,7 +85,6 @@ class Message(db.Model):
     exists_for_recipient = db.Column(db.Integer, default=1)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
 
     def __repr__(self):
         return '<Message {}>'.format(self.body)
