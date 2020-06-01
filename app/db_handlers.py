@@ -3,6 +3,7 @@ from app import db
 from app.models import User, Book, BookInstance, Message
 from random import random, randint
 from sqlalchemy import or_, and_, desc
+import csv
 
 #  ------------  GENERAL DB ------------------
 
@@ -19,33 +20,20 @@ def make_db_data(db):
             email=i*3 + '@gmail.com',
             latitude=latitude + (random() - 0.5)/10,
             longitude=longitude + (random() - 0.5)/10,
-            about_me='No info about the uses yet.'
+            about_me='No info about the user yet.'
         )
         user.set_password(i*3)
         db.session.add(user)
     db.session.commit()
-    # create boooks
-    books = [
-        ('In Search of Lost Time', 'Marcel Proust'),
-        ('Ulysses', 'James Joyce'),
-        ('Don Quixote', 'Miguel de Cervantes'),
-        ('The Great Gatsby', 'F. Scott Fitzgerald'),
-        ('One Hundred Years of Solitude', 'Gabriel Garcia Marquez'),
-        ('Moby Dick', 'Herman Melville'),
-        ('War and Peace', 'Leo Tolstoy'),
-        ('Lolita', 'Vladimir Nabokov'),
-        ('Hamlet', 'William Shakespeare'),
-        ('The Catcher in the Rye', 'J. D. Salinger'),
-        ('The Odyssey', 'Homer'),
-        ('The Brothers Karamazov', 'Fyodor Dostoyevsky'),
-        ('Crime and Punishment', 'Fyodor Dostoyevsky'),
-        ('Madame Bovary', 'Gustave Flaubert'),
-        ('The Divine Comedy', 'Dante Alighieri'),
-    ]
-    for book in books:
-        book = Book(title=book[0], author=book[1])
-        db.session.add(book)
-    db.session.commit()
+
+    # import books from file & create in db
+    with open('test_books_data.csv', newline='') as csvfile:
+        book_reader = csv.reader(csvfile, delimiter=',', quotechar="'")
+        for book in book_reader:
+            book = Book(title=book[0], author=book[1], isbn=book[2])
+            db.session.add(book)
+        db.session.commit()
+
     # create boook instances
     for book_instance in range(25):
         book_id = randint(1, 15)
