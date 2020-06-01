@@ -227,7 +227,7 @@ def add_book():
             db_handlers.create_book(title, author, isbn)
         book_id = db_handlers.get_book_id(title, author)
         utils.cover_upload(cover, book_id)
-        return redirect(url_for('main.book', book_id=book_id))
+        return redirect(url_for('main.add_book_instance', book_id=book_id))
     return render_template('add_book.html', title='add_book', form=form)
 
 
