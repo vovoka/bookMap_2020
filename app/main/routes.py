@@ -95,7 +95,7 @@ def unpopulate_db():
 @bp.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    user = db_handlers.get_user_by_username(username)
     book_instances = db_handlers.get_book_instances_by_user_id(user.id)
     # TODO not added to html template. Delete?
     # books = db_handlers.get_books_by_user_id(user.id)

@@ -4,6 +4,8 @@ from app.models import User, Book, BookInstance, Message
 from random import random, randint
 from sqlalchemy import or_, and_, desc
 import csv
+from datetime import datetime
+
 
 #  ------------  GENERAL DB ------------------
 
@@ -85,20 +87,17 @@ def book_exist(title: str, author: str, isbn=0) -> bool:
     """ Check if book with incoming attributes is in db """
     if isbn:
         return bool(Book.query.filter_by(
-            isbn=isbn
-        ).first())
+            isbn=isbn).first())
     return bool(Book.query.filter_by(
         title=title,
-        author=author
-    ).first())
+        author=author).first())
 
 
 def get_book_id(title: str, author: str):
     """ Returns Book.id or None """
     book = Book.query.filter_by(
         title=title,
-        author=author
-    ).first()
+        author=author).first()
     book_id = book.id if book else None
     res = int(book_id) if book_id else None
     return res
@@ -110,8 +109,7 @@ def get_books_by_user_id(user_id) -> list:
         User.username,
         Book.title,
         Book.author,
-        Book.isbn,
-    )
+        Book.isbn)
         .filter(BookInstance.owner_id == user_id)
         .filter(BookInstance.book_id == Book.id))
     return books
@@ -119,15 +117,13 @@ def get_books_by_user_id(user_id) -> list:
 
 def get_book(id) -> object:
     book = Book.query.filter_by(
-        id=id
-    ).first()
+        id=id).first()
     return book
 
 
 def get_book_by_isbn(isbn) -> object:
     book = Book.query.filter_by(
-        isbn=isbn
-    ).first()
+        isbn=isbn).first()
     return book
 
 
@@ -162,8 +158,7 @@ def get_all_book_instances() -> list:
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,
-        BookInstance.description,
-    )
+        BookInstance.description)
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.book_id == Book.id))
     return book_instances
@@ -183,8 +178,7 @@ def get_freshest_book_instances(items: int) -> list:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.timestamp,
-    )
+        BookInstance.timestamp)
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.book_id == Book.id)
         .order_by(desc(BookInstance.timestamp)).limit(items).all())
@@ -203,8 +197,7 @@ def create_book_instance(price, condition, description, owner_id, book_id):
         owner_id=owner_id,
         price=price,
         condition=condition,
-        description=description
-    )
+        description=description)
     db.session.add(book_instance)
     incr_instance_counter(book_id)
     db.session.commit()
@@ -215,15 +208,12 @@ def update_book_instance(
     book_instance_id,
     price,
     condition,
-    description,
-):
-
+    description):
     bi_prev_state = get_book_instance_by_id(book_instance_id)
     if (
-        price != bi_prev_state.price or
-        condition != bi_prev_state.condition or
-        description != bi_prev_state.description
-    ):
+            price != bi_prev_state.price or
+            condition != bi_prev_state.condition or
+            description != bi_prev_state.description):
         (
             db.session.query(BookInstance)
             .filter(BookInstance.id == book_instance_id)
@@ -232,9 +222,7 @@ def update_book_instance(
                     BookInstance.price: price,
                     BookInstance.condition: condition,
                     BookInstance.description: description
-                }, synchronize_session=False
-            )
-        )
+                }, synchronize_session=False))
         db.session.commit()
 
 
@@ -258,8 +246,7 @@ def get_book_instance_by_id(book_instance_id: str) -> object:
         BookInstance.condition,
         BookInstance.description,
         BookInstance.book_id,
-        BookInstance.is_active,
-    )
+        BookInstance.is_active)
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.id == book_instance_id)
         .filter(BookInstance.book_id == Book.id)
@@ -279,8 +266,7 @@ def get_book_instances_by_user_id(user_id) -> list:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.is_active,
-    )
+        BookInstance.is_active)
         .filter(BookInstance.owner_id == user_id)
         .filter(User.id == user_id)
         .filter(BookInstance.book_id == Book.id)
@@ -299,8 +285,7 @@ def get_book_instances_by_book_id(book_id) -> list:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.is_active,
-    )
+        BookInstance.is_active)
         .filter(BookInstance.book_id == book_id)
         .filter(BookInstance.owner_id == User.id)
         .order_by(BookInstance.id.desc())
@@ -311,7 +296,10 @@ def get_book_instances_by_book_id(book_id) -> list:
 def activate_book_instance(book_instance_id):
     (db.session.query(BookInstance)
      .filter(BookInstance.id == book_instance_id)
-     .update({BookInstance.is_active: True}, synchronize_session=False))
+     .update({
+         BookInstance.is_active: True,
+         BookInstance.activation_time: datetime.utcnow
+     }, synchronize_session=False))
     db.session.commit()
 
 
@@ -322,6 +310,10 @@ def deactivate_book_instance(book_instance_id):
     db.session.commit()
 
 #  ------------ USER ------------------
+
+
+def get_user_by_username(username: str)  -> object:
+    return User.query.filter_by(username=username).first_or_404()
 
 
 #  ------------ MESSAGE ------------------
@@ -341,9 +333,6 @@ def get_messages_by_user(user_id):
                 and_(Message.sender_id == user_id,
                      Message.exists_for_sender == 1),
                 and_(Message.recipient_id == user_id,
-                     Message.exists_for_recipient == 1)
-            )
-        )
-        .order_by(Message.timestamp.desc())
-    )
+                     Message.exists_for_recipient == 1)))
+        .order_by(Message.timestamp.desc()))
     return messages

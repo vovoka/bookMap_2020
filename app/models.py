@@ -55,6 +55,7 @@ class BookInstance(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     is_active = db.Column(db.Boolean(), default=True)
+    activation_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<BookInstance {}>'.format(self.description)
