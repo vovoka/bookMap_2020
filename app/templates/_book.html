@@ -1,9 +1,12 @@
-<tr onclick='location.href="{{ url_for('main.book', book_id=book.id) }}"' style="cursor:pointer;">
-    <td>{{ book.id }}</td>
-    <td>{{ book.title }}</td>
-    <td>{{ book.author }}</td>
-    <td>
+<section class="books" onclick='location.href="{{ url_for('main.book', book_id=book.id) }}"' style="cursor:pointer;">
+    <div class="book-card">
+      <div class="book-image">
         <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
-    </td>
-    <td>{{ book.instance_counter }}</td>
-</tr>
+      </div>
+      <div class="book-info">
+        <h5>{{ book.title }}</h5>
+        <h5>{{ book.author }}</h5>
+        <h6>instances: {{ book.instance_counter }}</h6>
+      </div>
+    </div>
+</section>

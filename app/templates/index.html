@@ -5,32 +5,17 @@
     {% include '_map.html' %}
 
     <h2>Recently added Book instances</h2>
-
-    <table class="table table-hover">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Price</th>
-            <th>owner's name</th>
-        </tr>
+    <div class="parent--books">
         {% for book_instance in book_instances %}
             {% include '_book_instance.html' %}
         {% endfor %}
-    </table>
+    </div>
 
     <h2>Library</h2>
-    <table class="table table-hover">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Cover</th>
-            <th>Instances</th>
-        </tr>
-    {% for book in books %}
-        {% include '_book.html' %}
-    {% endfor %}
-    </table>
 
+    <div class="parent--books">
+        {% for book in books %}
+            {% include '_book.html' %}
+        {% endfor %}
+      </div>
 {% endblock %}

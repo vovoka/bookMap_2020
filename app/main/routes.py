@@ -16,7 +16,7 @@ from app.main.forms import SearchForm
 @login_required
 def index():
     books = Book.query.all()
-    book_instances = db_handlers.get_freshest_book_instances(10)
+    book_instances = db_handlers.get_freshest_book_instances(30)
     books_ids = [bi.book_id for bi in book_instances]
     utils.generate_map_by_book_id(list(books_ids))
     return render_template(

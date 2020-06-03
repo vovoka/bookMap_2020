@@ -1,7 +1,13 @@
-<tr onclick='location.href="{{ url_for('main.book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
-    <td>{{ book_instance.id }}</td>
-    <td>{{ book_instance.title }}</td>
-    <td>{{ book_instance.author }}</td>
-    <td>{{ book_instance.price }}</td>
-    <td><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
-</tr>
+<section class="books" onclick='location.href="{{ url_for('main.book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+    <div class="book-card">
+      <div class="book-image">
+        <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+      </div>
+      <div class="book-info">
+        <h5>{{ book_instance.title }}</h5>
+        <h5>by {{ book_instance.author }}</h5>
+        <h5>{{ book_instance.price }} uah</h5>
+        <h6><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></h6>
+      </div>
+    </div>
+</section>
