@@ -124,6 +124,13 @@ def get_book(id) -> object:
     return book
 
 
+def get_book_by_isbn(isbn) -> object:
+    book = Book.query.filter_by(
+        isbn=isbn
+    ).first()
+    return book
+
+
 def incr_instance_counter(book_id) -> int:
     """ Icrement book.instance_counter by 1.
     Return new value (int)"""

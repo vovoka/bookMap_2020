@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, TextAreaField, SubmitField
+from wtforms import IntegerField, StringField, TextAreaField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, NumberRange
 from flask_wtf.file import FileField, FileAllowed
-
+from app import db_handlers
 
 from flask import request
 
@@ -16,6 +16,13 @@ class SearchForm(FlaskForm):
         if 'csrf_enabled' not in kwargs:
             kwargs['csrf_enabled'] = False
         super(SearchForm, self).__init__(*args, **kwargs)
+
+
+def isbn_is_not_exist(form, field):
+    book = db_handlers.get_book_by_isbn(field.data)
+    if book:
+        raise ValidationError(f'Book with isbn {field.data} already exist in database:\
+             {book.title} by {book.author}. Please, do not create duplicates, use search.')
 
 
 class AddBookForm(FlaskForm):
@@ -33,7 +40,9 @@ class AddBookForm(FlaskForm):
             min=0,
             max=99999999999999,
             message='isbn is out of range'
-        )]
+        ),
+            isbn_is_not_exist
+        ]
     )
     cover = FileField('Book cover', validators=[
         DataRequired(),
