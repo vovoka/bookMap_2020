@@ -13,7 +13,6 @@ from app.main.forms import SearchForm
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
-@login_required
 def index():
     books = Book.query.all()
     book_instances = db_handlers.get_freshest_book_instances(30)

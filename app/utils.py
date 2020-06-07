@@ -52,9 +52,13 @@ def generate_map_single_marker(
 def generate_map_by_book_id(book_ids: list):
     """ Show all active book instances locations """
 
+    location= current_app.config["DEFAULT_MAP_COORDINADES"]
+    if not current_user.is_anonymous:
+        location=(current_user.latitude, current_user.longitude)
+
     m = folium.Map(
         height=500,
-        location=(current_user.latitude, current_user.longitude),
+        location=location,
         zoom_start=12
     )
     books = Book.query.filter(Book.id.in_(book_ids)).all()

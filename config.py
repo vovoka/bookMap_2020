@@ -14,3 +14,4 @@ class Config(object):
     MAX_IMAGE_FILESIZE = 2 * 1024 * 1024 # first multiplier = 1 Mb
     IMAGE_UPLOADS = os.path.join(basedir, 'app/static/covers')
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]
+    DEFAULT_MAP_COORDINADES = (50.4547, 30.520) # Kyiv
