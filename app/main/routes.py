@@ -9,6 +9,7 @@ from app.main import bp
 import folium
 import folium.plugins
 from app.main.forms import SearchForm
+from flask import current_app
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -112,6 +113,16 @@ def book(book_id):
     """ Shows book detailed info """
 
     book = Book.query.filter_by(id=book_id).first_or_404()
+
+    # update (deactivate) expired book_instances
+    check_expired = current_app.config["CHECK_EXPIRED_BOOK_INSTANCES"]
+    expiration_period_days = current_app.config["EXPIRATION_PERIOD_DAYS"]
+    if check_expired:
+        book_instances_ids = db_handlers.get_book_instances_id_by_book_id(
+            book_id)
+        db_handlers.deactivate_if_expired(
+            book_instances_ids, expiration_period_days=expiration_period_days)
+
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
     utils.generate_map_by_book_id([book_id])
     return render_template(

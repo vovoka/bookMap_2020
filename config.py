@@ -10,8 +10,15 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.urandom(32)
 
-    # image upload settings
+    # Image upload settings
     MAX_IMAGE_FILESIZE = 2 * 1024 * 1024 # first multiplier = 1 Mb
     IMAGE_UPLOADS = os.path.join(basedir, 'app/static/covers')
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]
+
+    # Map settings
     DEFAULT_MAP_COORDINADES = (50.4547, 30.520) # Kyiv
+
+
+    # Other
+    CHECK_EXPIRED_BOOK_INSTANCES = True
+    EXPIRATION_PERIOD_DAYS = 30

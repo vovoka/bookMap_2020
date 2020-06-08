@@ -4,7 +4,7 @@ from app.models import User, Book, BookInstance, Message
 from random import random, randint
 from sqlalchemy import or_, and_, desc
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 #  ------------  GENERAL DB ------------------
@@ -205,10 +205,10 @@ def create_book_instance(price, condition, description, owner_id, book_id):
 
 
 def update_book_instance(
-    book_instance_id,
-    price,
-    condition,
-    description):
+        book_instance_id,
+        price,
+        condition,
+        description):
     bi_prev_state = get_book_instance_by_id(book_instance_id)
     if (
             price != bi_prev_state.price or
@@ -293,6 +293,43 @@ def get_book_instances_by_book_id(book_id) -> list:
     return book_instances
 
 
+def get_book_instances_id_by_book_id(book_id) -> tuple:
+    """ Returns list of BookInstance IDs """
+    book_instances_ids = (db.session.query(
+        BookInstance.id)
+        .filter(BookInstance.book_id == book_id)
+        .all())
+    book_instances_ids = tuple(el[0] for el in book_instances_ids)
+    return book_instances_ids
+
+
+def deactivate_if_expired(bi_ids: list, expiration_period_days=30) -> None:
+    """ Update bi's status active -> inactive in DB if expired.
+
+    Obviously, it's better to run the task separately from user's requests.
+    First idea - redis/selery. Hovewer both usually used for postponed
+    operations for example after minute delay after some trigger-action.
+    So we come to cronjobs. It's simpler and easy implemented with APScheduler
+    ...until app factory used.
+    If app_factory is implemented than appeared a problem with app_context
+     (which is needed for db updating). app_context is not shared.
+    See some considerations here https://stackoverflow.com/questions/62171804\
+    /add-a-cron-job-using-apscheduler-in-flask-flask-factory/62249027#62249027
+    """
+
+    # month_ago = now - 30 days
+    expiration_time = datetime.today() - timedelta(days=expiration_period_days)
+    expiration_time_timestamp = datetime.timestamp(expiration_time)
+    (db.session.query(BookInstance)
+     .filter(BookInstance.id.in_(bi_ids))
+     .filter(BookInstance.is_active == True)
+     .filter(BookInstance.activation_time <= expiration_time_timestamp)
+     .update({
+         BookInstance.is_active: False,
+     }, synchronize_session=False))
+    db.session.commit()
+
+
 def activate_book_instance(book_instance_id):
     (db.session.query(BookInstance)
      .filter(BookInstance.id == book_instance_id)
@@ -312,11 +349,12 @@ def deactivate_book_instance(book_instance_id):
 #  ------------ USER ------------------
 
 
-def get_user_by_username(username: str)  -> object:
+def get_user_by_username(username: str) -> object:
     return User.query.filter_by(username=username).first_or_404()
 
 
 #  ------------ MESSAGE ------------------
+
 
 def get_message(message_id) -> object:
     """ Returns Message object """
