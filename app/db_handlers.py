@@ -62,16 +62,36 @@ def clear_db_data(db):
 #  ------------  BOOK ------------------
 
 
-def get_books_by_kw(key_word):
+def get_books_by_kw(key_word) -> list(object):
+    """ Returns list of book instances founded by key_words
+
+    Q: why is the loop?
+    A: to decrease key_words untill something is found.
+    The crutch solves next problem:
+    if request contained part of Author and part of book_title returns None
+    for example 'Hamlet William' --> None
+    It's simple, stupid, yes. Later going to made a search with Elastic
+    Current problem: ' rssr Hamlet William' --> None because 'rssr' still not
+    found. Split key_word to words and use these words combinations looks
+    like a nightmare.
+    """
 
     search = "%{}%".format(key_word)
-    # todo fix request contained part of Author and part of book_title returns None
-    # for example 'Hamlet William' --> None
-    books_by_title = Book.query.filter(Book.title.like(search)).all()
-    if books_by_title == []:
-        books_by_author = Book.query.filter(Book.author.like(search)).all()
-        return books_by_author
-    return books_by_title
+
+    def search_attempt(search):
+        books_by_title = Book.query.filter(Book.title.like(search)).all()
+        if books_by_title == []:
+            books_by_author = Book.query.filter(Book.author.like(search)).all()
+            return books_by_author
+        return books_by_title
+
+    search_result = search_attempt(search)
+
+    while ' ' in search and not search_result:
+        search = search.rsplit(' ', 1)[0]+'%'
+        search_result = search_attempt(search)
+
+    return search_result
 
 
 def create_book(title: str, author: str, isbn=0) -> object:
