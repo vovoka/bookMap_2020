@@ -323,25 +323,13 @@ def get_book_instances_id_by_book_id(book_id) -> tuple:
     return book_instances_ids
 
 
-def deactivate_if_expired(bi_ids: list, expiration_period_days=30) -> None:
-    """ Update bi's status active -> inactive in DB if expired.
-
-    Obviously, it's better to run the task separately from user's requests.
-    First idea - redis/selery. Hovewer both usually used for postponed
-    operations for example after minute delay after some trigger-action.
-    So we come to cronjobs. It's simpler and easy implemented with APScheduler
-    ...until app factory used.
-    If app_factory is implemented than appeared a problem with app_context
-     (which is needed for db updating). app_context is not shared.
-    See some considerations here https://stackoverflow.com/questions/62171804\
-    /add-a-cron-job-using-apscheduler-in-flask-flask-factory/62249027#62249027
-    """
-
+def deactivate_if_expired(expiration_period_days=30) -> None:
+    """ Update all b_instances status active -> inactive in DB if expired """
+    print(f'CALL deactivate_if_expired', flush=True)
     # month_ago = now - 30 days
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
     expiration_time_timestamp = datetime.timestamp(expiration_time)
     (db.session.query(BookInstance)
-     .filter(BookInstance.id.in_(bi_ids))
      .filter(BookInstance.is_active == True)
      .filter(BookInstance.activation_time <= expiration_time_timestamp)
      .update({

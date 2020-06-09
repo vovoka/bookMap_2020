@@ -7,13 +7,25 @@ from werkzeug.urls import url_parse
 from flask import render_template, redirect, url_for, flash, request
 from flask import render_template, flash, redirect, url_for, request, g
 from app import db, db_handlers, utils
-from app.forms import AddBookForm, EditBookInstanceForm, MessageForm, EditProfileForm, SearchForm
+from app.forms import (AddBookForm, EditBookInstanceForm,
+                       MessageForm, EditProfileForm, SearchForm)
 from flask_login import current_user, login_required
 from app.models import User, Book, Message
 from datetime import datetime
 import folium
 import folium.plugins
 from flask import current_app
+
+
+# CRON TASKS
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+# if it called twice each time it might be ok in debug mode:
+# https://stackoverflow.com/questions/14874782/apscheduler-in-flask-executes-twice
+scheduler.start()
+scheduler.add_job(func=db_handlers.deactivate_if_expired,
+                  trigger="interval", days=1)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -117,15 +129,6 @@ def book(book_id):
     """ Shows book detailed info """
 
     book = Book.query.filter_by(id=book_id).first_or_404()
-
-    # update (deactivate) expired book_instances
-    check_expired = current_app.config["CHECK_EXPIRED_BOOK_INSTANCES"]
-    expiration_period_days = current_app.config["EXPIRATION_PERIOD_DAYS"]
-    if check_expired:
-        book_instances_ids = db_handlers.get_book_instances_id_by_book_id(
-            book_id)
-        db_handlers.deactivate_if_expired(
-            book_instances_ids, expiration_period_days=expiration_period_days)
 
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
     utils.generate_map_by_book_id([book_id])
