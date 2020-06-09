@@ -1,19 +1,23 @@
+import os
+from app.models import User
+from app.forms import RegistrationForm, LoginForm, EditProfileForm
+from app import app, db, db_handlers
+from flask_login import login_user, logout_user, current_user
+from werkzeug.urls import url_parse
+from flask import render_template, redirect, url_for, flash, request
 from flask import render_template, flash, redirect, url_for, request, g
 from app import db, db_handlers, utils
-from app.main.forms import AddBookForm, EditBookInstanceForm, MessageForm
-from app.auth.forms import EditProfileForm
+from app.forms import AddBookForm, EditBookInstanceForm, MessageForm, EditProfileForm, SearchForm
 from flask_login import current_user, login_required
 from app.models import User, Book, Message
 from datetime import datetime
-from app.main import bp
 import folium
 import folium.plugins
-from app.main.forms import SearchForm
 from flask import current_app
 
 
-@bp.route('/', methods=['GET', 'POST'])
-@bp.route('/index', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     books = Book.query.all()
     book_instances = db_handlers.get_freshest_book_instances(30)
@@ -27,7 +31,7 @@ def index():
     )
 
 
-@bp.before_app_request
+@app.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
@@ -35,24 +39,24 @@ def before_request():
         g.search_form = SearchForm()
 
 
-@bp.route('/search')
+@app.route('/search')
 @login_required
 def search():
     if not g.search_form.validate():
-        return redirect(url_for('main.explore'))
+        return redirect(url_for('explore'))
     key_word = g.search_form.q.data
     books = db_handlers.get_books_by_kw(key_word)
     books_ids = [b.id for b in books]
     utils.generate_map_by_book_id(list(books_ids))
     if len(books) == 1:
-        return redirect(url_for('main.book', book_id=books_ids[0]))
+        return redirect(url_for('book', book_id=books_ids[0]))
     if len(books) == 0:
         flash('Sorry, we do not know anything about.Hovewer you can add the book, even sell one.')
-        return redirect(url_for('main.add_book'))
+        return redirect(url_for('add_book'))
     return render_template('search.html', title='Search', books=books)
 
 
-@bp.route('/location')
+@app.route('/location')
 def test_index():
     start_coords = (50.4547, 30.524)
     m = folium.Map(width=500, height=500, location=start_coords, zoom_start=12)
@@ -72,27 +76,27 @@ def test_index():
     return render_template('map.html')
 
 
-@bp.route('/location/<book_id>')
+@app.route('/location/<book_id>')
 def book_location(book_id):
     utils.generate_map_by_book_id([book_id])
     return render_template('map.html')
 
 
-@bp.route('/populate_db')
+@app.route('/populate_db')
 def populate_db():
     db_handlers.make_db_data(db)
     flash('Congratulations, db is populated')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('index'))
 
 
-@bp.route('/unpopulate_db')
+@app.route('/unpopulate_db')
 def unpopulate_db():
     db_handlers.clear_db_data(db)
     flash('Congratulations, db is empty now')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('index'))
 
 
-@bp.route('/user/<username>', methods=['GET', 'POST'])
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     user = db_handlers.get_user_by_username(username)
@@ -107,7 +111,7 @@ def user(username):
     )
 
 
-@bp.route('/b/<book_id>')
+@app.route('/b/<book_id>')
 @login_required
 def book(book_id):
     """ Shows book detailed info """
@@ -132,7 +136,7 @@ def book(book_id):
     )
 
 
-@bp.route('/bi/<book_instance_id>', methods=['GET', 'POST'])
+@app.route('/bi/<book_instance_id>', methods=['GET', 'POST'])
 @login_required
 def book_instance(book_instance_id):
     book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
@@ -149,7 +153,7 @@ def book_instance(book_instance_id):
         db.session.add(msg)
         db.session.commit()
         flash('Your message have been sent.')
-        return redirect(url_for('main.messages'))
+        return redirect(url_for('messages'))
     utils.generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
@@ -160,7 +164,7 @@ def book_instance(book_instance_id):
     )
 
 
-@bp.route('/edit_profile', methods=['GET', 'POST'])
+@app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm(current_user.username)
@@ -180,7 +184,7 @@ def edit_profile():
 
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('main.user', username=current_user.username))
+        return redirect(url_for('user', username=current_user.username))
 
     return render_template(
         'edit_profile.html',
@@ -224,7 +228,7 @@ def edit_profile():
 #     return 1
 
 
-@bp.route('/add_book', methods=['GET', 'POST'])
+@app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
     form = AddBookForm()
@@ -237,11 +241,11 @@ def add_book():
             db_handlers.create_book(title, author, isbn)
         book_id = db_handlers.get_book_id(title, author)
         utils.cover_upload(cover, book_id)
-        return redirect(url_for('main.add_book_instance', book_id=book_id))
+        return redirect(url_for('add_book_instance', book_id=book_id))
     return render_template('add_book.html', title='add_book', form=form)
 
 
-@bp.route('/add_book_instance/<book_id>', methods=['GET', 'POST'])
+@app.route('/add_book_instance/<book_id>', methods=['GET', 'POST'])
 @login_required
 def add_book_instance(book_id):
     form = EditBookInstanceForm()
@@ -258,7 +262,7 @@ def add_book_instance(book_id):
             book_id=book_id
         )
         return redirect(url_for(
-            'main.book_instance',
+            'book_instance',
             book_instance_id=book_instance.id)
         )
     book = db_handlers.get_book(book_id)
@@ -272,7 +276,7 @@ def add_book_instance(book_id):
     )
 
 
-@bp.route('/edit_book_instance/<book_instance_id>', methods=['GET', 'POST'])
+@app.route('/edit_book_instance/<book_instance_id>', methods=['GET', 'POST'])
 @login_required
 def edit_book_instance(book_instance_id):
 
@@ -303,7 +307,7 @@ def edit_book_instance(book_instance_id):
             description=description
         )
         return redirect(url_for(
-            'main.book_instance',
+            'book_instance',
             book_instance_id=book_instance_id)
         )
 
@@ -315,7 +319,7 @@ def edit_book_instance(book_instance_id):
     )
 
 
-@bp.route(
+@app.route(
     '/activate_book_instance/<book_instance_id>',
     methods=['GET', 'POST']
 )
@@ -324,12 +328,12 @@ def activate_book_instance(book_instance_id):
     # check the user is a bi owner
     bi = db_handlers.get_book_instance_by_id(book_instance_id)
     if current_user.id != bi.owner_id:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index'))
     db_handlers.activate_book_instance(book_instance_id)
     return redirect(request.referrer)
 
 
-@bp.route(
+@app.route(
     '/deactivate_book_instance/<book_instance_id>',
     methods=['GET', 'POST']
 )
@@ -338,12 +342,12 @@ def deactivate_book_instance(book_instance_id):
     # check the user is a bi owner
     bi = db_handlers.get_book_instance_by_id(book_instance_id)
     if current_user.id != bi.owner_id:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index'))
     db_handlers.deactivate_book_instance(book_instance_id)
     return redirect(request.referrer)
 
 
-@bp.route(
+@app.route(
     '/delete_book_instance/<book_instance_id>',
     methods=['GET', 'POST']
 )
@@ -352,18 +356,18 @@ def delete_book_instance(book_instance_id):
     # check the user is a bi owner
     bi = db_handlers.get_book_instance_by_id(book_instance_id)
     if current_user.id != bi.owner_id:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index'))
     db_handlers.delete_book_instance_by_id(book_instance_id)
     return redirect(request.referrer)
 
 
-@bp.route('/users')
+@app.route('/users')
 def users():
     users = User.query.all()
     return render_template('users.html', title='User list', users=users)
 
 
-@bp.route('/all_msgs')
+@app.route('/all_msgs')
 def all_msgs():
     """ For debug only """
     msgs = Message.query.all()
@@ -376,7 +380,7 @@ def all_msgs():
     )
 
 
-@bp.route(
+@app.route(
     '/send_message/<recipient>/<prev_message_id>',
     methods=['GET', 'POST']
 )
@@ -406,7 +410,7 @@ def send_message(recipient, prev_message_id):
         db.session.add(msg)
         db.session.commit()
         flash('Your message has been sent.')
-        return redirect(url_for('main.messages'))
+        return redirect(url_for('messages'))
     return render_template('send_message.html',
                            title='Send Message',
                            form=form,
@@ -415,7 +419,7 @@ def send_message(recipient, prev_message_id):
                            )
 
 
-@bp.route('/delete_message/<message_id>', methods=['GET', 'POST'])
+@app.route('/delete_message/<message_id>', methods=['GET', 'POST'])
 @login_required
 def delete_message(message_id):
     """ Delete message from visible for current user """
@@ -429,10 +433,10 @@ def delete_message(message_id):
         Message.query.filter_by(id=message_id).delete()
     db.session.commit()
     flash('Your message has been deleted.')
-    return redirect(url_for('main.messages'))
+    return redirect(url_for('messages'))
 
 
-@bp.route('/messages', methods=['GET', 'POST'])
+@app.route('/messages', methods=['GET', 'POST'])
 @login_required
 def messages():
     current_user.last_message_read_time = datetime.utcnow()
@@ -443,3 +447,58 @@ def messages():
         messages=messages,
         form=MessageForm
     )
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('auth/login.html', title='Sign In', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+
+    if form.validate_on_submit():
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            latitude=form.latitude.data,
+            longitude=form.longitude.data
+        )
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect
+
+    start_coords = (50.4547, 30.524)
+    m = folium.Map(width=300, height=300, location=start_coords, zoom_start=12)
+    folium.Marker(
+        location=[50.4547, 30.520],
+        popup='your location',
+        icon=folium.Icon(color='green'),
+        draggable=True
+    ).add_to(m)
+    m.save('app/templates/_map.html')
+    return render_template('register.html', title='Register', form=form)

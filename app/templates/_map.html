@@ -23,30 +23,27 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_5365cc1b41434d1ba3bb1ac701b13cb4 {
+                #map_b2596da219bd4d26a838499446e6a83c {
                     position: relative;
                     width: 100.0%;
-                    height: 500.0px;
+                    height: 200.0px;
                     left: 0.0%;
                     top: 0.0%;
                 }
             </style>
         
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
 </head>
 <body>    
     
-            <div class="folium-map" id="map_5365cc1b41434d1ba3bb1ac701b13cb4" ></div>
+            <div class="folium-map" id="map_b2596da219bd4d26a838499446e6a83c" ></div>
         
 </body>
 <script>    
     
-            var map_5365cc1b41434d1ba3bb1ac701b13cb4 = L.map(
-                "map_5365cc1b41434d1ba3bb1ac701b13cb4",
+            var map_b2596da219bd4d26a838499446e6a83c = L.map(
+                "map_b2596da219bd4d26a838499446e6a83c",
                 {
-                    center: [50.41721921904502, 30.545894172991485],
+                    center: [50.4356949348267, 30.52528523260319],
                     crs: L.CRS.EPSG3857,
                     zoom: 12,
                     zoomControl: true,
@@ -58,473 +55,32 @@
 
         
     
-            var tile_layer_7a4588165997418fa7a16aca9bc1e078 = L.tileLayer(
+            var tile_layer_2edce19ab7f4454e8b312c8560e4ab18 = L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_5365cc1b41434d1ba3bb1ac701b13cb4);
+            ).addTo(map_b2596da219bd4d26a838499446e6a83c);
         
     
-            var marker_cluster_fc1ec914af7249bd9a40cc15638b94f8 = L.markerClusterGroup(
+            var marker_b35542cca74f43c785c48c77f10d8a51 = L.marker(
+                [50.4356949348267, 30.52528523260319],
                 {}
+            ).addTo(map_b2596da219bd4d26a838499446e6a83c);
+        
+    
+            var icon_2be4dee205814cf9a7d907f66def7cb5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
             );
-            map_5365cc1b41434d1ba3bb1ac701b13cb4.addLayer(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
+            marker_b35542cca74f43c785c48c77f10d8a51.setIcon(icon_2be4dee205814cf9a7d907f66def7cb5);
         
     
-            var marker_a3ae803a50d14ddca89ca40d3ead80b3 = L.marker(
-                [50.48045164189213, 30.480598434216976],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_ce6dd54803ce45559828d494194b5efa = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
-        marker_a3ae803a50d14ddca89ca40d3ead80b3.setIcon(custom_icon_ce6dd54803ce45559828d494194b5efa);
-        
-    
-        var popup_947bb5d0f3954c279de65c0ac99748ae = L.popup({"maxWidth": "100%"});
+        var popup_8c3aa65e2d714813ba7362c7fcd79e38 = L.popup({"maxWidth": "100%"});
 
         
-            var html_98499ed6f25f428eaab5c7a528515703 = $(`<div id="html_98499ed6f25f428eaab5c7a528515703" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/1><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>120 uah</div>`)[0];
-            popup_947bb5d0f3954c279de65c0ac99748ae.setContent(html_98499ed6f25f428eaab5c7a528515703);
+            var html_81da4e03b96d4e04962729f9e579d89a = $(`<div id="html_81da4e03b96d4e04962729f9e579d89a" style="width: 100.0%; height: 100.0%;">popup content</div>`)[0];
+            popup_8c3aa65e2d714813ba7362c7fcd79e38.setContent(html_81da4e03b96d4e04962729f9e579d89a);
         
 
-        marker_a3ae803a50d14ddca89ca40d3ead80b3.bindPopup(popup_947bb5d0f3954c279de65c0ac99748ae)
-        ;
-
-        
-    
-    
-            var marker_ef83d5c3e6834ad2b22cf18854834dbf = L.marker(
-                [50.43509428658432, 30.51166837998533],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_bf376b144cb444d188b93a6dd5448e22 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
-        marker_ef83d5c3e6834ad2b22cf18854834dbf.setIcon(custom_icon_bf376b144cb444d188b93a6dd5448e22);
-        
-    
-        var popup_204501827d2146eda5a62d101610bc41 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_aa72cecd5cd94cc1aec3d16380ef0096 = $(`<div id="html_aa72cecd5cd94cc1aec3d16380ef0096" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/7><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>110 uah</div>`)[0];
-            popup_204501827d2146eda5a62d101610bc41.setContent(html_aa72cecd5cd94cc1aec3d16380ef0096);
-        
-
-        marker_ef83d5c3e6834ad2b22cf18854834dbf.bindPopup(popup_204501827d2146eda5a62d101610bc41)
-        ;
-
-        
-    
-    
-            var marker_1887a28df5f24633a36a2526c0999194 = L.marker(
-                [50.458276423196786, 30.521040714275276],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_a43efc529242446dbf4eac0fb65df946 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
-        marker_1887a28df5f24633a36a2526c0999194.setIcon(custom_icon_a43efc529242446dbf4eac0fb65df946);
-        
-    
-        var popup_10912b861cc54bb2a28cc06269fa736b = L.popup({"maxWidth": "100%"});
-
-        
-            var html_e6a8251f4a4847ccbc8bebdf3146c5d5 = $(`<div id="html_e6a8251f4a4847ccbc8bebdf3146c5d5" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/8><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>152 uah</div>`)[0];
-            popup_10912b861cc54bb2a28cc06269fa736b.setContent(html_e6a8251f4a4847ccbc8bebdf3146c5d5);
-        
-
-        marker_1887a28df5f24633a36a2526c0999194.bindPopup(popup_10912b861cc54bb2a28cc06269fa736b)
-        ;
-
-        
-    
-    
-            var marker_8f52073dfdc4460fb843ac4ab1cbdb2a = L.marker(
-                [50.43509428658432, 30.51166837998533],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_5ca0549d12f4459a8ea7131a76a8e197 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
-        marker_8f52073dfdc4460fb843ac4ab1cbdb2a.setIcon(custom_icon_5ca0549d12f4459a8ea7131a76a8e197);
-        
-    
-        var popup_92145ce92d8f41a490476ff0f6f1556b = L.popup({"maxWidth": "100%"});
-
-        
-            var html_54f9d942fa914dd89aa55b5fd2b97959 = $(`<div id="html_54f9d942fa914dd89aa55b5fd2b97959" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/19><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>133 uah</div>`)[0];
-            popup_92145ce92d8f41a490476ff0f6f1556b.setContent(html_54f9d942fa914dd89aa55b5fd2b97959);
-        
-
-        marker_8f52073dfdc4460fb843ac4ab1cbdb2a.bindPopup(popup_92145ce92d8f41a490476ff0f6f1556b)
-        ;
-
-        
-    
-    
-            var marker_5505be9bc31746bf94f7e867ca291374 = L.marker(
-                [50.45227695670093, 30.487853253585232],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_9b24cf5f2586405faca0a720a5d1e0ad = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
-        marker_5505be9bc31746bf94f7e867ca291374.setIcon(custom_icon_9b24cf5f2586405faca0a720a5d1e0ad);
-        
-    
-        var popup_663f7a9639834ef19b20aeea1f721ad0 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_ec0ce8a224c741fa8386754e5602fd1d = $(`<div id="html_ec0ce8a224c741fa8386754e5602fd1d" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/11><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>96 uah</div>`)[0];
-            popup_663f7a9639834ef19b20aeea1f721ad0.setContent(html_ec0ce8a224c741fa8386754e5602fd1d);
-        
-
-        marker_5505be9bc31746bf94f7e867ca291374.bindPopup(popup_663f7a9639834ef19b20aeea1f721ad0)
-        ;
-
-        
-    
-    
-            var marker_2de950123b77468fbbbe81b50c1feeba = L.marker(
-                [50.44085149592688, 30.492503522440618],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_75caa593d1ac446f98f17de3c3d381f5 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
-        marker_2de950123b77468fbbbe81b50c1feeba.setIcon(custom_icon_75caa593d1ac446f98f17de3c3d381f5);
-        
-    
-        var popup_4b277fc69e984c669e3b8a85fe0b2996 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_89146b164279494ca867a8269d584b96 = $(`<div id="html_89146b164279494ca867a8269d584b96" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/17><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>153 uah</div>`)[0];
-            popup_4b277fc69e984c669e3b8a85fe0b2996.setContent(html_89146b164279494ca867a8269d584b96);
-        
-
-        marker_2de950123b77468fbbbe81b50c1feeba.bindPopup(popup_4b277fc69e984c669e3b8a85fe0b2996)
-        ;
-
-        
-    
-    
-            var marker_f54c29c7cd60464283209132566c71cb = L.marker(
-                [50.458276423196786, 30.521040714275276],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_2c1183746db847eabe7bbcb5bf7e4336 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
-        marker_f54c29c7cd60464283209132566c71cb.setIcon(custom_icon_2c1183746db847eabe7bbcb5bf7e4336);
-        
-    
-        var popup_36602f6ba6dc4895b2609fea18feb9ba = L.popup({"maxWidth": "100%"});
-
-        
-            var html_a6df4ed1e95249d789a5475fa86008a5 = $(`<div id="html_a6df4ed1e95249d789a5475fa86008a5" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/23><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>39 uah</div>`)[0];
-            popup_36602f6ba6dc4895b2609fea18feb9ba.setContent(html_a6df4ed1e95249d789a5475fa86008a5);
-        
-
-        marker_f54c29c7cd60464283209132566c71cb.bindPopup(popup_36602f6ba6dc4895b2609fea18feb9ba)
-        ;
-
-        
-    
-    
-            var marker_b55c4960f986494db0a47dcbe2ffd14e = L.marker(
-                [50.458276423196786, 30.521040714275276],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_384e8fabdfff485aa5067b9ebe0eeb50 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/7.jpg"});
-        marker_b55c4960f986494db0a47dcbe2ffd14e.setIcon(custom_icon_384e8fabdfff485aa5067b9ebe0eeb50);
-        
-    
-        var popup_67e3e33f09ad4c969293b18937626933 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_69c923374d0046e0be999354a0df17d4 = $(`<div id="html_69c923374d0046e0be999354a0df17d4" style="width: 100.0%; height: 100.0%;">War and Peace</br><a href=http://127.0.0.1:5000/bi/5><img src="/static/covers/7.jpg" width="50" height="70" ></a></br>122 uah</div>`)[0];
-            popup_67e3e33f09ad4c969293b18937626933.setContent(html_69c923374d0046e0be999354a0df17d4);
-        
-
-        marker_b55c4960f986494db0a47dcbe2ffd14e.bindPopup(popup_67e3e33f09ad4c969293b18937626933)
-        ;
-
-        
-    
-    
-            var marker_4a028e6afbdc4bc6b5d3470b00482f59 = L.marker(
-                [50.431874526865585, 30.4925014262005],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_17b789b32a974b6680fd9544e179997b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/7.jpg"});
-        marker_4a028e6afbdc4bc6b5d3470b00482f59.setIcon(custom_icon_17b789b32a974b6680fd9544e179997b);
-        
-    
-        var popup_b002fd4b757146889b129bff17495d0a = L.popup({"maxWidth": "100%"});
-
-        
-            var html_ea069fc0b8444d9582bb7d610b0e5da4 = $(`<div id="html_ea069fc0b8444d9582bb7d610b0e5da4" style="width: 100.0%; height: 100.0%;">War and Peace</br><a href=http://127.0.0.1:5000/bi/22><img src="/static/covers/7.jpg" width="50" height="70" ></a></br>132 uah</div>`)[0];
-            popup_b002fd4b757146889b129bff17495d0a.setContent(html_ea069fc0b8444d9582bb7d610b0e5da4);
-        
-
-        marker_4a028e6afbdc4bc6b5d3470b00482f59.bindPopup(popup_b002fd4b757146889b129bff17495d0a)
-        ;
-
-        
-    
-    
-            var marker_543d8c45670b461c8482f2d345303c79 = L.marker(
-                [50.45227695670093, 30.487853253585232],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_bc2df6f4d830417d9fedc7eea6a3ffad = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
-        marker_543d8c45670b461c8482f2d345303c79.setIcon(custom_icon_bc2df6f4d830417d9fedc7eea6a3ffad);
-        
-    
-        var popup_5eb33098d6bd4db9a25ae84bb12192f8 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_3480e0f4aa37486ca625cad6c7b2c929 = $(`<div id="html_3480e0f4aa37486ca625cad6c7b2c929" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/16><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>150 uah</div>`)[0];
-            popup_5eb33098d6bd4db9a25ae84bb12192f8.setContent(html_3480e0f4aa37486ca625cad6c7b2c929);
-        
-
-        marker_543d8c45670b461c8482f2d345303c79.bindPopup(popup_5eb33098d6bd4db9a25ae84bb12192f8)
-        ;
-
-        
-    
-    
-            var marker_3aa90f5314d141afb92e4b43980bb67a = L.marker(
-                [50.41721921904502, 30.545894172991485],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_8a3194ba9df84d1b8428ec1bc2f7697b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/11.jpg"});
-        marker_3aa90f5314d141afb92e4b43980bb67a.setIcon(custom_icon_8a3194ba9df84d1b8428ec1bc2f7697b);
-        
-    
-        var popup_8094cb06c5d64776b6da613e82bebc9c = L.popup({"maxWidth": "100%"});
-
-        
-            var html_f6a3b9bbc1f44175a9e577b6c1f470d2 = $(`<div id="html_f6a3b9bbc1f44175a9e577b6c1f470d2" style="width: 100.0%; height: 100.0%;">The Odyssey</br><a href=http://127.0.0.1:5000/bi/13><img src="/static/covers/11.jpg" width="50" height="70" ></a></br>163 uah</div>`)[0];
-            popup_8094cb06c5d64776b6da613e82bebc9c.setContent(html_f6a3b9bbc1f44175a9e577b6c1f470d2);
-        
-
-        marker_3aa90f5314d141afb92e4b43980bb67a.bindPopup(popup_8094cb06c5d64776b6da613e82bebc9c)
-        ;
-
-        
-    
-    
-            var marker_7394a3b67beb4136915fc8a542a15286 = L.marker(
-                [50.49455187489776, 30.499570992706893],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_32396ea1f4044559a7e4d5baef95684f = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/11.jpg"});
-        marker_7394a3b67beb4136915fc8a542a15286.setIcon(custom_icon_32396ea1f4044559a7e4d5baef95684f);
-        
-    
-        var popup_168e3163835b47afabac80d86197965b = L.popup({"maxWidth": "100%"});
-
-        
-            var html_20919a721c1746a99b67d936ae890785 = $(`<div id="html_20919a721c1746a99b67d936ae890785" style="width: 100.0%; height: 100.0%;">The Odyssey</br><a href=http://127.0.0.1:5000/bi/14><img src="/static/covers/11.jpg" width="50" height="70" ></a></br>132 uah</div>`)[0];
-            popup_168e3163835b47afabac80d86197965b.setContent(html_20919a721c1746a99b67d936ae890785);
-        
-
-        marker_7394a3b67beb4136915fc8a542a15286.bindPopup(popup_168e3163835b47afabac80d86197965b)
-        ;
-
-        
-    
-    
-            var marker_a35bb930007e45fb9668e028264b9a2e = L.marker(
-                [50.43509428658432, 30.51166837998533],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_f4a6a68bfda145e0b3daf084fd84b6fd = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/11.jpg"});
-        marker_a35bb930007e45fb9668e028264b9a2e.setIcon(custom_icon_f4a6a68bfda145e0b3daf084fd84b6fd);
-        
-    
-        var popup_ff35e9af4af8455289c6f3fe5cc2cdf6 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_efb90513d2e44abf9c60072daecf83b7 = $(`<div id="html_efb90513d2e44abf9c60072daecf83b7" style="width: 100.0%; height: 100.0%;">The Odyssey</br><a href=http://127.0.0.1:5000/bi/18><img src="/static/covers/11.jpg" width="50" height="70" ></a></br>81 uah</div>`)[0];
-            popup_ff35e9af4af8455289c6f3fe5cc2cdf6.setContent(html_efb90513d2e44abf9c60072daecf83b7);
-        
-
-        marker_a35bb930007e45fb9668e028264b9a2e.bindPopup(popup_ff35e9af4af8455289c6f3fe5cc2cdf6)
-        ;
-
-        
-    
-    
-            var marker_ea064d74ffeb477d98fd4b34408c0e9b = L.marker(
-                [50.458276423196786, 30.521040714275276],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_d6386de6d9184327960d4d4c8807d72f = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/11.jpg"});
-        marker_ea064d74ffeb477d98fd4b34408c0e9b.setIcon(custom_icon_d6386de6d9184327960d4d4c8807d72f);
-        
-    
-        var popup_0ac6b2a96c4549aa9c46d5117ca3c3de = L.popup({"maxWidth": "100%"});
-
-        
-            var html_929c81c59b214b1ebd9950317ab62c36 = $(`<div id="html_929c81c59b214b1ebd9950317ab62c36" style="width: 100.0%; height: 100.0%;">The Odyssey</br><a href=http://127.0.0.1:5000/bi/24><img src="/static/covers/11.jpg" width="50" height="70" ></a></br>107 uah</div>`)[0];
-            popup_0ac6b2a96c4549aa9c46d5117ca3c3de.setContent(html_929c81c59b214b1ebd9950317ab62c36);
-        
-
-        marker_ea064d74ffeb477d98fd4b34408c0e9b.bindPopup(popup_0ac6b2a96c4549aa9c46d5117ca3c3de)
-        ;
-
-        
-    
-    
-            var marker_bee7fcb52efe473484fea10d4f5cbab8 = L.marker(
-                [50.45227695670093, 30.487853253585232],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_3059246a18b74bea98a8f41079096055 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
-        marker_bee7fcb52efe473484fea10d4f5cbab8.setIcon(custom_icon_3059246a18b74bea98a8f41079096055);
-        
-    
-        var popup_26ba4231ae984591a9c5a651e8535b63 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_3779a2b854ef476f839ca0566fdd0766 = $(`<div id="html_3779a2b854ef476f839ca0566fdd0766" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/6><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>169 uah</div>`)[0];
-            popup_26ba4231ae984591a9c5a651e8535b63.setContent(html_3779a2b854ef476f839ca0566fdd0766);
-        
-
-        marker_bee7fcb52efe473484fea10d4f5cbab8.bindPopup(popup_26ba4231ae984591a9c5a651e8535b63)
-        ;
-
-        
-    
-    
-            var marker_bbb0d9c96e324813b76a54198354d883 = L.marker(
-                [50.41721921904502, 30.545894172991485],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_2a3c23af46324c578311f1812c8df5dd = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
-        marker_bbb0d9c96e324813b76a54198354d883.setIcon(custom_icon_2a3c23af46324c578311f1812c8df5dd);
-        
-    
-        var popup_a81f498034fb4344a14a14e82a33c275 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_989840a628404b7fa9c549ad8482406d = $(`<div id="html_989840a628404b7fa9c549ad8482406d" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/20><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>8 uah</div>`)[0];
-            popup_a81f498034fb4344a14a14e82a33c275.setContent(html_989840a628404b7fa9c549ad8482406d);
-        
-
-        marker_bbb0d9c96e324813b76a54198354d883.bindPopup(popup_a81f498034fb4344a14a14e82a33c275)
-        ;
-
-        
-    
-    
-            var marker_e3ee4f8f1452453583c94a244df94974 = L.marker(
-                [50.49455187489776, 30.499570992706893],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_e74c5d78ec5549dfb4dc0efd905c18fa = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
-        marker_e3ee4f8f1452453583c94a244df94974.setIcon(custom_icon_e74c5d78ec5549dfb4dc0efd905c18fa);
-        
-    
-        var popup_ebed51430c68456e9ab0b9edc05d616a = L.popup({"maxWidth": "100%"});
-
-        
-            var html_563638103f1240d3bf0f20ca20a2e809 = $(`<div id="html_563638103f1240d3bf0f20ca20a2e809" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/21><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>141 uah</div>`)[0];
-            popup_ebed51430c68456e9ab0b9edc05d616a.setContent(html_563638103f1240d3bf0f20ca20a2e809);
-        
-
-        marker_e3ee4f8f1452453583c94a244df94974.bindPopup(popup_ebed51430c68456e9ab0b9edc05d616a)
-        ;
-
-        
-    
-    
-            var marker_50b50c6cf898402c9db41e205aca72ba = L.marker(
-                [50.45227695670093, 30.487853253585232],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_a93b575165504967bc4b5eaec24fa0b7 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
-        marker_50b50c6cf898402c9db41e205aca72ba.setIcon(custom_icon_a93b575165504967bc4b5eaec24fa0b7);
-        
-    
-        var popup_8a761a3182024c67b00a089732ae3fb5 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_34ae5d3058c94b66b69aa1669c1fb824 = $(`<div id="html_34ae5d3058c94b66b69aa1669c1fb824" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/9><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>64 uah</div>`)[0];
-            popup_8a761a3182024c67b00a089732ae3fb5.setContent(html_34ae5d3058c94b66b69aa1669c1fb824);
-        
-
-        marker_50b50c6cf898402c9db41e205aca72ba.bindPopup(popup_8a761a3182024c67b00a089732ae3fb5)
-        ;
-
-        
-    
-    
-            var marker_adefdc9f87d5411a8096d16404a7e3ef = L.marker(
-                [50.48045164189213, 30.480598434216976],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_ac2cccc1ef5a431f8f542be75e6c00dc = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
-        marker_adefdc9f87d5411a8096d16404a7e3ef.setIcon(custom_icon_ac2cccc1ef5a431f8f542be75e6c00dc);
-        
-    
-        var popup_6b98a5c5bb294e8ba26c760eda6526fe = L.popup({"maxWidth": "100%"});
-
-        
-            var html_ccd5f5bd0cdc4d2b877642f60e1ea620 = $(`<div id="html_ccd5f5bd0cdc4d2b877642f60e1ea620" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/10><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>72 uah</div>`)[0];
-            popup_6b98a5c5bb294e8ba26c760eda6526fe.setContent(html_ccd5f5bd0cdc4d2b877642f60e1ea620);
-        
-
-        marker_adefdc9f87d5411a8096d16404a7e3ef.bindPopup(popup_6b98a5c5bb294e8ba26c760eda6526fe)
-        ;
-
-        
-    
-    
-            var marker_3dde9b42679b497bb6dacb27f44a3834 = L.marker(
-                [50.458276423196786, 30.521040714275276],
-                {}
-            ).addTo(marker_cluster_fc1ec914af7249bd9a40cc15638b94f8);
-        
-    
-        var custom_icon_595c30d35b0b498cb42e1e36ed9d7553 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
-        marker_3dde9b42679b497bb6dacb27f44a3834.setIcon(custom_icon_595c30d35b0b498cb42e1e36ed9d7553);
-        
-    
-        var popup_2d64c5ab50064ac18047620e588cd633 = L.popup({"maxWidth": "100%"});
-
-        
-            var html_c4a1313c85494415a6fcb0ec8d482e60 = $(`<div id="html_c4a1313c85494415a6fcb0ec8d482e60" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/25><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>137 uah</div>`)[0];
-            popup_2d64c5ab50064ac18047620e588cd633.setContent(html_c4a1313c85494415a6fcb0ec8d482e60);
-        
-
-        marker_3dde9b42679b497bb6dacb27f44a3834.bindPopup(popup_2d64c5ab50064ac18047620e588cd633)
+        marker_b35542cca74f43c785c48c77f10d8a51.bindPopup(popup_8c3aa65e2d714813ba7362c7fcd79e38)
         ;
 
         

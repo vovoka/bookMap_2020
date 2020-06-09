@@ -1,9 +1,9 @@
 
 from hashlib import md5
 from datetime import datetime
-from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from app import app, db, login
 
 
 class User(UserMixin, db.Model):
@@ -24,7 +24,8 @@ class User(UserMixin, db.Model):
     messages_received = db.relationship('Message',
                                         foreign_keys='Message.recipient_id',
                                         backref='recipient', lazy='dynamic')
-    last_message_read_time = db.Column(db.DateTime, default=datetime(1900, 1, 1))
+    last_message_read_time = db.Column(
+        db.DateTime, default=datetime(1900, 1, 1))
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()

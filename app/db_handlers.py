@@ -62,7 +62,7 @@ def clear_db_data(db):
 #  ------------  BOOK ------------------
 
 
-def get_books_by_kw(key_word) -> list(object):
+def get_books_by_kw(key_word) -> list():
     """ Returns list of book instances founded by key_words
 
     Q: why is the loop?

@@ -1,4 +1,4 @@
-<tr onclick='location.href="{{ url_for('main.book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+<tr onclick='location.href="{{ url_for('book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
     <td>{{ book_instance.price }}</td>
-    <td><a href={{ url_for('main.user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
+    <td><a href={{ url_for('user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
 </tr>
