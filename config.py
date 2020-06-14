@@ -1,9 +1,13 @@
 import os
+from dotenv import load_dotenv
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-
 class Config(object):
+
+    # Load secrets from dotenv
+    dotenv_path = os.path.join(basedir, '.env')
+    load_dotenv(dotenv_path)
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -18,7 +22,10 @@ class Config(object):
     # Map settings
     DEFAULT_MAP_COORDINADES = (50.4547, 30.520) # Kyiv
 
-
     # Other
     CHECK_EXPIRED_BOOK_INSTANCES = True
     EXPIRATION_PERIOD_DAYS = 30
+
+    # Google OAUth2 credentials
+    GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
+    GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)

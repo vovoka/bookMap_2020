@@ -24,7 +24,6 @@ def make_db_data(db):
             longitude=longitude + (random() - 0.5)/10,
             about_me='No info about the user yet.'
         )
-        user.set_password(i*3)
         db.session.add(user)
     db.session.commit()
 
@@ -62,7 +61,7 @@ def clear_db_data(db):
 #  ------------  BOOK ------------------
 
 
-def get_books_by_kw(key_word) -> list(object):
+def get_books_by_kw(key_word) -> list():
     """ Returns list of book instances founded by key_words
 
     Q: why is the loop?
@@ -246,7 +245,7 @@ def update_book_instance(
         db.session.commit()
 
 
-def delete_book_instance_by_id(book_instance_id: str) -> None:
+def delete_book_instance(book_instance_id: str) -> None:
     bi = get_book_instance_by_id(book_instance_id)
     decr_instance_counter(bi.book_id)
     BookInstance.query.filter_by(id=book_instance_id).delete()
@@ -323,25 +322,13 @@ def get_book_instances_id_by_book_id(book_id) -> tuple:
     return book_instances_ids
 
 
-def deactivate_if_expired(bi_ids: list, expiration_period_days=30) -> None:
-    """ Update bi's status active -> inactive in DB if expired.
-
-    Obviously, it's better to run the task separately from user's requests.
-    First idea - redis/selery. Hovewer both usually used for postponed
-    operations for example after minute delay after some trigger-action.
-    So we come to cronjobs. It's simpler and easy implemented with APScheduler
-    ...until app factory used.
-    If app_factory is implemented than appeared a problem with app_context
-     (which is needed for db updating). app_context is not shared.
-    See some considerations here https://stackoverflow.com/questions/62171804\
-    /add-a-cron-job-using-apscheduler-in-flask-flask-factory/62249027#62249027
-    """
-
+def deactivate_if_expired(expiration_period_days=30) -> None:
+    """ Update all b_instances status active -> inactive in DB if expired """
+    print(f'CALL deactivate_if_expired', flush=True)
     # month_ago = now - 30 days
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
     expiration_time_timestamp = datetime.timestamp(expiration_time)
     (db.session.query(BookInstance)
-     .filter(BookInstance.id.in_(bi_ids))
      .filter(BookInstance.is_active == True)
      .filter(BookInstance.activation_time <= expiration_time_timestamp)
      .update({
@@ -372,6 +359,30 @@ def deactivate_book_instance(book_instance_id):
 def get_user_by_username(username: str) -> object:
     return User.query.filter_by(username=username).first_or_404()
 
+
+def create_user(username: str, email:str, avatar:str, latitude=50.4547,
+        longitude=30.520) -> object:
+    ''' create new user '''
+
+    user = User(
+        username=username,
+        email=email,
+        avatar=avatar,
+        latitude=latitude,
+        longitude=longitude,
+        about_me='I will tell you a bit letter',
+        is_active = True
+    )
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
+def delete_user(user_id):
+    User.query.filter_by(id=user_id).delete()
+    # TODO cascade delete all users book_instances???
+    # Check if it generate any errors related to messages (no recepient for exmpl)
+    db.session.commit()
 
 #  ------------ MESSAGE ------------------
 

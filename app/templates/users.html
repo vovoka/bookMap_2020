@@ -9,20 +9,23 @@
         </tr>
         {% for user in users %}
         <tr>
+
             <td>
-                <img src="{{ user.avatar(48) }}">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar }}">
+                {% else %}
+                    <img src="/static/avatar/default_avatar.png" >
+                {% endif %}
             </td>
             <td>
                 <b>User name: {{ user.username }}</b></br>
                 User email: {{ user.email }}</br>
                 {% if user.last_seen %}
                     <p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>
-                {% endif %}</br>
-                latitude: {{ user.latitude }}</br>
-                longitude: {{ user.longitude }}
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
     </table>
-    
+
 {% endblock %}
