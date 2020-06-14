@@ -9,10 +9,12 @@ from flask_moment import Moment
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-
+from authlib.integrations.flask_client import OAuth
 from config import Config
 
+
 app = Flask(__name__)
+app.secret_key = '!secret'
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)

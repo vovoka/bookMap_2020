@@ -3,23 +3,21 @@ Pet project for learning purposes.
 
 initial setup:
 * copy the repository
-* create `venv` with `python3 -m venv venv && source venv/bin/activate`
+* create virtual environment`venv` with `python3 -m venv venv && source venv/bin/activate`
+* create file `.env` file with secrets values (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET) like `export GOOGLE_CLIENT_ID = "102561523463-...r5ohi8ej22307.apps.googleusercontent.com" ...` to enable google OAuth.
 * install modules `pip install --upgrade pip && pip install -r requrements.txt`
-* initialise db `flask db init && flask db migrate -m "initial tables" && flask db upgrade`. This step might be skipped. However some errors might be generated during next step then.
-* visit `http://127.0.0.1:5000/populate_db` to populate db with a sample data
-It generated user name/logins are like `ddd/ddd`, `hhh/hhh`, `kkk/kkk`
-* optional, for DEV purposes: export `FLASK_DEBUG=1`
+* initialise db (if you want to use db migrations later) `flask db init && flask db migrate -m "initial tables" && flask db upgrade` or visit `http://127.0.0.1:5000/populate_db` to create all tables and populate them with a sample data. It generates test-users with names like `ddd`, `hhh`, `kkk` with some test-books and book-instances.
 * run the app with `flask run`
-* visit `http://127.0.0.1:5000/unpopulate_db` to clean un the db
 
 here is a lot of bugs, I know ;)
 
 
-###### TODO (unsorted):
+###### TODO (unsorted ideas):
 * Add routines (Celery/rabbitMQ?) for automatic book instances deactivation by expiration datetime.
-* Google auth
 * email notifications
-* image resizer / cropper(?)
 * Docker
-* try to switch to GraphQL
+* Resize upload pictures / crop image funcion(?)
+* get user location by ip to center map (permissions?)
+* image resizer / cropper(?)
+* try to switch to GraphQL (what for?)
 * Add a service to visit goodreads and parse an info of searched book.

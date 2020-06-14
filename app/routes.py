@@ -1,27 +1,38 @@
 import os
 from app.models import User
 from app.forms import RegistrationForm, LoginForm, EditProfileForm
-from app import app, db, db_handlers
-from flask_login import login_user, logout_user, current_user
+from app import app, db, db_handlers, utils
+from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from flask import render_template, redirect, url_for, flash, request
-from flask import render_template, flash, redirect, url_for, request, g
-from app import db, db_handlers, utils
+from flask import render_template, redirect, flash, request, g
 from app.forms import (AddBookForm, EditBookInstanceForm,
                        MessageForm, EditProfileForm, SearchForm)
-from flask_login import current_user, login_required
 from app.models import User, Book, Message
 from datetime import datetime
 import folium
 import folium.plugins
 from flask import current_app
-
-
-# CRON TASKS
+from authlib.integrations.flask_client import OAuth
+from flask import Flask, session, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
 
+
+# oauth configuration
+CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
+oauth = OAuth(app)
+oauth.register(
+    name='google',
+    server_metadata_url=CONF_URL,
+    client_kwargs={
+        'scope': 'openid email profile'
+    }
+)
+
+
+# Cron tasks
+#? replace it to __init__ ?
 scheduler = BackgroundScheduler()
-# if it called twice each time it might be ok in debug mode:
+# If it called twice each time it might be ok in debug mode:
 # https://stackoverflow.com/questions/14874782/apscheduler-in-flask-executes-twice
 scheduler.start()
 scheduler.add_job(func=db_handlers.deactivate_if_expired,
@@ -39,7 +50,7 @@ def index():
         'index.html',
         title='Home',
         books=books,
-        book_instances=book_instances
+        book_instances=book_instances,
     )
 
 
@@ -356,11 +367,10 @@ def deactivate_book_instance(book_instance_id):
 )
 @login_required
 def delete_book_instance(book_instance_id):
-    # check the user is a bi owner
     bi = db_handlers.get_book_instance_by_id(book_instance_id)
     if current_user.id != bi.owner_id:
         return redirect(url_for('index'))
-    db_handlers.delete_book_instance_by_id(book_instance_id)
+    db_handlers.delete_book_instance(book_instance_id)
     return redirect(request.referrer)
 
 
@@ -452,23 +462,34 @@ def messages():
     )
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-        return redirect(next_page)
-    return render_template('auth/login.html', title='Sign In', form=form)
+    redirect_uri = url_for('auth', _external=True)
+    return oauth.google.authorize_redirect(redirect_uri)
 
+
+@app.route('/auth')
+def auth():
+    token = oauth.google.authorize_access_token()
+    user = oauth.google.parse_id_token(token)
+
+    user_from_db = User.query.filter_by(email=user.get('email')).first()
+
+    if user_from_db:
+        login_user(user_from_db)
+        # TODO redirect to previous page
+        return redirect(url_for('index'))
+    else:
+        user_from_db = db_handlers.create_user(
+            username=user.get('name'),
+            email=user.get('email'),
+            avatar=user.get('picture')
+        )
+        login_user(user_from_db)
+        flash('Please, made an initial set up of your profile:')
+        flash('    * Edit your location. (you can set any point you want, i.e. your home, busstop or metro station convenient for you to meet buyers)')
+        flash('    * Add alternative contact info, if you want (mobile/telegram... etc.)')
+        return redirect('/edit_profile')
 
 @app.route('/logout')
 def logout():
@@ -495,10 +516,10 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect
 
-    start_coords = (50.4547, 30.524)
+    start_coords = current_app.config["DEFAULT_MAP_COORDINADES"]
     m = folium.Map(width=300, height=300, location=start_coords, zoom_start=12)
     folium.Marker(
-        location=[50.4547, 30.520],
+        location=start_coords,
         popup='your location',
         icon=folium.Icon(color='green'),
         draggable=True
