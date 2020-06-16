@@ -13,11 +13,10 @@ here is a lot of bugs, I know ;)
 
 
 ###### TODO (unsorted ideas):
-* Add routines (Celery/rabbitMQ?) for automatic book instances deactivation by expiration datetime.
 * email notifications
 * Docker
-* Resize upload pictures / crop image funcion(?)
 * get user location by ip to center map (permissions?)
 * image resizer / cropper(?)
 * try to switch to GraphQL (what for?)
 * Add a service to visit goodreads and parse an info of searched book.
+* Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)

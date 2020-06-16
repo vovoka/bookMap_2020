@@ -15,6 +15,7 @@ from flask import current_app
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, session, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
+from app.thumbs import thumbnail
 
 
 # oauth configuration
@@ -221,25 +222,6 @@ def edit_profile():
 #     ext = filename.rsplit(".", 1)[1]
 #     return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
 
-# def cover_upload(request, book_id) -> int:
-#     """ Add book image to db """
-#     if request.method == "POST" and request.files:
-#         if "filesize" in request.cookies:
-#             if not image_has_allowed_filesize(request.cookies["filesize"]):
-#                 flash("Filesize exceeded maximum limit")
-#                 return 1
-#             image = request.files["cover"]
-#             if not image_has_allowed_extetion(image.filename):
-#                 flash("No book cover file or file extension is not allowed")
-#                 return 1
-#             filename = str(book_id) + '.jpg'
-#             image.save(os.path.join(
-#                 current_app.config["IMAGE_UPLOADS"], filename))
-#             flash('Congratulations, book cover added')
-#         else:
-#             flash("No filesize in cookie")
-#         return 0
-#     return 1
 
 
 @app.route('/add_book', methods=['GET', 'POST'])
@@ -253,8 +235,23 @@ def add_book():
         cover = form.cover.data
         if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
             db_handlers.create_book(title, author, isbn)
+        # TODO  get book_id with isbn firstly.
+        # If no result - try with author+title
         book_id = db_handlers.get_book_id(title, author)
         utils.cover_upload(cover, book_id)
+
+        # Replace saved file with smaller one:
+        #   generate full filepath to the recently downloaded file
+        #   resize file with thumbnail()
+        #   upload new file (replace old one)
+        filepath = os.path.join(
+            current_app.config["IMAGE_UPLOADS"],
+            str(book_id)+ '.jpg')
+        cover = thumbnail(
+            filepath,
+            current_app.config["IMAGE_TARGET_SIZE"])
+        utils.cover_upload(cover, book_id)
+
         return redirect(url_for('add_book_instance', book_id=book_id))
     return render_template('add_book.html', title='add_book', form=form)
 

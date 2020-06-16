@@ -4,6 +4,7 @@ import folium
 import folium.plugins
 from flask_login import current_user
 from app.models import User, Book
+from app.thumbs import thumbnail
 import sys
 
 
@@ -25,7 +26,7 @@ def cover_upload(cover, book_id) -> int:
         try:
             cover.save(
                 os.path.join(current_app.config["IMAGE_UPLOADS"], filename)
-                )
+            )
         except FileExistsError:
             return 1
     return 0
@@ -34,8 +35,8 @@ def cover_upload(cover, book_id) -> int:
 def generate_map_single_marker(
     height=200,
     zoom_start=12,
-    popup='popup content'
-):
+    popup='popup content'):
+
     m = folium.Map(
         height=height,
         location=(current_user.latitude, current_user.longitude),
@@ -52,9 +53,9 @@ def generate_map_single_marker(
 def generate_map_by_book_id(book_ids: list):
     """ Show all active book instances locations """
 
-    location= current_app.config["DEFAULT_MAP_COORDINADES"]
+    location = current_app.config["DEFAULT_MAP_COORDINADES"]
     if not current_user.is_anonymous:
-        location=(current_user.latitude, current_user.longitude)
+        location = (current_user.latitude, current_user.longitude)
 
     m = folium.Map(
         height=500,

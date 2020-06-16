@@ -17,6 +17,7 @@ class Config(object):
     # Image upload settings
     MAX_IMAGE_FILESIZE = 2 * 1024 * 1024 # first multiplier = 1 Mb
     IMAGE_UPLOADS = os.path.join(basedir, 'app/static/covers')
+    IMAGE_TARGET_SIZE = '110x160' # i.e. width = 100 px, height = 160 px
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]
 
     # Map settings
