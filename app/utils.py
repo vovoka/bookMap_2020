@@ -6,7 +6,8 @@ from flask_login import current_user
 from app.models import User, Book
 from app.thumbs import thumbnail
 import sys
-
+import ipapi
+ipapi.location(ip=None, key=None, field=None)
 
 def get_num(x: str) -> int:
     """ Extracts all digits from incomig string """
@@ -104,3 +105,24 @@ def generate_map_by_book_id(book_ids: list):
                     popup=popup
                 ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
+
+
+def get_coordinates_by_ip(visitor_ip:str) -> tuple:
+    '''
+    Returns longitude, latitude by ip.
+
+    Uses external service https://ipapi.co/ with no api_key.
+    Consider https://ipapi.com as alternative.
+    '''
+    ipapi_resp = ipapi.location(
+        ip=visitor_ip)
+    print(f'localhost ipapi_resp = {ipapi_resp}', flush=True)
+
+    #for DBG!
+    if visitor_ip == '127.0.0.1':
+        ipapi_resp = {u'city': u'Wilton', u'ip': u'50.1.2.3', u'region': u'California', u'longitude': -121.2429, u'country': u'US', u'latitude': 38.3926, u'timezone': u'America/Los_Angeles', u'postal': u'95693'}
+
+    longitude = ipapi_resp.get('longitude')
+    latitude = ipapi_resp.get('latitude')
+    print(f'returned ipapi_resp = {longitude}   {latitude}', flush=True)
+    return longitude, latitude

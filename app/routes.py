@@ -1,19 +1,17 @@
 import os
-from app.models import User
 from app.forms import RegistrationForm, LoginForm, EditProfileForm
 from app import app, db, db_handlers, utils
 from flask_login import login_user, logout_user, current_user, login_required
-from werkzeug.urls import url_parse
-from flask import render_template, redirect, flash, request, g
+# from werkzeug.urls import url_parse
+from flask import (Flask, session, url_for, current_app, render_template,
+                   redirect, flash, request, g)
 from app.forms import (AddBookForm, EditBookInstanceForm,
                        MessageForm, EditProfileForm, SearchForm)
 from app.models import User, Book, Message
 from datetime import datetime
 import folium
 import folium.plugins
-from flask import current_app
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, session, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.thumbs import thumbnail
 
@@ -31,7 +29,7 @@ oauth.register(
 
 
 # Cron tasks
-#? replace it to __init__ ?
+# ? TODO replace it to __init__ ?
 scheduler = BackgroundScheduler()
 # If it called twice each time it might be ok in debug mode:
 # https://stackoverflow.com/questions/14874782/apscheduler-in-flask-executes-twice
@@ -131,7 +129,7 @@ def user(username):
         'user.html',
         user=user,
         book_instances=book_instances,
-        total_instances=len(book_instances)
+        total_instances=len(book_instances),
     )
 
 
@@ -147,7 +145,7 @@ def book(book_id):
     return render_template(
         'book_page.html',
         book=book,
-        book_instances=book_instances
+        book_instances=book_instances,
     )
 
 
@@ -163,7 +161,7 @@ def book_instance(book_instance_id):
             book_instance_id=book_instance_id,
             sender_id=current_user.id,
             recipient_id=book_instance.owner_id,
-            body=form.message.data
+            body=form.message.data,
         )
         db.session.add(msg)
         db.session.commit()
@@ -175,7 +173,7 @@ def book_instance(book_instance_id):
         bi=book_instance,
         book_instance=book_instance,
         editable=editable,
-        form=form
+        form=form,
     )
 
 
@@ -204,7 +202,7 @@ def edit_profile():
     return render_template(
         'edit_profile.html',
         title='Edit Profile',
-        form=form
+        form=form,
     )
 
 # TODO to check file size wo request?
@@ -221,7 +219,6 @@ def edit_profile():
 #         return False
 #     ext = filename.rsplit(".", 1)[1]
 #     return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
-
 
 
 @app.route('/add_book', methods=['GET', 'POST'])
@@ -246,10 +243,11 @@ def add_book():
         #   upload new file (replace old one)
         filepath = os.path.join(
             current_app.config["IMAGE_UPLOADS"],
-            str(book_id)+ '.jpg')
+            str(book_id) + '.jpg')
         cover = thumbnail(
             filepath,
-            current_app.config["IMAGE_TARGET_SIZE"])
+            current_app.config["IMAGE_TARGET_SIZE"],
+        )
         utils.cover_upload(cover, book_id)
 
         return redirect(url_for('add_book_instance', book_id=book_id))
@@ -270,7 +268,7 @@ def add_book_instance(book_id):
             condition=condition,
             description=description,
             owner_id=current_user.id,
-            book_id=book_id
+            book_id=book_id,
         )
         return redirect(url_for(
             'book_instance',
@@ -283,7 +281,7 @@ def add_book_instance(book_id):
         title='add_book_instance',
         form=form,
         book=book,
-        bi=book
+        bi=book,
     )
 
 
@@ -298,7 +296,7 @@ def edit_book_instance(book_instance_id):
         return render_template(
             'book_instance_page.html',
             book_instance=book_instance,
-            editable=False
+            editable=False,
         )
 
     # form prefill
@@ -315,7 +313,7 @@ def edit_book_instance(book_instance_id):
             book_instance_id=book_instance_id,
             price=price,
             condition=condition,
-            description=description
+            description=description,
         )
         return redirect(url_for(
             'book_instance',
@@ -326,13 +324,13 @@ def edit_book_instance(book_instance_id):
         'edit_book_instance.html',
         title='edit_book_instance',
         form=form,
-        bi=book_instance
+        bi=book_instance,
     )
 
 
 @app.route(
     '/activate_book_instance/<book_instance_id>',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST'],
 )
 @login_required
 def activate_book_instance(book_instance_id):
@@ -346,7 +344,7 @@ def activate_book_instance(book_instance_id):
 
 @app.route(
     '/deactivate_book_instance/<book_instance_id>',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST'],
 )
 @login_required
 def deactivate_book_instance(book_instance_id):
@@ -360,7 +358,7 @@ def deactivate_book_instance(book_instance_id):
 
 @app.route(
     '/delete_book_instance/<book_instance_id>',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST'],
 )
 @login_required
 def delete_book_instance(book_instance_id):
@@ -386,13 +384,13 @@ def all_msgs():
     return render_template(
         'all_messages.html',
         title='Messages list',
-        msgs=msgs
+        msgs=msgs,
     )
 
 
 @app.route(
     '/send_message/<recipient>/<prev_message_id>',
-    methods=['GET', 'POST']
+    methods=['GET', 'POST'],
 )
 @login_required
 def send_message(recipient, prev_message_id):
@@ -404,7 +402,7 @@ def send_message(recipient, prev_message_id):
             book_id=0,
             author=current_user,
             recipient=user,
-            body=''
+            body='',
         )
     else:
         prev_message = db_handlers.get_message(prev_message_id)
@@ -415,7 +413,7 @@ def send_message(recipient, prev_message_id):
             book_id=prev_message.book_id,
             author=current_user,
             recipient=user,
-            body=form.message.data
+            body=form.message.data,
         )
         db.session.add(msg)
         db.session.commit()
@@ -425,7 +423,7 @@ def send_message(recipient, prev_message_id):
                            title='Send Message',
                            form=form,
                            recipient=recipient,
-                           prev_message_id=prev_message.id
+                           prev_message_id=prev_message.id,
                            )
 
 
@@ -455,7 +453,7 @@ def messages():
     return render_template(
         'messages.html',
         messages=messages,
-        form=MessageForm
+        form=MessageForm,
     )
 
 
@@ -477,49 +475,30 @@ def auth():
         # TODO redirect to previous page
         return redirect(url_for('index'))
     else:
-        user_from_db = db_handlers.create_user(
-            username=user.get('name'),
-            email=user.get('email'),
-            avatar=user.get('picture')
-        )
+        visitor_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        lon, lat = utils.get_coordinates_by_ip(visitor_ip)
+        if lon and lat:
+            user_from_db = db_handlers.create_user(
+                username=user.get('name'),
+                email=user.get('email'),
+                avatar=user.get('picture'),
+                longitude=lon,
+                latitude=lat,
+            )
+        else:
+            user_from_db = db_handlers.create_user(
+                username=user.get('name'),
+                email=user.get('email'),
+                avatar=user.get('picture'),
+            )
         login_user(user_from_db)
         flash('Please, made an initial set up of your profile:')
         flash('    * Edit your location. (you can set any point you want, i.e. your home, busstop or metro station convenient for you to meet buyers)')
         flash('    * Add alternative contact info, if you want (mobile/telegram... etc.)')
         return redirect('/edit_profile')
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = RegistrationForm()
-
-    if form.validate_on_submit():
-        user = User(
-            username=form.username.data,
-            email=form.email.data,
-            latitude=form.latitude.data,
-            longitude=form.longitude.data
-        )
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Congratulations, you are now a registered user!')
-        return redirect
-
-    start_coords = current_app.config["DEFAULT_MAP_COORDINADES"]
-    m = folium.Map(width=300, height=300, location=start_coords, zoom_start=12)
-    folium.Marker(
-        location=start_coords,
-        popup='your location',
-        icon=folium.Icon(color='green'),
-        draggable=True
-    ).add_to(m)
-    m.save('app/templates/_map.html')
-    return render_template('register.html', title='Register', form=form)
