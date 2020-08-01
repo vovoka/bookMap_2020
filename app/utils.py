@@ -5,9 +5,15 @@ import folium.plugins
 from flask_login import current_user
 from app.models import User, Book
 from app.thumbs import thumbnail
+from app.db_handlers import (
+    get_expired_bi_with_users,
+    deactivate_any_bi_if_expired,
+)
+from app.email import send_bi_is_expired_email
 import sys
 import ipapi
 ipapi.location(ip=None, key=None, field=None)
+
 
 def get_num(x: str) -> int:
     """ Extracts all digits from incomig string """
@@ -34,9 +40,9 @@ def cover_upload(cover, book_id) -> int:
 
 
 def generate_map_single_marker(
-    height=200,
-    zoom_start=12,
-    popup='popup content'):
+        height=200,
+        zoom_start=12,
+        popup='popup content'):
 
     m = folium.Map(
         height=height,
@@ -113,16 +119,56 @@ def get_coordinates_by_ip(visitor_ip:str) -> tuple:
 
     Uses external service https://ipapi.co/ with no api_key.
     Consider https://ipapi.com as alternative.
-    '''
-    ipapi_resp = ipapi.location(
-        ip=visitor_ip)
-    print(f'localhost ipapi_resp = {ipapi_resp}', flush=True)
 
-    #for DBG!
+    for DBG on localhost use next:
     if visitor_ip == '127.0.0.1':
-        ipapi_resp = {u'city': u'Wilton', u'ip': u'50.1.2.3', u'region': u'California', u'longitude': -121.2429, u'country': u'US', u'latitude': 38.3926, u'timezone': u'America/Los_Angeles', u'postal': u'95693'}
-
+        ipapi_resp = {
+            u'city': u'Wilton',
+            u'ip': u'50.1.2.3',
+            u'region': u'California',
+            u'longitude': -121.2429,
+            u'country': u'US',
+            u'latitude': 38.3926,
+            u'timezone': u'America/Los_Angeles',
+            u'postal': u'95693',
+            }
+    '''
+    ipapi_resp = ipapi.location(ip=visitor_ip)
     longitude = ipapi_resp.get('longitude')
     latitude = ipapi_resp.get('latitude')
-    print(f'returned ipapi_resp = {longitude}   {latitude}', flush=True)
     return longitude, latitude
+
+
+def expired_bi_handler():
+    """
+    Collected all expired book instances by expiration time
+    Send email notificasions to these books owners
+    Deactivated all expired books. (in one separate request)
+
+    TODO:
+    1) bi_id still needed to create direct url(s) to the bi page inside
+    the letter html body
+    2) send emails in threads or replace it as a Redis worker
+
+    for DBG sending emails use data
+    expired_bis = {'kovalyov.volodymyr@gmail.com': [
+        (25, 'The Great Gatsby'), (10, 'The Great Gatsby'), (9, 'War and Peace')]}
+    """
+
+    # Get expired bi & pack expired_bi to dict:
+    expired_bis = dict()
+    for user_email, bi_id, bi_title in get_expired_bi_with_users():
+        if(user_email in expired_bis.keys()):
+            expired_bis[user_email].append((bi_id, bi_title))
+        else:
+            expired_bis[user_email] = [(bi_id, bi_title)]
+
+    # Send an email to each user
+    for user, bis in expired_bis.items():
+        bi_list = list()
+        for bi in bis:
+            bi_list.append(bi[1])
+        send_bi_is_expired_email(user, bi_list)
+
+    # Deactivate all expired books
+    deactivate_any_bi_if_expired()

@@ -13,10 +13,14 @@ here is a lot of bugs, I know ;)
 
 
 ###### TODO (unsorted ideas):
-* email notifications
+* email notifications as html (now txt only)
+* email notifications as thread
+* email notifications 'You got a new message '
 * Docker
-* get user location by ip to center map (permissions?)
-* image resizer / cropper(?)
+* Clasterize book instances by location
 * try to switch to GraphQL (what for?)
 * Add a service to visit goodreads and parse an info of searched book.
 * Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
+* ! автоматизируй формы с https://medium.com/better-programming/how-to-use-flask-wtforms-faab71d5a034 ?
+* remove LoginForm
+* Add AdminPanel

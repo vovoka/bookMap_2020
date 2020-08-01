@@ -34,8 +34,11 @@ scheduler = BackgroundScheduler()
 # If it called twice each time it might be ok in debug mode:
 # https://stackoverflow.com/questions/14874782/apscheduler-in-flask-executes-twice
 scheduler.start()
-scheduler.add_job(func=db_handlers.deactivate_if_expired,
-                  trigger="interval", days=1)
+scheduler.add_job(
+    func=utils.expired_bi_handler,
+    trigger="interval",
+    days=1,
+)
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -322,7 +322,27 @@ def get_book_instances_id_by_book_id(book_id) -> tuple:
     return book_instances_ids
 
 
-def deactivate_if_expired(expiration_period_days=30) -> None:
+def get_expired_bi_with_users(expiration_period_days=30) -> list:
+    """ Returns user_email and bi_id & title for
+    expired bi only."""
+    expiration_time = datetime.today() - timedelta(days=expiration_period_days)
+    expiration_time_timestamp = datetime.timestamp(expiration_time)
+
+    book_instances = (db.session.query(
+        User.email,
+        BookInstance.id,
+        Book.title,
+        )
+        .filter(BookInstance.book_id == Book.id)
+        .filter(BookInstance.is_active == True)
+        .filter(BookInstance.activation_time <= expiration_time_timestamp)
+        .filter(BookInstance.owner_id == User.id)
+        .order_by(BookInstance.id.desc())
+        .all())
+    return book_instances
+
+
+def deactivate_any_bi_if_expired(expiration_period_days=30) -> None:
     """ Update all b_instances status active -> inactive in DB if expired """
     print(f'CALL deactivate_if_expired', flush=True)
     # month_ago = now - 30 days

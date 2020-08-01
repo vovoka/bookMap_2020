@@ -30,3 +30,9 @@ class Config(object):
     # Google OAUth2 credentials
     GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
     GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+
+    # email
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_ADMIN = os.environ.get('MAIL_ADMIN')
