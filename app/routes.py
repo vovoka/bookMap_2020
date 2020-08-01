@@ -1,5 +1,5 @@
 import os
-from app.forms import RegistrationForm, LoginForm, EditProfileForm
+from app.forms import EditProfileForm
 from app import app, db, db_handlers, utils
 from flask_login import login_user, logout_user, current_user, login_required
 # from werkzeug.urls import url_parse
