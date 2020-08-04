@@ -4,10 +4,12 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
     {% include '_map.html' %}
+    <table class="table table-hover">
+        {% include '_book_instance_2_column.html' %}
+    </table>
 
         <div class="col-md-2">
         {{ wtf.quick_form(form) }}
         </div>
 
 {% endblock %}
-

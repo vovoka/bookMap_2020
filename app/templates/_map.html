@@ -1,182 +1,88 @@
 <!DOCTYPE html>
-
-<head>
+<head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-    <script>
-        L_NO_TOUCH = false;
-        L_DISABLE_3D = false;
-    </script>
-
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
-    <link rel="stylesheet"
-        href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css" />
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <style>
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-    </style>
-
-    <meta name="viewport" content="width=device-width,
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <style>
-        #map_848788e26f664f86a163a9714d955027 {
-            position: relative;
-            width: 100.0%;
-            height: 500.0px;
-            left: 0.0%;
-            top: 0.0%;
-        }
-    </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css" />
+            <style>
+                #map_e580751698ae46e491a13196972423a9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 200.0px;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
 </head>
-
-<body>
-
-    <div class="folium-map" id="map_848788e26f664f86a163a9714d955027"></div>
-
+<body>    
+    
+            <div class="folium-map" id="map_e580751698ae46e491a13196972423a9" ></div>
+        
 </body>
-<script>
-    var map_848788e26f664f86a163a9714d955027 = L.map(
-        "map_848788e26f664f86a163a9714d955027",
-        {
-            center: [50.40161462180039, 30.497978423187625],
-            crs: L.CRS.EPSG3857,
-            zoom: 12,
-            zoomControl: true,
-            preferCanvas: false,
-        }
-    );
+<script>    
+    
+            var map_e580751698ae46e491a13196972423a9 = L.map(
+                "map_e580751698ae46e491a13196972423a9",
+                {
+                    center: [50.40161462180039, 30.497978423187625],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
 
-    var tile_layer_833d1e3215584f98869f3f556e448990 = L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        { "attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false }
-    ).addTo(map_848788e26f664f86a163a9714d955027);
+            
 
+        
+    
+            var tile_layer_f65b6523f323479c88573f5e5b21a5e0 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e580751698ae46e491a13196972423a9);
+        
+    
+            var marker_8853a833b05e49a598ca36e547582155 = L.marker(
+                [50.40161462180039, 30.497978423187625],
+                {}
+            ).addTo(map_e580751698ae46e491a13196972423a9);
+        
+    
+            var icon_879ede15660d48d3b87cb7faa68d412b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_8853a833b05e49a598ca36e547582155.setIcon(icon_879ede15660d48d3b87cb7faa68d412b);
+        
+    
+        var popup_9f97e3130e7649c08f8d850c4b964b7e = L.popup({"maxWidth": "100%"});
 
-    var marker_cluster_a12f918d9a2947959ddfebed9e70bb08 = L.markerClusterGroup(
-        {}
-    );
-    map_848788e26f664f86a163a9714d955027.addLayer(marker_cluster_a12f918d9a2947959ddfebed9e70bb08);
+        
+            var html_1914a399a30c461ab9e4ec8281246c22 = $(`<div id="html_1914a399a30c461ab9e4ec8281246c22" style="width: 100.0%; height: 100.0%;">popup content</div>`)[0];
+            popup_9f97e3130e7649c08f8d850c4b964b7e.setContent(html_1914a399a30c461ab9e4ec8281246c22);
+        
 
-
-    var marker_d5a55c520aa44150b7250ba456f733db = L.marker(
-        [50.43248250112012, 30.477287219364694],
-        {}
-    ).addTo(marker_cluster_a12f918d9a2947959ddfebed9e70bb08);
-
-
-    var custom_icon_b22e4b68099b481d88e9515f5f4ab7b6 = L.icon({ "iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg" });
-    marker_d5a55c520aa44150b7250ba456f733db.setIcon(custom_icon_b22e4b68099b481d88e9515f5f4ab7b6);
-
-
-    var popup_a335a622779d46c8a5a5470c59ff03b2 = L.popup({ "maxWidth": "100%" });
-
-
-    var html_302dacc9eda742a292152d668d5a4bf0 = $(`<div id="html_302dacc9eda742a292152d668d5a4bf0" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/1><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>190 uah</div>`)[0];
-    popup_a335a622779d46c8a5a5470c59ff03b2.setContent(html_302dacc9eda742a292152d668d5a4bf0);
-
-
-    marker_d5a55c520aa44150b7250ba456f733db.bindPopup(popup_a335a622779d46c8a5a5470c59ff03b2)
+        marker_8853a833b05e49a598ca36e547582155.bindPopup(popup_9f97e3130e7649c08f8d850c4b964b7e)
         ;
 
-
-
-
-    var marker_3de2bc033be0412ca92e4dc5ee82811c = L.marker(
-        [50.42252134129123, 30.48692059586381],
-        {}
-    ).addTo(marker_cluster_a12f918d9a2947959ddfebed9e70bb08);
-
-
-    var custom_icon_d90b1de108af4757b50452562e4e5ea6 = L.icon({ "iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg" });
-    marker_3de2bc033be0412ca92e4dc5ee82811c.setIcon(custom_icon_d90b1de108af4757b50452562e4e5ea6);
-
-
-    var popup_f23290da51b24e93b56f70ec38ba290e = L.popup({ "maxWidth": "100%" });
-
-
-    var html_94fbe699f55c40d0b6df3e0b6a41df57 = $(`<div id="html_94fbe699f55c40d0b6df3e0b6a41df57" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/15><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>117 uah</div>`)[0];
-    popup_f23290da51b24e93b56f70ec38ba290e.setContent(html_94fbe699f55c40d0b6df3e0b6a41df57);
-
-
-    marker_3de2bc033be0412ca92e4dc5ee82811c.bindPopup(popup_f23290da51b24e93b56f70ec38ba290e)
-        ;
-
-
-
-
-    var marker_c68768a1d69e4fc1b48eaf8141704c7f = L.marker(
-        [50.426191675946036, 30.53184020204697],
-        {}
-    ).addTo(marker_cluster_a12f918d9a2947959ddfebed9e70bb08);
-
-
-    var custom_icon_837f50cb1f2849bdadfec77c34517d02 = L.icon({ "iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg" });
-    marker_c68768a1d69e4fc1b48eaf8141704c7f.setIcon(custom_icon_837f50cb1f2849bdadfec77c34517d02);
-
-
-    var popup_7b8b98cd9d954f33ab625c92c3fcb7c4 = L.popup({ "maxWidth": "100%" });
-
-
-    var html_70b05b01f46f450ab19502735f844d5e = $(`<div id="html_70b05b01f46f450ab19502735f844d5e" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/22><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>131 uah</div>`)[0];
-    popup_7b8b98cd9d954f33ab625c92c3fcb7c4.setContent(html_70b05b01f46f450ab19502735f844d5e);
-
-
-    marker_c68768a1d69e4fc1b48eaf8141704c7f.bindPopup(popup_7b8b98cd9d954f33ab625c92c3fcb7c4)
-        ;
-
-
-
-
-    var marker_6501744aa9124d02b5d7a36574a52cdd = L.marker(
-        [50.40161462180039, 30.497978423187625],
-        {}
-    ).addTo(marker_cluster_a12f918d9a2947959ddfebed9e70bb08);
-
-
-    var custom_icon_c724840fc5c8402fb2f854f5c3e5b1ab = L.icon({ "iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg" });
-    marker_6501744aa9124d02b5d7a36574a52cdd.setIcon(custom_icon_c724840fc5c8402fb2f854f5c3e5b1ab);
-
-
-    var popup_4b7c3b6bab2840bd9b0784a25b98b76b = L.popup({ "maxWidth": "100%" });
-
-
-    var html_91c8cb261eed477e82fc0fdba14e332e = $(`<div id="html_91c8cb261eed477e82fc0fdba14e332e" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/29><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>4 uah</div>`)[0];
-    popup_4b7c3b6bab2840bd9b0784a25b98b76b.setContent(html_91c8cb261eed477e82fc0fdba14e332e);
-
-
-    marker_6501744aa9124d02b5d7a36574a52cdd.bindPopup(popup_4b7c3b6bab2840bd9b0784a25b98b76b)
-        ;
-
-
-
+        
+    
 </script>
