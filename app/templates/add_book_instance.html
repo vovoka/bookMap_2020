@@ -1,41 +1,25 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-    <h1>Add Book instance</h1>
-    <table>
-        <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
-            <td>
-                <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
-            </td>
-            <td><b>{{ book.title }}</b><br>
-                by {{ book.author }}<br>
-                isbn: {{ book.isbn }}
-            </td>
-        </tr>
-    </table>
-    <form action="" method="post" novalidate enctype="multipart/form-data" >
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.price.label }}<br>
-            {{ form.price(size=32) }}<br>
-            {% for error in form.price.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.condition.label }}<br>
-            {{ form.condition(size=32) }}<br>
-            {% for error in form.condition.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.description.label }}<br>
-            {{ form.description(size=32) }}<br>
-            {% for error in form.description.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<h1>Add Book instance</h1>
+<table>
+    <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
+        <td>
+            <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
+                onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+        </td>
+        <td><b>{{ book.title }}</b><br>
+            by {{ book.author }}<br>
+            isbn: {{ book.isbn }}
+        </td>
+    </tr>
+</table>
+
+<div class="container-sm">
+    <hr>
+    <div class="col-md-2">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
 {% endblock %}

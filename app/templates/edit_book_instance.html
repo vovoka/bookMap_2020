@@ -1,44 +1,13 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+{% import "bootstrap/wtf.html" as wtf %}
 
     {% include '_map.html' %}
 
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-
-        <table class="table table-hover">
-            {% include '_book_instance_2_column.html' %}
-            <tr>
-                <td>price: </td>
-                <td>
-                    {{ form.price(size=32) }}<br>
-                    {% for error in form.price.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <td>condition:</td>
-                <td>
-                    {{ form.condition(size=32) }}<br>
-                    {% for error in form.condition.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <td>description:</td>
-                <td>
-                    {{ form.description(size=32) }}<br>
-                    {% for error in form.description.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-        <p>{{ form.submit() }}</p>
-    </form>
+        <div class="col-md-2">
+        {{ wtf.quick_form(form) }}
+        </div>
 
 {% endblock %}
 
