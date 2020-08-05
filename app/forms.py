@@ -1,11 +1,12 @@
 from app.models import User
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, NumberRange
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, InputRequired
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from app import db_handlers
 
 from flask import request
+import re
 
 
 class SearchForm(FlaskForm):
@@ -26,6 +27,36 @@ def isbn_is_not_exist(form, field):
              {book.title} by {book.author}. Please, do not create duplicates, use search.')
 
 
+def is_isbn(form, fieldname):
+    sum = 0
+    isbn = form.data.get(fieldname)
+    isbn = re.sub(r"[-–—\s]", "", isbn)
+
+    # isbn13
+    if len(isbn) == 13 and isbn[0:3] == "978" or "979":  # is it a ISBN? Thanks @librarythingtim
+        for d, i in enumerate(isbn):
+            # if (int(d) + 1) % 2 != 0:
+            if int(d) % 2 == 0:
+                sum += int(i)
+            else:
+                sum += int(i) * 3
+        return sum % 10 == 0
+
+    # isbn10
+    if len(isbn) == 10:
+        isbn = list(isbn)
+        if isbn[-1] == "X" or isbn[-1] == "x": #  a final x stands for 10
+            isbn[-1] = 10
+        for d, i in enumerate(isbn[:-1]):
+            sum += (int(d)+1) * int(i)
+        return (sum % 11) == int(isbn[-1])
+
+    return False
+
+def is_valid_isbn(form, field):
+    if not is_isbn(form, 'isbn'):
+        raise ValidationError('Sorry, is NOT a valid ISBN')
+    return True
 class AddBookForm(FlaskForm):
     title = StringField(
         'Title',
@@ -35,15 +66,9 @@ class AddBookForm(FlaskForm):
         'Author',
         validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
     )
-    isbn = IntegerField(
+    isbn = StringField(
         'isbn',
-        validators=[NumberRange(
-            min=0,
-            max=99999999999999,
-            message='isbn is out of range'
-        ),
-            isbn_is_not_exist
-        ]
+        validators=[InputRequired(), is_valid_isbn]
     )
     cover = FileField('Book cover', validators=[
         DataRequired(),
@@ -61,13 +86,9 @@ class BookInstanceForm(FlaskForm):
         'Author',
         validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
     )
-    isbn = IntegerField(
+    isbn = StringField(
         'isbn',
-        validators=[NumberRange(
-            min=0,
-            max=99999999999999,
-            message='isbn is out of range'
-        )]
+        validators=[DataRequired()]
     )
     price = IntegerField('Price', validators=[DataRequired()])
     condition = StringField('Condition', validators=[DataRequired()])
