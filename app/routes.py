@@ -189,16 +189,17 @@ def edit_profile():
     form.latitude.data = current_user.latitude
     form.longitude.data = current_user.longitude
     if form.validate_on_submit():
-        result = request.form
-        about_me = result.get('about_me')
-        latitude = result.get('latitude')
-        longitude = result.get('longitude')
+        about_me = request.form.get('about_me')
+        latitude = request.form.get('latitude')
+        longitude = request.form.get('longitude')
 
-        current_user.about_me = about_me
-        current_user.latitude = latitude
-        current_user.longitude = longitude
+        db_handlers.update_user_profile(
+            about_me,
+            latitude,
+            longitude,
+            username=current_user.username,
+        )
 
-        db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
 

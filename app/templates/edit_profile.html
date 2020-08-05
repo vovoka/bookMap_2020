@@ -14,19 +14,6 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        (TODO: hide latitude/longitude fields from html)
-        Please, put the Marker to your location:
-        <p>
-            {{ form.latitude(size=16) }}
-            {% for error in form.latitude.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            {{ form.longitude(size=16) }}<br>
-            {% for error in form.longitude.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-        </p>
         <div id="mapid" style="width: 300px; height: 300px;"></div>
         <p>{{ form.submit() }}</p>
         <script>

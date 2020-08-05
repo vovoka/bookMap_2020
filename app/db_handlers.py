@@ -332,7 +332,7 @@ def get_expired_bi_with_users(expiration_period_days=30) -> list:
         User.email,
         BookInstance.id,
         Book.title,
-        )
+    )
         .filter(BookInstance.book_id == Book.id)
         .filter(BookInstance.is_active == True)
         .filter(BookInstance.activation_time <= expiration_time_timestamp)
@@ -380,8 +380,30 @@ def get_user_by_username(username: str) -> object:
     return User.query.filter_by(username=username).first_or_404()
 
 
-def create_user(username: str, email:str, avatar:str, latitude=50.4547,
-        longitude=30.520) -> object:
+def update_user_profile(
+    about_me:str,
+    latitude:str,
+    longitude:str,
+    username:str,
+) -> object:
+    """ Updates users coordinates, description at DB """
+    user = (db.session.query(User)
+            .filter(User.username == username)
+            .update(
+            {
+                User.about_me: about_me,
+                User.latitude: latitude,
+                User.longitude: longitude,
+            },
+            synchronize_session=False,
+            )
+            )
+    db.session.commit()
+    return user
+
+
+def create_user(username: str, email: str, avatar: str, latitude=50.4547,
+                longitude=30.520) -> object:
     ''' create new user '''
 
     user = User(
@@ -391,7 +413,7 @@ def create_user(username: str, email:str, avatar:str, latitude=50.4547,
         latitude=latitude,
         longitude=longitude,
         about_me='I will tell you a bit letter',
-        is_active = True
+        is_active=True
     )
     db.session.add(user)
     db.session.commit()

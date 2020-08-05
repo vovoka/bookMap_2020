@@ -21,6 +21,5 @@ here is a lot of bugs, I know ;)
 * try to switch to GraphQL (what for?)
 * Add a service to visit goodreads and parse an info of searched book.
 * Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
-* add {% include '_book_instance_2_column.html' %} to add_book_instance?
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.

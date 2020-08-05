@@ -1,9 +1,7 @@
 from app.models import User
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, NumberRange
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, TextAreaField, SubmitField, ValidationError
-from wtforms.validators import DataRequired, Length, NumberRange
 from flask_wtf.file import FileField, FileAllowed
 from app import db_handlers
 
@@ -108,8 +106,8 @@ class MessageForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     username = StringField('Username')
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-    latitude = StringField('Latitude', validators=[DataRequired()])
-    longitude = StringField('Longitude', validators=[DataRequired()])
+    latitude = HiddenField('Latitude', validators=[DataRequired()])
+    longitude = HiddenField('Longitude', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def __init__(self, original_username, *args, **kwargs):
