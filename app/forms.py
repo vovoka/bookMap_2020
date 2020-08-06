@@ -1,5 +1,5 @@
 from app.models import User
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, InputRequired
+from wtforms.validators import ValidationError, DataRequired, Email, Length, InputRequired, NumberRange
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField, SelectField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
@@ -33,7 +33,8 @@ def is_isbn(form, fieldname):
     isbn = re.sub(r"[-–—\s]", "", isbn)
 
     # isbn13
-    if len(isbn) == 13 and isbn[0:3] == "978" or "979":  # is it a ISBN? Thanks @librarythingtim
+    # is it a ISBN? Thanks @librarythingtim
+    if len(isbn) == 13 and isbn[0:3] == "978" or "979":
         for d, i in enumerate(isbn):
             # if (int(d) + 1) % 2 != 0:
             if int(d) % 2 == 0:
@@ -45,7 +46,7 @@ def is_isbn(form, fieldname):
     # isbn10
     if len(isbn) == 10:
         isbn = list(isbn)
-        if isbn[-1] == "X" or isbn[-1] == "x": #  a final x stands for 10
+        if isbn[-1] == "X" or isbn[-1] == "x":  # a final x stands for 10
             isbn[-1] = 10
         for d, i in enumerate(isbn[:-1]):
             sum += (int(d)+1) * int(i)
@@ -53,10 +54,13 @@ def is_isbn(form, fieldname):
 
     return False
 
+
 def is_valid_isbn(form, field):
     if not is_isbn(form, 'isbn'):
         raise ValidationError('Sorry, is NOT a valid ISBN')
     return True
+
+
 class AddBookForm(FlaskForm):
     title = StringField(
         'Title',
@@ -78,7 +82,10 @@ class AddBookForm(FlaskForm):
 
 
 class EditBookInstanceForm(FlaskForm):
-    price = IntegerField('Price', validators=[DataRequired()])
+    price = IntegerField(
+        'Price',
+        validators=[NumberRange(min=1, max=9999, message='Invalid price')]
+    )
     condition = SelectField(
         'The book instance condition',
         choices=[
@@ -96,7 +103,6 @@ class MessageForm(FlaskForm):
     message = TextAreaField('Message', validators=[
         DataRequired(), Length(min=0, max=140)])
     submit = SubmitField('Submit')
-
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

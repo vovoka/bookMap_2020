@@ -23,5 +23,3 @@ here is a lot of bugs, I know ;)
 * Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
-* book/book_instance - add form validators
-* When create a new book - check if a book with such isbn already exist...

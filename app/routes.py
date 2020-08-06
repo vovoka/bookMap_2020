@@ -233,27 +233,35 @@ def add_book():
         author = form.author.data
         isbn = form.isbn.data
         cover = form.cover.data
-        if not db_handlers.book_exist(title=title, author=author, isbn=isbn):
-            db_handlers.create_book(title, author, isbn)
-        # TODO  get book_id with isbn firstly.
-        # If no result - try with author+title
-        book_id = db_handlers.get_book_id(title, author)
-        utils.cover_upload(cover, book_id)
+        isbn = str(''.join(filter(str.isdigit, isbn))) # digits only
 
+        book_by_isbn = db_handlers.get_book_by_isbn(isbn)
+        if book_by_isbn:
+            #? TODO add popup with a message why user is redirected
+            flash('The book with ISBN you entered alreaty exists in DB \n That is why you are redirected to the page. \n You can add a book instance by click on "Sell the book" button.')
+            return redirect(url_for('add_book_instance', book_id=book_by_isbn.id))
+
+        # else create book...
+        new_book = db_handlers.create_book(title, author, isbn)
+        # get the book_id
+        # book_id = db_handlers.get_book_id(title, author)
+
+        # download original cover file
+        utils.cover_upload(cover, new_book.id)
         # Replace saved file with smaller one:
         #   generate full filepath to the recently downloaded file
         #   resize file with thumbnail()
         #   upload new file (replace old one)
         filepath = os.path.join(
             current_app.config["IMAGE_UPLOADS"],
-            str(book_id) + '.jpg')
+            str(new_book.id) + '.jpg')
         cover = thumbnail(
             filepath,
             current_app.config["IMAGE_TARGET_SIZE"],
         )
-        utils.cover_upload(cover, book_id)
+        utils.cover_upload(cover, new_book.id)
 
-        return redirect(url_for('add_book_instance', book_id=book_id))
+        return redirect(url_for('add_book_instance', book_id=new_book.id))
     return render_template('add_book.html', title='add_book', form=form)
 
 
