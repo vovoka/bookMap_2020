@@ -1,6 +1,6 @@
 from app.models import User
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, InputRequired
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField, SelectField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from app import db_handlers
@@ -77,32 +77,17 @@ class AddBookForm(FlaskForm):
     submit = SubmitField('Add Book')
 
 
-class BookInstanceForm(FlaskForm):
-    title = StringField(
-        'Title',
-        validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
-    )
-    author = StringField(
-        'Author',
-        validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
-    )
-    isbn = StringField(
-        'isbn',
-        validators=[DataRequired()]
-    )
-    price = IntegerField('Price', validators=[DataRequired()])
-    condition = StringField('Condition', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
-    cover = FileField('Book cover', validators=[
-        DataRequired(),
-        FileAllowed(['jpg', 'jpeg'], '*.jpeg Images only!')
-    ])
-    submit = SubmitField('Submit')
-
-
 class EditBookInstanceForm(FlaskForm):
     price = IntegerField('Price', validators=[DataRequired()])
-    condition = StringField('Condition', validators=[DataRequired()])
+    condition = SelectField(
+        'The book instance condition',
+        choices=[
+            ('4', 'Идеальное'),
+            ('3', 'Хорошее (читана аккуратно, без пометок и заломов) '),
+            ('2', 'Удовлетворительное'),
+            ('1', 'Как есть (стоит уточннить нюансы с продавцом)')],
+        validators=[DataRequired()]
+    )
     description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')
 

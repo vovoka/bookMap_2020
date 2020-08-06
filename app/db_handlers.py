@@ -42,7 +42,7 @@ def make_db_data(db):
             book_id=book_id,
             owner_id=randint(1, 8),
             price=randint(20, 200),
-            condition=randint(1, 12),
+            condition=randint(1, 5),
             description='Lorem ipsum...'
         )
         incr_instance_counter(book_id)

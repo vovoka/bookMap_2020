@@ -173,7 +173,6 @@ def book_instance(book_instance_id):
     utils.generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
-        bi=book_instance,
         book_instance=book_instance,
         editable=editable,
         form=form,
@@ -269,7 +268,7 @@ def add_book_instance(book_id):
 
         book_instance = db_handlers.create_book_instance(
             price=price,
-            condition=condition,
+            condition=int(condition),
             description=description,
             owner_id=current_user.id,
             book_id=book_id,
@@ -305,7 +304,7 @@ def edit_book_instance(book_instance_id):
 
     # form prefill
     form.price.data = book_instance.price or '0'
-    form.condition.data = book_instance.condition
+    form.condition.data = str(book_instance.condition)
     form.description.data = book_instance.description
 
     if form.validate_on_submit():
@@ -326,9 +325,8 @@ def edit_book_instance(book_instance_id):
 
     return render_template(
         'edit_book_instance.html',
-        title='edit_book_instance',
         form=form,
-        bi=book_instance,
+        book_instance=book_instance,
     )
 
 
