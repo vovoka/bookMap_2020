@@ -12,16 +12,22 @@ from datetime import datetime, timedelta
 
 def make_db_data(db):
     """ Fill DB with users, Books, BookInstances """
+
+    # how many to generate
+    users = 60
+    books = 15
+    book_instances = 180
+
     db.create_all()
     # create users
     latitude = 50.4547
     longitude = 30.520
-    for i in 'cdefghikz':
+    for i in range(users):
         user = User(
-            username=i*3,
-            email=i*3 + '@gmail.com',
-            latitude=latitude + (random() - 0.5)/10,
-            longitude=longitude + (random() - 0.5)/10,
+            username='user_'+str(i),
+            email='user_'+str(i) + '@gmail.com',
+            latitude=latitude + (random() - 0.5)/3,
+            longitude=longitude + (random() - 0.5)/3,
             about_me='No info about the user yet.'
         )
         db.session.add(user)
@@ -36,11 +42,11 @@ def make_db_data(db):
         db.session.commit()
 
     # create boook instances
-    for book_instance in range(25):
-        book_id = randint(1, 15)
+    for book_instance in range(book_instances):
+        book_id = randint(1, books)
         book_instance = BookInstance(
             book_id=book_id,
-            owner_id=randint(1, 8),
+            owner_id=randint(1, users),
             price=randint(20, 200),
             condition=randint(1, 5),
             description='Lorem ipsum...'
@@ -98,7 +104,6 @@ def create_book(title: str, author: str, isbn=0) -> object:
         book = Book(title=title, author=author, isbn=isbn)
         db.session.add(book)
         db.session.commit()
-        print('Book created "{title}" "{author}" isbn={isbn}', flush=True)
         return book
 
 
@@ -344,7 +349,6 @@ def get_expired_bi_with_users(expiration_period_days=30) -> list:
 
 def deactivate_any_bi_if_expired(expiration_period_days=30) -> None:
     """ Update all b_instances status active -> inactive in DB if expired """
-    print(f'CALL deactivate_if_expired', flush=True)
     # month_ago = now - 30 days
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
     expiration_time_timestamp = datetime.timestamp(expiration_time)

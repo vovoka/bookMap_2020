@@ -29,7 +29,9 @@
             <th>Title</th>
             <th>Author</th>
             <th>Price</th>
-            <th>Actions</th>
+            {% if user == current_user %}
+                <th>Actions</th>
+            {% endif %}
         </tr>
         {% for book_instance in book_instances %}
             {% if book_instance.is_active %}
@@ -38,17 +40,19 @@
                     <td>{{ book_instance.title }}</td>
                     <td>{{ book_instance.author }}</td>
                     <td>{{ book_instance.price }}</td>
+                    {% if user == current_user %}
                     <td>
                         <button type="button" onclick='window.location.href="{{ url_for('deactivate_book_instance', book_instance_id=book_instance.id) }}"'>deactivate</button>
                         <button type="button" onclick='window.location.href="{{ url_for('edit_book_instance', book_instance_id=book_instance.id) }}"'>edit</button>
                         <button type="button" onclick='window.location.href="{{ url_for('delete_book_instance', book_instance_id=book_instance.id) }}"'>delete</button>
 
                     </td>
+                    {% endif %}
                 </tr>
             {% endif %}
         {% endfor %}
     </table>
-
+    {% if user == current_user %}
     <h2> Inactive books </h2>
     <table class="table table-hover">
         <tr>
@@ -74,4 +78,5 @@
             {% endif %}
         {% endfor %}
     </table>
+    {% endif %}
 {% endblock %}

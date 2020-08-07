@@ -81,22 +81,19 @@ def search():
     return render_template('search.html', title='Search', books=books)
 
 
-@app.route('/location')
-def test_index():
+@app.route('/users_location')
+def users_location():
+    # for debug purposes / admin?
     start_coords = (50.4547, 30.524)
     m = folium.Map(width=500, height=500, location=start_coords, zoom_start=12)
 
     users = User.query.all()
     for user in users:
-        # teporary if. Delete when user coordinates will be obligatory
-        if user.longitude and user.latitude:
-            folium.Marker(
-                location=[user.latitude, user.longitude],
-                # for DEBUG:
-                # location=[50.4547, 30.520],
-                popup=user.username,
-                icon=folium.Icon(color='green')
-            ).add_to(m)
+        folium.Marker(
+            location=[user.latitude, user.longitude],
+            popup=user.username,
+            icon=folium.Icon(color='green')
+        ).add_to(m)
     m.save('app/templates/_map.html')
     return render_template('map.html')
 
@@ -120,6 +117,13 @@ def unpopulate_db():
     flash('Congratulations, db is empty now')
     return redirect(url_for('index'))
 
+
+@app.route('/recreate_db')
+def recreate_db():
+    db_handlers.clear_db_data(db)
+    db_handlers.make_db_data(db)
+    flash('DB is recreated now')
+    return redirect(url_for('index'))
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
@@ -207,21 +211,6 @@ def edit_profile():
         title='Edit Profile',
         form=form,
     )
-
-# TODO to check file size wo request?
-# ? Delete next 3 functions when sure not back to it.
-# from flask import current_app
-
-# def image_has_allowed_filesize(filesize: str) -> bool:
-#     return bool(int(filesize) <= current_app.config["MAX_IMAGE_FILESIZE"])
-
-
-# def image_has_allowed_extetion(filename: str) -> bool:
-#     """ Check if filename has any of expected extention """
-#     if not "." in filename:
-#         return False
-#     ext = filename.rsplit(".", 1)[1]
-#     return bool(ext.upper() in current_app.config["ALLOWED_IMAGE_EXTENSIONS"])
 
 
 @app.route('/add_book', methods=['GET', 'POST'])
@@ -390,7 +379,6 @@ def all_msgs():
     """ For debug only """
     msgs = Message.query.all()
     msgs_total = Message.query.count()
-    print(f'messages found = {msgs_total}', flush=True)
     return render_template(
         'all_messages.html',
         title='Messages list',

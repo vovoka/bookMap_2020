@@ -13,8 +13,6 @@ SCALE_HEIGHT = 'h'
 SCALE_BOTH = 'crop'
 
 def crop(img, x, y):
-    print(f'CALL CROP', flush=True)
-
     img_x, img_y = img.size
     img_ratio = img_x/float(img_y)
     crop_ratio = x/float(y)
@@ -67,7 +65,6 @@ def thumbnail(filename:str, size='200w'):
         size = size[:-1]
         max_size = int(size.strip())
     else:
-        print(f' CROP mode', flush=True)
         mode = 'crop'
 
     # if the image wasn't already resized, resize it
