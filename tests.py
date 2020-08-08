@@ -3,8 +3,9 @@ from datetime import datetime, timedelta
 import unittest
 from app import app, db
 from app.models import User, Book
-from app.db_handlers import (get_book_id, book_exist,
-                             get_books_by_user_id)
+from app.db_handlers import (get_book_id,
+                             get_books_by_user_id,
+                             )
 
 
 # class UserModelCase(unittest.TestCase):
@@ -49,12 +50,12 @@ class BookModelCase(unittest.TestCase):
         self.assertEqual(get_book_id('test_title_00', 'test_author'), None)
         self.assertEqual(get_book_id('', ''), None)
 
-    def test_book_exist(self):
-        self.assertEqual(book_exist(title='test_title',
-                                    author='test_author'), True)
-        self.assertEqual(book_exist(title='test_title_not',
-                                    author='test_author'), False)
-        self.assertEqual(book_exist('', ''), False)
+    # def test_book_exist(self):
+    #     self.assertEqual(book_exist(title='test_title',
+    #                                 author='test_author'), True)
+    #     self.assertEqual(book_exist(title='test_title_not',
+    #                                 author='test_author'), False)
+    #     self.assertEqual(book_exist('', ''), False)
 
     # def test_get_books_by_user_id(self):
     #     # create_user (to not get error with book.owner_id

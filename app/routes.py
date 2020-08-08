@@ -78,7 +78,12 @@ def search():
     if len(books) == 0:
         flash('Sorry, we do not know anything about.Hovewer you can add the book, even sell one.')
         return redirect(url_for('add_book'))
-    return render_template('search.html', title='Search', books=books)
+    return render_template(
+        'search.html',
+        title='Search',
+        books=books,
+        key_word=key_word,
+        )
 
 
 @app.route('/users_location')
@@ -148,6 +153,7 @@ def book(book_id):
     book = Book.query.filter_by(id=book_id).first_or_404()
 
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
+    book_instances = sorted(book_instances, key=lambda x: x[4])
     utils.generate_map_by_book_id([book_id])
     return render_template(
         'book_page.html',

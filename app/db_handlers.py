@@ -5,12 +5,13 @@ from random import random, randint
 from sqlalchemy import or_, and_, desc
 import csv
 from datetime import datetime, timedelta
+from typing import List, Union
 
 
 #  ------------  GENERAL DB ------------------
 
 
-def make_db_data(db):
+def make_db_data(db) -> None:
     """ Fill DB with users, Books, BookInstances """
 
     # how many to generate
@@ -49,14 +50,14 @@ def make_db_data(db):
             owner_id=randint(1, users),
             price=randint(20, 200),
             condition=randint(1, 5),
-            description='Lorem ipsum...'
+            description='Lorem ipsum...',
         )
         incr_instance_counter(book_id)
         db.session.add(book_instance)
     db.session.commit()
 
 
-def clear_db_data(db):
+def clear_db_data(db) -> None:
     """ clear all rows from listed db tables """
     tables = [BookInstance, Book, User, Message]
     for table in tables:
@@ -67,7 +68,7 @@ def clear_db_data(db):
 #  ------------  BOOK ------------------
 
 
-def get_books_by_kw(key_word) -> list():
+def get_books_by_kw(key_word) -> List[Book]:
     """ Returns list of book instances founded by key_words
 
     Q: why is the loop?
@@ -99,25 +100,15 @@ def get_books_by_kw(key_word) -> list():
     return search_result
 
 
-def create_book(title: str, author: str, isbn=0) -> object:
-    if not book_exist(title, author):
+def create_book(title: str, author: str, isbn) -> Book:
+    if not get_book_by_isbn(isbn):
         book = Book(title=title, author=author, isbn=isbn)
         db.session.add(book)
         db.session.commit()
         return book
 
 
-def book_exist(title: str, author: str, isbn=0) -> bool:
-    """ Check if book with incoming attributes is in db """
-    if isbn:
-        return bool(Book.query.filter_by(
-            isbn=isbn).first())
-    return bool(Book.query.filter_by(
-        title=title,
-        author=author).first())
-
-
-def get_book_id(title: str, author: str):
+def get_book_id(title: str, author: str) -> Union[int, None]:
     """ Returns Book.id or None """
     book = Book.query.filter_by(
         title=title,
@@ -127,7 +118,7 @@ def get_book_id(title: str, author: str):
     return res
 
 
-def get_books_by_user_id(user_id) -> list:
+def get_books_by_user_id(user_id) -> List[Book]:
     """ Returns list of Book objects """
     books = (db.session.query(
         User.username,
@@ -139,13 +130,13 @@ def get_books_by_user_id(user_id) -> list:
     return books
 
 
-def get_book(id) -> object:
+def get_book(book_id) -> Book:
     book = Book.query.filter_by(
-        id=id).first()
+        book_id=id).first()
     return book
 
 
-def get_book_by_isbn(isbn) -> object:
+def get_book_by_isbn(isbn) -> Book:
     book = Book.query.filter_by(
         isbn=isbn).first()
     return book
@@ -172,7 +163,7 @@ def decr_instance_counter(book_id) -> int:
 #  ------------  BOOK INSTANCE ------------------
 
 
-def get_all_book_instances() -> list:
+def get_all_book_instances() -> List[BookInstance]:
     """ Returns all BookInstances """
     book_instances = (db.session.query(
         User.username,
@@ -188,7 +179,7 @@ def get_all_book_instances() -> list:
     return book_instances
 
 
-def get_freshest_book_instances(items: int) -> list:
+def get_freshest_book_instances(items: int) -> List[BookInstance]:
     """ Returns n freshest BookInstances """
     book_instances = (db.session.query(
         User.username,
@@ -209,7 +200,12 @@ def get_freshest_book_instances(items: int) -> list:
     return book_instances
 
 
-def create_book_instance(price, condition, description, owner_id, book_id):
+def create_book_instance(
+        price,
+        condition,
+        description,
+        owner_id,
+        book_id) -> BookInstance:
     """
     Add book instance to db
 
@@ -232,13 +228,13 @@ def update_book_instance(
         book_instance_id,
         price,
         condition,
-        description):
+        description) -> BookInstance:
     bi_prev_state = get_book_instance_by_id(book_instance_id)
     if (
             price != bi_prev_state.price or
             condition != bi_prev_state.condition or
             description != bi_prev_state.description):
-        (
+        bi = (
             db.session.query(BookInstance)
             .filter(BookInstance.id == book_instance_id)
             .update(
@@ -248,6 +244,8 @@ def update_book_instance(
                     BookInstance.description: description
                 }, synchronize_session=False))
         db.session.commit()
+        return bi
+    return bi_prev_state
 
 
 def delete_book_instance(book_instance_id: str) -> None:
@@ -257,7 +255,7 @@ def delete_book_instance(book_instance_id: str) -> None:
     db.session.commit()
 
 
-def get_book_instance_by_id(book_instance_id: str) -> object:
+def get_book_instance_by_id(book_instance_id: str) -> Union[BookInstance, None]:
     """ Returns BookInstance object if exists in DB or None"""
     book_instance = (db.session.query(
         User.username,
@@ -278,7 +276,7 @@ def get_book_instance_by_id(book_instance_id: str) -> object:
     return book_instance
 
 
-def get_book_instances_by_user_id(user_id) -> list:
+def get_book_instances_by_user_id(user_id) -> List[BookInstance]:
     """ Returns list of BookInstance objects """
     book_instances = (db.session.query(
         User.username,
@@ -299,7 +297,7 @@ def get_book_instances_by_user_id(user_id) -> list:
     return book_instances
 
 
-def get_book_instances_by_book_id(book_id) -> list:
+def get_book_instances_by_book_id(book_id) -> List[BookInstance]:
     """ Returns list of BookInstance objects """
     book_instances = (db.session.query(
         User.username,
@@ -327,7 +325,7 @@ def get_book_instances_id_by_book_id(book_id) -> tuple:
     return book_instances_ids
 
 
-def get_expired_bi_with_users(expiration_period_days=30) -> list:
+def get_expired_bi_with_users(expiration_period_days=30) -> List[BookInstance]:
     """ Returns user_email and bi_id & title for
     expired bi only."""
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
@@ -361,7 +359,7 @@ def deactivate_any_bi_if_expired(expiration_period_days=30) -> None:
     db.session.commit()
 
 
-def activate_book_instance(book_instance_id):
+def activate_book_instance(book_instance_id) -> None:
     (db.session.query(BookInstance)
      .filter(BookInstance.id == book_instance_id)
      .update({
@@ -371,7 +369,7 @@ def activate_book_instance(book_instance_id):
     db.session.commit()
 
 
-def deactivate_book_instance(book_instance_id):
+def deactivate_book_instance(book_instance_id) -> None:
     (db.session.query(BookInstance)
      .filter(BookInstance.id == book_instance_id)
      .update({BookInstance.is_active: False}, synchronize_session=False))
@@ -380,16 +378,16 @@ def deactivate_book_instance(book_instance_id):
 #  ------------ USER ------------------
 
 
-def get_user_by_username(username: str) -> object:
+def get_user_by_username(username: str) -> User:
     return User.query.filter_by(username=username).first_or_404()
 
 
 def update_user_profile(
-    about_me:str,
-    latitude:str,
-    longitude:str,
-    username:str,
-) -> object:
+    about_me: str,
+    latitude: str,
+    longitude: str,
+    username: str,
+) -> User:
     """ Updates users coordinates, description at DB """
     user = (db.session.query(User)
             .filter(User.username == username)
@@ -407,7 +405,7 @@ def update_user_profile(
 
 
 def create_user(username: str, email: str, avatar: str, latitude=50.4547,
-                longitude=30.520) -> object:
+                longitude=30.520) -> User:
     ''' create new user '''
 
     user = User(
@@ -424,7 +422,7 @@ def create_user(username: str, email: str, avatar: str, latitude=50.4547,
     return user
 
 
-def delete_user(user_id):
+def delete_user(user_id) -> None:
     User.query.filter_by(id=user_id).delete()
     # TODO cascade delete all users book_instances???
     # Check if it generate any errors related to messages (no recepient for exmpl)
@@ -433,13 +431,13 @@ def delete_user(user_id):
 #  ------------ MESSAGE ------------------
 
 
-def get_message(message_id) -> object:
+def get_message(message_id) -> Message:
     """ Returns Message object """
     message = Message.query.filter_by(id=message_id).first_or_404()
     return message
 
 
-def get_messages_by_user(user_id):
+def get_messages_by_user(user_id) -> List[Message]:
     """ Returns non-deleted users Messages (both sent and received) """
     messages = (
         Message.query

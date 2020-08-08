@@ -8,13 +8,15 @@
         Sorry, this book is not offered now.
         <p><a href="{{ url_for('index') }}">Back</a></p>
     {% endif %}
+
+    <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
+        <input type="submit" value="Sell the book" />
+    </form>
+
         <table class="table table-hover">
             <tr>
                 <th>Cover</th>
                 <th>Description</th>
-                {% if book_instances %}
-                    <th>Book instances</th>
-                {% endif %}
             </tr>
             <tr>
                 <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
@@ -27,23 +29,24 @@
                         isbn: not provided <small><i> (click <a href="#">here</a> to add isbn) </i></small>
                     {% endif %}
                 </td>
-                {% if book_instances %}
-                    <td>
-                        <table class="table table-hover">
-                                <th>Price</th>
-                                <th>owner's name</th>
-                            {% for book_instance in book_instances %}
-                                {% include '_book_instance_short.html' %}
-                            {% endfor %}
-                        </table>
-                        <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
-                            <input type="submit" value="Sell the book" />
-                        </form>
-                    </td>
-                {% endif %}
-
             </tr>
-        </table>
+
+        {% if book_instances %}
+            <tr>
+                <td><b>Book offers</b></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>Owner</td>
+            </tr>
+            <tr>
+                {% for book_instance in book_instances %}
+                    {% include '_book_instance_short.html' %}
+                {% endfor %}
+            </tr>
+        {% endif %}
+    </table>
 
         {% if not book_instances %}
         <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
