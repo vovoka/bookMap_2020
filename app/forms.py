@@ -1,12 +1,14 @@
-from app.models import User
-from wtforms.validators import ValidationError, DataRequired, Email, Length, InputRequired, NumberRange
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, HiddenField, SelectField
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from app import db_handlers
+import re
 
 from flask import request
-import re
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
+from wtforms import (HiddenField, IntegerField, SelectField, StringField,
+                     SubmitField, TextAreaField)
+from wtforms.validators import (DataRequired, Length, NumberRange, Optional,
+                                ValidationError)
+
+from app.models import User
 
 
 class SearchForm(FlaskForm):
@@ -20,44 +22,45 @@ class SearchForm(FlaskForm):
         super(SearchForm, self).__init__(*args, **kwargs)
 
 
-def isbn_is_not_exist(form, field):
-    book = db_handlers.get_book_by_isbn(field.data)
-    if book:
-        raise ValidationError(f'Book with isbn {field.data} already exist in database:\
-             {book.title} by {book.author}. Please, do not create duplicates, use search.')
-
-
-def is_isbn(form, fieldname):
-    sum = 0
-    isbn = form.data.get(fieldname)
-    isbn = re.sub(r"[-–—\s]", "", isbn)
-
-    # isbn13
-    # is it a ISBN? Thanks @librarythingtim
-    if len(isbn) == 13 and isbn[0:3] == "978" or "979":
-        for d, i in enumerate(isbn):
-            # if (int(d) + 1) % 2 != 0:
-            if int(d) % 2 == 0:
-                sum += int(i)
-            else:
-                sum += int(i) * 3
-        return sum % 10 == 0
-
-    # isbn10
+def is_isbn_10(form, fieldname):
+    _sum = 0
+    isbn_val = form.data.get(fieldname)
+    isbn = re.sub(r"[-–—\s]", "", isbn_val)
+    checksum_passed = False
     if len(isbn) == 10:
         isbn = list(isbn)
         if isbn[-1] == "X" or isbn[-1] == "x":  # a final x stands for 10
             isbn[-1] = 10
         for d, i in enumerate(isbn[:-1]):
-            sum += (int(d)+1) * int(i)
-        return (sum % 11) == int(isbn[-1])
+            _sum += (int(d)+1) * int(i)
+        checksum_passed = (_sum % 11) == int(isbn[-1])
+    return checksum_passed
 
-    return False
+
+def is_isbn_13(form, fieldname):
+    _sum = 0
+    isbn_val = form.data.get(fieldname)
+    isbn = re.sub(r"[-–—\s]", "", isbn_val)
+    checksum_passed = False
+    if len(isbn) == 13 and isbn[0:3] == "978" or "979":
+        for d, i in enumerate(isbn):
+            if int(d) % 2 == 0:
+                _sum += int(i)
+            else:
+                _sum += int(i) * 3
+        checksum_passed = _sum % 10 == 0
+    return checksum_passed
 
 
-def is_valid_isbn(form, field):
-    if not is_isbn(form, 'isbn'):
-        raise ValidationError('Sorry, is NOT a valid ISBN')
+def isbn_10_validator(form, field):
+    if not is_isbn_10(form, 'isbn_10'):
+        raise ValidationError('Sorry, is NOT a valid ISBN 10')
+    return True
+
+
+def isbn_13_validator(form, field):
+    if not is_isbn_13(form, 'isbn_13'):
+        raise ValidationError('Sorry, is NOT a valid ISBN 13')
     return True
 
 
@@ -70,21 +73,29 @@ class AddBookForm(FlaskForm):
         'Author',
         validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
     )
-    isbn = StringField(
-        'ISBN (leave blank if no ISBN)',
-        validators=[is_valid_isbn or None]
+    isbn_10 = StringField(
+        'ISBN 10 (leave blank if no ISBN)',
+        validators=[Optional(), isbn_10_validator]
+    )
+    isbn_13 = StringField(
+        'ISBN 13 (leave blank if no ISBN)',
+        validators=[Optional(), isbn_13_validator]
     )
     cover = FileField('Book cover', validators=[
-        DataRequired(),
+        Optional(),
         FileAllowed(['jpg', 'jpeg'], '*.jpeg Images only!')
     ])
     submit = SubmitField('Add Book')
 
 
 class AddIsbnForm(FlaskForm):
-    isbn = StringField(
-        'ISBN',
-        validators=[is_valid_isbn]
+    isbn_10 = StringField(
+        'ISBN 10 (leave blank if no ISBN)',
+        validators=[Optional(), isbn_10_validator]
+    )
+    isbn_13 = StringField(
+        'ISBN 13 (leave blank if no ISBN)',
+        validators=[Optional(), isbn_13_validator]
     )
     submit = SubmitField('Add ISBN')
 

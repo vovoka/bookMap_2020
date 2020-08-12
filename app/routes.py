@@ -1,20 +1,19 @@
 import os
-from app.forms import EditProfileForm
-from app import app, db, db_handlers, utils
-from flask_login import login_user, logout_user, current_user, login_required
-# from werkzeug.urls import url_parse
-from flask import (Flask, session, url_for, current_app, render_template,
-                   redirect, flash, request, g)
-from app.forms import (AddBookForm, EditBookInstanceForm,
-                       MessageForm, EditProfileForm, SearchForm, AddIsbnForm)
-from app.models import User, Book, Message
 from datetime import datetime
+
 import folium
 import folium.plugins
-from authlib.integrations.flask_client import OAuth
 from apscheduler.schedulers.background import BackgroundScheduler
-from app.thumbs import thumbnail
+from authlib.integrations.flask_client import OAuth
+from flask import (current_app, flash, g, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 
+from app import app, db, db_handlers, utils
+from app.forms import (AddBookForm, AddIsbnForm, EditBookInstanceForm,
+                       EditProfileForm, MessageForm, SearchForm)
+from app.models import Book, Message, User
+from app.thumbs import thumbnail
 
 # oauth configuration
 CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
@@ -76,7 +75,6 @@ def search():
     if len(books) == 1:
         return redirect(url_for('book', book_id=books_ids[0]))
     if len(books) == 0:
-        flash('Sorry, we do not know anything about.Hovewer you can add the book, even sell one.')
         return redirect(url_for('add_book'))
     return render_template(
         'search.html',
@@ -92,11 +90,11 @@ def users_location():
     start_coords = (50.4547, 30.524)
     m = folium.Map(width=500, height=500, location=start_coords, zoom_start=12)
 
-    users = User.query.all()
-    for user in users:
+    _users = User.query.all()
+    for _user in _users:
         folium.Marker(
-            location=[user.latitude, user.longitude],
-            popup=user.username,
+            location=[_user.latitude, _user.longitude],
+            popup=_user.username,
             icon=folium.Icon(color='green')
         ).add_to(m)
     m.save('app/templates/_map.html')
@@ -134,15 +132,13 @@ def recreate_db():
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    user = db_handlers.get_user_by_username(username)
-    book_instances = db_handlers.get_book_instances_by_user_id(user.id)
-    # TODO not added to html template. Delete?
-    # books = db_handlers.get_books_by_user_id(user.id)
+    _user = db_handlers.get_user_by_username(username)
+    _book_instances = db_handlers.get_book_instances_by_user_id(_user.id)
     return render_template(
         'user.html',
-        user=user,
-        book_instances=book_instances,
-        total_instances=len(book_instances),
+        user=_user,
+        book_instances=_book_instances,
+        total_instances=len(_book_instances),
     )
 
 
@@ -151,14 +147,14 @@ def user(username):
 def book(book_id):
     """ Shows book detailed info """
 
-    book = Book.query.filter_by(id=book_id).first_or_404()
+    _book = Book.query.filter_by(id=book_id).first_or_404()
 
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
     book_instances = sorted(book_instances, key=lambda x: x[4])
     utils.generate_map_by_book_id([book_id])
     return render_template(
         'book_page.html',
-        book=book,
+        book=_book,
         book_instances=book_instances,
     )
 
@@ -166,15 +162,15 @@ def book(book_id):
 @app.route('/bi/<book_instance_id>', methods=['GET', 'POST'])
 @login_required
 def book_instance(book_instance_id):
-    book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
-    editable = (book_instance.owner_id == current_user.id)
+    _book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
+    editable = (_book_instance.owner_id == current_user.id)
     form = MessageForm()
     if form.validate_on_submit():
         msg = Message(
-            book_id=book_instance.book_id,
+            book_id=_book_instance.book_id,
             book_instance_id=book_instance_id,
             sender_id=current_user.id,
-            recipient_id=book_instance.owner_id,
+            recipient_id=_book_instance.owner_id,
             body=form.message.data,
         )
         db.session.add(msg)
@@ -184,7 +180,7 @@ def book_instance(book_instance_id):
     utils.generate_map_single_marker()
     return render_template(
         'book_instance_page.html',
-        book_instance=book_instance,
+        book_instance=_book_instance,
         editable=editable,
         form=form,
     )
@@ -227,36 +223,46 @@ def add_book():
     if form.validate_on_submit():
         title = form.title.data
         author = form.author.data
-        isbn = form.isbn.data
+        # digits only
+        isbn_10 = str(''.join(filter(str.isdigit, form.isbn_10.data)))
+        isbn_13 = str(''.join(filter(str.isdigit, form.isbn_10.data)))
         cover = form.cover.data
-        isbn = str(''.join(filter(str.isdigit, isbn)))  # digits only
 
         book_by_isbn = None
-        if isbn:
-            book_by_isbn = db_handlers.get_book_by_isbn(isbn)
+        if isbn_10:
+            book_by_isbn = db_handlers.get_book_by_isbn_10(isbn_10)
+        if isbn_13:
+            book_by_isbn = db_handlers.get_book_by_isbn_13(isbn_13)
         if book_by_isbn:
             # ? TODO add popup with a message why user is redirected
-            flash('The book with ISBN you entered alreaty exists in DB \n That is why you are redirected to the page. \n You can add a book instance by click on "Sell the book" button.')
-            return redirect(url_for('add_book_instance', book_id=book_by_isbn.id))
+            flash('The book with ISBN you entered alreaty exists in DB')
+            # That is why you are redirected to the page.
+            # You can add a book instance by click on "Sell the book" button.
+            return redirect(url_for(
+                'add_book_instance',
+                book_id=book_by_isbn.id
+            ))
 
         # else create book
         new_book = db_handlers.create_book(
             title=title,
             author=author,
-            isbn=isbn,
+            isbn_10=isbn_10,
+            isbn_13=isbn_13,
             current_user_id=current_user.id,
-            )
+        )
 
         # download original cover file then replace it with cropped one
-        utils.cover_upload(cover, new_book.id)
-        filepath = os.path.join(
-            current_app.config["IMAGE_UPLOADS"],
-            str(new_book.id) + '.jpg')
-        cover = thumbnail(
-            filepath,
-            current_app.config["IMAGE_TARGET_SIZE"],
-        )
-        utils.cover_upload(cover, new_book.id)
+        if cover:
+            utils.cover_upload(cover, new_book.id)
+            filepath = os.path.join(
+                current_app.config["IMAGE_UPLOADS"],
+                str(new_book.id) + '.jpg')
+            cover = thumbnail(
+                filepath,
+                current_app.config["IMAGE_TARGET_SIZE"],
+            )
+            utils.cover_upload(cover, new_book.id)
 
         return redirect(url_for('add_book_instance', book_id=new_book.id))
     return render_template('add_book.html', title='add_book', form=form)
@@ -271,7 +277,7 @@ def add_book_instance(book_id):
         condition = form.condition.data
         description = form.description.data
 
-        book_instance = db_handlers.create_book_instance(
+        _book_instance = db_handlers.create_book_instance(
             price=price,
             condition=int(condition),
             description=description,
@@ -280,37 +286,53 @@ def add_book_instance(book_id):
         )
         return redirect(url_for(
             'book_instance',
-            book_instance_id=book_instance.id)
-        )
-    book = db_handlers.get_book(book_id)
+            book_instance_id=_book_instance.id,
+        ))
+    _book = db_handlers.get_book(book_id)
 
     return render_template(
         'add_book_instance.html',
         title='add_book_instance',
         form=form,
-        book=book,
-        bi=book,
+        book=_book,
+        bi=_book,
     )
 
 
 @app.route('/add_isbn/<book_id>', methods=['GET', 'POST'])
 @login_required
 def add_isbn_to_book(book_id):
-    book = db_handlers.get_book(book_id)
+    _book = db_handlers.get_book(book_id)
     form = AddIsbnForm()
     if form.validate_on_submit():
-        isbn = form.isbn.data
-        if not db_handlers.get_book_by_isbn(isbn):  # then update_isbn
-            db_handlers.update_book_isbn(book_id, isbn)
-            flash('Thank you for updating the book ISBN')
-            return redirect(url_for(
+        isbn_10 = form.isbn_10.data
+        isbn_13 = form.isbn_13.data
+        # handle isbn_10
+
+        isbn_10_exist = db_handlers.get_book_by_isbn_10(isbn_10)
+        isbn_13_exist = db_handlers.get_book_by_isbn_13(isbn_13)
+
+        if not isbn_10_exist:
+            db_handlers.update_book_isbn_10(book_id, isbn_10)
+            flash('Thank you for updating the book ISBN 10')
+
+        if not isbn_13_exist:
+            db_handlers.update_book_isbn_13(book_id, isbn_13)
+            flash('Thank you for updating the book ISBN 13')
+
+        # if not (isbn_10_exist or isbn_13_exist):
+        return redirect(url_for(
             'book',
             book_id=book_id))
-        flash('Sorry, it seems that entered ISBN is already linked to another book. Please, doublecheck it.')
+
+        # ? show it?
+        # flash('Sorry, it seems that entered ISBN is already linked to
+        # another book. Please, doublecheck it.')
+
     return render_template(
         'add_isbn.html',
         form=form,
-        book=book,
+        book=_book,
     )
 
 
@@ -319,19 +341,19 @@ def add_isbn_to_book(book_id):
 def edit_book_instance(book_instance_id):
 
     form = EditBookInstanceForm()
-    book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
-    if book_instance.owner_id != current_user.id:
+    _book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
+    if _book_instance.owner_id != current_user.id:
         flash("User allowed to edit only their own book instances")
         return render_template(
             'book_instance_page.html',
-            book_instance=book_instance,
+            book_instance=_book_instance,
             editable=False,
         )
 
     # form prefill
-    form.price.data = book_instance.price or '0'
-    form.condition.data = str(book_instance.condition)
-    form.description.data = book_instance.description
+    form.price.data = _book_instance.price or '0'
+    form.condition.data = str(_book_instance.condition)
+    form.description.data = _book_instance.description
 
     if form.validate_on_submit():
         result = request.form
@@ -363,8 +385,8 @@ def edit_book_instance(book_instance_id):
 @login_required
 def activate_book_instance(book_instance_id):
     # check the user is a bi owner
-    bi = db_handlers.get_book_instance_by_id(book_instance_id)
-    if current_user.id != bi.owner_id:
+    _book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != _book_instance.owner_id:
         return redirect(url_for('index'))
     db_handlers.activate_book_instance(book_instance_id)
     return redirect(request.referrer)
@@ -377,8 +399,8 @@ def activate_book_instance(book_instance_id):
 @login_required
 def deactivate_book_instance(book_instance_id):
     # check the user is a bi owner
-    bi = db_handlers.get_book_instance_by_id(book_instance_id)
-    if current_user.id != bi.owner_id:
+    _book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != _book_instance.owner_id:
         return redirect(url_for('index'))
     db_handlers.deactivate_book_instance(book_instance_id)
     return redirect(request.referrer)
@@ -390,8 +412,8 @@ def deactivate_book_instance(book_instance_id):
 )
 @login_required
 def delete_book_instance(book_instance_id):
-    bi = db_handlers.get_book_instance_by_id(book_instance_id)
-    if current_user.id != bi.owner_id:
+    _book_instance = db_handlers.get_book_instance_by_id(book_instance_id)
+    if current_user.id != _book_instance.owner_id:
         return redirect(url_for('index'))
     db_handlers.delete_book_instance(book_instance_id)
     return redirect(request.referrer)
@@ -399,15 +421,15 @@ def delete_book_instance(book_instance_id):
 
 @app.route('/users')
 def users():
-    users = User.query.all()
-    return render_template('users.html', title='User list', users=users)
+    _users = User.query.all()
+    return render_template('users.html', title='User list', users=_users)
 
 
 @app.route('/all_msgs')
 def all_msgs():
     """ For debug only """
     msgs = Message.query.all()
-    msgs_total = Message.query.count()
+    # msgs_total = Message.query.count()
     return render_template(
         'all_messages.html',
         title='Messages list',
@@ -421,14 +443,14 @@ def all_msgs():
 )
 @login_required
 def send_message(recipient, prev_message_id):
-    user = User.query.filter_by(username=recipient).first_or_404()
+    _user = User.query.filter_by(username=recipient).first_or_404()
     form = MessageForm()
     if prev_message_id == 0:
         prev_message = Message(
             book_instance_id=0,
             book_id=0,
             author=current_user,
-            recipient=user,
+            recipient=_user,
             body='',
         )
     else:
@@ -476,10 +498,10 @@ def delete_message(message_id):
 def messages():
     current_user.last_message_read_time = datetime.utcnow()
     db.session.commit()
-    messages = db_handlers.get_messages_by_user(current_user.id)
+    _messages = db_handlers.get_messages_by_user(current_user.id)
     return render_template(
         'messages.html',
-        messages=messages,
+        messages=_messages,
         form=MessageForm,
     )
 
@@ -493,35 +515,36 @@ def login():
 @app.route('/auth')
 def auth():
     token = oauth.google.authorize_access_token()
-    user = oauth.google.parse_id_token(token)
+    _user = oauth.google.parse_id_token(token)
 
-    user_from_db = User.query.filter_by(email=user.get('email')).first()
+    user_from_db = User.query.filter_by(email=_user.get('email')).first()
 
     if user_from_db:
         login_user(user_from_db)
-        # TODO redirect to previous page
         return redirect(url_for('index'))
     else:
         visitor_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
         lon, lat = utils.get_coordinates_by_ip(visitor_ip)
         if lon and lat:
             user_from_db = db_handlers.create_user(
-                username=user.get('name'),
-                email=user.get('email'),
-                avatar=user.get('picture'),
+                username=_user.get('name'),
+                email=_user.get('email'),
+                avatar=_user.get('picture'),
                 longitude=lon,
                 latitude=lat,
             )
         else:
             user_from_db = db_handlers.create_user(
-                username=user.get('name'),
-                email=user.get('email'),
-                avatar=user.get('picture'),
+                username=_user.get('name'),
+                email=_user.get('email'),
+                avatar=_user.get('picture'),
             )
         login_user(user_from_db)
         flash('Please, made an initial set up of your profile:')
-        flash('    * Edit your location. (you can set any point you want, i.e. your home, busstop or metro station convenient for you to meet buyers)')
-        flash('    * Add alternative contact info, if you want (mobile/telegram... etc.)')
+        flash('    * Edit your location.')
+        #  (you can set any point you want, i.e. your home,
+        #  busstop or metro station convenient for you to meet buyers)
+        flash('    * Add contact info, if you want (telegram... etc.)')
         return redirect('/edit_profile')
 
 

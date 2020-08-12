@@ -5,6 +5,12 @@
     </td>
     <td><b>{{ book_instance.title }}</b><br>
         by {{ book_instance.author }}<br>
-        isbn: {{ book_instance.isbn }}
+        {% if book_instance.isbn_10 %}
+            isbn 10: {{ book_instance.isbn_10 }}<br>
+        {% endif %}
+        {% if book_instance.isbn_13 %}
+            isbn 13: {{ book_instance.isbn_13 }}<br>
+        {% endif %}
+
     </td>
 </tr>

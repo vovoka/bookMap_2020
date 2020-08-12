@@ -38,7 +38,7 @@ def make_db_data(db) -> None:
     with open('test_books_data.csv', newline='') as csvfile:
         book_reader = csv.reader(csvfile, delimiter=',', quotechar="'")
         for book in book_reader:
-            book = Book(title=book[0], author=book[1], isbn=book[2])
+            book = Book(title=book[0], author=book[1], isbn_13=book[2])
             db.session.add(book)
         db.session.commit()
 
@@ -102,11 +102,17 @@ def get_books_by_kw(key_word) -> List[Book]:
 
 def create_book(title: str,
                 author: str,
-                isbn: str,
+                isbn_10: Union[str, None],
+                isbn_13: Union[str, None],
                 current_user_id: int,
                 ) -> Book:
-    book = Book(title=title, author=author,
-                isbn=isbn, created_by=current_user_id)
+    book = Book(
+        title=title,
+        author=author,
+        isbn_10=isbn_10,
+        isbn_13=isbn_13,
+        created_by=current_user_id,
+    )
     db.session.add(book)
     db.session.commit()
     return book
@@ -128,7 +134,9 @@ def get_books_by_user_id(user_id) -> List[Book]:
         User.username,
         Book.title,
         Book.author,
-        Book.isbn)
+        Book.isbn_10,
+        Book.isbn_13,
+    )
         .filter(BookInstance.owner_id == user_id)
         .filter(BookInstance.book_id == Book.id))
     return books
@@ -140,21 +148,39 @@ def get_book(book_id) -> Book:
     return book
 
 
-def get_book_by_isbn(isbn) -> Book:
+def get_book_by_isbn_10(isbn_10) -> Book:
     book = Book.query.filter_by(
-        isbn=isbn).first()
+        isbn_10=isbn_10).first()
     return book
 
 
-def update_book_isbn(
-        book_id,
-        isbn) -> Book:
+def get_book_by_isbn_13(isbn_13) -> Book:
+    book = Book.query.filter_by(
+        isbn_13=isbn_13).first()
+    return book
+
+
+def update_book_isbn_10(book_id, isbn_10) -> Book:
     book = (
         db.session.query(Book)
         .filter(Book.id == book_id)
         .update(
             {
-                Book.isbn: isbn,
+                Book.isbn_10: isbn_10,
+            }, synchronize_session=False))
+    db.session.commit()
+    return book
+
+
+def update_book_isbn_13(
+        book_id,
+        isbn_13) -> Book:
+    book = (
+        db.session.query(Book)
+        .filter(Book.id == book_id)
+        .update(
+            {
+                Book.isbn_13: isbn_13,
             }, synchronize_session=False))
     db.session.commit()
     return book
@@ -187,7 +213,8 @@ def get_all_book_instances() -> List[BookInstance]:
         User.username,
         Book.title,
         Book.author,
-        Book.isbn,
+        Book.isbn_10,
+        Book.isbn_13,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,
@@ -206,7 +233,8 @@ def get_freshest_book_instances(items: int) -> List[BookInstance]:
         BookInstance.book_id,
         Book.title,
         Book.author,
-        Book.isbn,
+        Book.isbn_10,
+        Book.isbn_13,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,
@@ -279,7 +307,8 @@ def get_book_instance_by_id(book_instance_id: str) -> Union[BookInstance, None]:
         User.username,
         Book.title,
         Book.author,
-        Book.isbn,
+        Book.isbn_10,
+        Book.isbn_13,
         BookInstance.id,
         BookInstance.owner_id,
         BookInstance.price,
@@ -301,7 +330,8 @@ def get_book_instances_by_user_id(user_id) -> List[BookInstance]:
         User.id,
         Book.title,
         Book.author,
-        Book.isbn,
+        Book.isbn_10,
+        Book.isbn_13,
         BookInstance.id,
         BookInstance.price,
         BookInstance.condition,

@@ -56,7 +56,8 @@ class BookInstance(db.Model):
 
 class Book(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    isbn = db.Column(db.Integer())
+    isbn_10 = db.Column(db.Integer())
+    isbn_13 = db.Column(db.Integer())
     title = db.Column(db.String(140))
     author = db.Column(db.String(140))
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'))

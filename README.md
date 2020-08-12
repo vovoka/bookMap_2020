@@ -18,11 +18,13 @@ here is a lot of bugs, I know ;)
 * email notifications 'You got a new message '
 * Docker
 * Clasterize book instances by location
-* try to switch to GraphQL (what for?)
-* Add a service to visit goodreads and parse an info of searched book.
+* Add a service to visit goodreads / Google API and parse an info of new / searched book.
 * Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
-* Add Book.created_by (username) to keep track if someone generates garbage data. Later add limitation for new book creation
 * replace http://127.0.0.1:5000 with DOMAIN_NAME
-* If noone or only you have BI then you can manage the related Book.
+* If noone or only you have BI then you can manage the related Book. how to? add book.is_editable
+
+* Add limitation for new book creation, just do not allow generates a lot of garbage data.
+* data caching?
+* try to switch to GraphQL (what for?)

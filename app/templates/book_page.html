@@ -23,9 +23,16 @@
                 <td>
                     title:<b>{{ book.title }}</b></br>
                     by: {{ book.author }}</br>
-                    {% if book.isbn %}
-                        isbn: {{ book.isbn }}</br>
-                    {% else %}
+
+                    {% if book.isbn_10 %}
+                        isbn 10: {{ book.isbn_10 }}</br>
+                    {% endif %}
+
+                    {% if book.isbn_13 %}
+                        isbn 13: {{ book.isbn_13 }}</br>
+                    {% endif %}
+
+                    {% if not (book.isbn_10 or book.isbn_13) %}
                         isbn: not provided yet. <small><i> Click <a href="http://127.0.0.1:5000/add_isbn/{{ book.id }}">here</a> to add. </i></small>
                     {% endif %}
                 </td>
