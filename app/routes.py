@@ -240,8 +240,12 @@ def add_book():
             return redirect(url_for('add_book_instance', book_id=book_by_isbn.id))
 
         # else create book
-        new_book = db_handlers.create_book(title, author, isbn)
-
+        new_book = db_handlers.create_book(
+            title=title,
+            author=author,
+            isbn=isbn,
+            current_user_id=current_user.id,
+            )
 
         # download original cover file then replace it with cropped one
         utils.cover_upload(cover, new_book.id)

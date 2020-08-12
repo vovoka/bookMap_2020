@@ -59,6 +59,7 @@ class Book(db.Model):
     isbn = db.Column(db.Integer())
     title = db.Column(db.String(140))
     author = db.Column(db.String(140))
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     instance_counter = db.Column(db.Integer, default=0)
     # TODO fix backref

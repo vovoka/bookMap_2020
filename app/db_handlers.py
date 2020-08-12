@@ -100,8 +100,13 @@ def get_books_by_kw(key_word) -> List[Book]:
     return search_result
 
 
-def create_book(title: str, author: str, isbn:str) -> Book:
-    book = Book(title=title, author=author, isbn=isbn)
+def create_book(title: str,
+                author: str,
+                isbn: str,
+                current_user_id: int,
+                ) -> Book:
+    book = Book(title=title, author=author,
+                isbn=isbn, created_by=current_user_id)
     db.session.add(book)
     db.session.commit()
     return book
@@ -140,6 +145,7 @@ def get_book_by_isbn(isbn) -> Book:
         isbn=isbn).first()
     return book
 
+
 def update_book_isbn(
         book_id,
         isbn) -> Book:
@@ -152,6 +158,7 @@ def update_book_isbn(
             }, synchronize_session=False))
     db.session.commit()
     return book
+
 
 def incr_instance_counter(book_id) -> int:
     """ Icrement book.instance_counter by 1.
