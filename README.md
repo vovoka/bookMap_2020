@@ -6,7 +6,7 @@ initial setup:
 * create virtual environment`venv` with `python3 -m venv venv && source venv/bin/activate`
 * create file `.env` file with secrets values (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET) like `export GOOGLE_CLIENT_ID = "102561523463-...r5ohi8ej22307.apps.googleusercontent.com" ...` to enable google OAuth.
 * install modules `pip install --upgrade pip && pip install -r requrements.txt`
-* initialise db (if you want to use db migrations later) `flask db init && flask db migrate -m "initial tables" && flask db upgrade` or visit `http://127.0.0.1:5000/populate_db` to create all tables and populate them with a sample data. It generates test-users with names like `ddd`, `hhh`, `kkk` with some test-books and book-instances.
+* initialise db (if you want to use db migrations later) `flask db init && flask db migrate -m "initial tables" && flask db upgrade` or visit `http://127.0.0.1:5000/populate_db` to create all tables and populate them with a sample data. It generates test-usersHas isbn with some test-books and book-instances.
 * run the app with `flask run`
 
 here is a lot of bugs, I know ;)
@@ -23,3 +23,6 @@ here is a lot of bugs, I know ;)
 * Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
+* Add Book.created_by (username) to keep track if someone generates garbage data. Later add limitation for new book creation
+* replace http://127.0.0.1:5000 with DOMAIN_NAME
+* If noone or only you have BI then you can manage the related Book.

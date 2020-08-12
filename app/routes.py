@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask import (Flask, session, url_for, current_app, render_template,
                    redirect, flash, request, g)
 from app.forms import (AddBookForm, EditBookInstanceForm,
-                       MessageForm, EditProfileForm, SearchForm)
+                       MessageForm, EditProfileForm, SearchForm, AddIsbnForm)
 from app.models import User, Book, Message
 from datetime import datetime
 import folium
@@ -83,7 +83,7 @@ def search():
         title='Search',
         books=books,
         key_word=key_word,
-        )
+    )
 
 
 @app.route('/users_location')
@@ -129,6 +129,7 @@ def recreate_db():
     db_handlers.make_db_data(db)
     flash('DB is recreated now')
     return redirect(url_for('index'))
+
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
@@ -228,25 +229,22 @@ def add_book():
         author = form.author.data
         isbn = form.isbn.data
         cover = form.cover.data
-        isbn = str(''.join(filter(str.isdigit, isbn))) # digits only
+        isbn = str(''.join(filter(str.isdigit, isbn)))  # digits only
 
-        book_by_isbn = db_handlers.get_book_by_isbn(isbn)
+        book_by_isbn = None
+        if isbn:
+            book_by_isbn = db_handlers.get_book_by_isbn(isbn)
         if book_by_isbn:
-            #? TODO add popup with a message why user is redirected
+            # ? TODO add popup with a message why user is redirected
             flash('The book with ISBN you entered alreaty exists in DB \n That is why you are redirected to the page. \n You can add a book instance by click on "Sell the book" button.')
             return redirect(url_for('add_book_instance', book_id=book_by_isbn.id))
 
-        # else create book...
+        # else create book
         new_book = db_handlers.create_book(title, author, isbn)
-        # get the book_id
-        # book_id = db_handlers.get_book_id(title, author)
 
-        # download original cover file
+
+        # download original cover file then replace it with cropped one
         utils.cover_upload(cover, new_book.id)
-        # Replace saved file with smaller one:
-        #   generate full filepath to the recently downloaded file
-        #   resize file with thumbnail()
-        #   upload new file (replace old one)
         filepath = os.path.join(
             current_app.config["IMAGE_UPLOADS"],
             str(new_book.id) + '.jpg')
@@ -288,6 +286,27 @@ def add_book_instance(book_id):
         form=form,
         book=book,
         bi=book,
+    )
+
+
+@app.route('/add_isbn/<book_id>', methods=['GET', 'POST'])
+@login_required
+def add_isbn_to_book(book_id):
+    book = db_handlers.get_book(book_id)
+    form = AddIsbnForm()
+    if form.validate_on_submit():
+        isbn = form.isbn.data
+        if not db_handlers.get_book_by_isbn(isbn):  # then update_isbn
+            db_handlers.update_book_isbn(book_id, isbn)
+            flash('Thank you for updating the book ISBN')
+            return redirect(url_for(
+            'book',
+            book_id=book_id))
+        flash('Sorry, it seems that entered ISBN is already linked to another book. Please, doublecheck it.')
+    return render_template(
+        'add_isbn.html',
+        form=form,
+        book=book,
     )
 
 

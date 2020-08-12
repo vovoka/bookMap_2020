@@ -71,14 +71,22 @@ class AddBookForm(FlaskForm):
         validators=[DataRequired(), Length(min=1, max=140, message='Too long')]
     )
     isbn = StringField(
-        'isbn',
-        validators=[InputRequired(), is_valid_isbn]
+        'ISBN (leave blank if no ISBN)',
+        validators=[is_valid_isbn or None]
     )
     cover = FileField('Book cover', validators=[
         DataRequired(),
         FileAllowed(['jpg', 'jpeg'], '*.jpeg Images only!')
     ])
     submit = SubmitField('Add Book')
+
+
+class AddIsbnForm(FlaskForm):
+    isbn = StringField(
+        'ISBN',
+        validators=[is_valid_isbn]
+    )
+    submit = SubmitField('Add ISBN')
 
 
 class EditBookInstanceForm(FlaskForm):

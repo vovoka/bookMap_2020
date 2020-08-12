@@ -100,12 +100,11 @@ def get_books_by_kw(key_word) -> List[Book]:
     return search_result
 
 
-def create_book(title: str, author: str, isbn) -> Book:
-    if not get_book_by_isbn(isbn):
-        book = Book(title=title, author=author, isbn=isbn)
-        db.session.add(book)
-        db.session.commit()
-        return book
+def create_book(title: str, author: str, isbn:str) -> Book:
+    book = Book(title=title, author=author, isbn=isbn)
+    db.session.add(book)
+    db.session.commit()
+    return book
 
 
 def get_book_id(title: str, author: str) -> Union[int, None]:
@@ -132,7 +131,7 @@ def get_books_by_user_id(user_id) -> List[Book]:
 
 def get_book(book_id) -> Book:
     book = Book.query.filter_by(
-        book_id=id).first()
+        id=book_id).first()
     return book
 
 
@@ -141,6 +140,18 @@ def get_book_by_isbn(isbn) -> Book:
         isbn=isbn).first()
     return book
 
+def update_book_isbn(
+        book_id,
+        isbn) -> Book:
+    book = (
+        db.session.query(Book)
+        .filter(Book.id == book_id)
+        .update(
+            {
+                Book.isbn: isbn,
+            }, synchronize_session=False))
+    db.session.commit()
+    return book
 
 def incr_instance_counter(book_id) -> int:
     """ Icrement book.instance_counter by 1.
@@ -193,10 +204,10 @@ def get_freshest_book_instances(items: int) -> List[BookInstance]:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.timestamp)
+        BookInstance.activation_time)
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.book_id == Book.id)
-        .order_by(desc(BookInstance.timestamp)).limit(items).all())
+        .order_by(desc(BookInstance.activation_time)).limit(items).all())
     return book_instances
 
 

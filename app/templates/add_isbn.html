@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+<h1>Add ISBN to existent Book</h1>
+<table>
+    <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
+        <td>
+            <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
+                onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+        </td>
+        <td><b>{{ book.title }}</b><br>
+            by {{ book.author }}<br>
+            isbn: {{ book.isbn }}
+        </td>
+    </tr>
+</table>
+
+    <div class="parent--books">
+        {% for book in books %}
+            {% include '_book.html' %}
+        {% endfor %}
+      </div>
+
+<div class="container-sm">
+    <hr>
+    <div class="col-md-2">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+{% endblock %}

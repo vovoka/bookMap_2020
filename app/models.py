@@ -31,8 +31,6 @@ class User(UserMixin, db.Model):
     last_message_read_time = db.Column(
         db.DateTime, default=datetime(1900, 1, 1))
 
-
-
     def new_messages(self):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
         return Message.query.filter_by(recipient=self).filter(
@@ -47,7 +45,6 @@ class BookInstance(db.Model):
     price = db.Column(db.Integer)
     condition = db.Column(db.Integer)
     description = db.Column(db.String(2000))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     is_active = db.Column(db.Boolean(), default=True)

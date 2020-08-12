@@ -26,7 +26,7 @@
                     {% if book.isbn %}
                         isbn: {{ book.isbn }}</br>
                     {% else %}
-                        isbn: not provided <small><i> (click <a href="#">here</a> to add isbn) </i></small>
+                        isbn: not provided yet. <small><i> Click <a href="http://127.0.0.1:5000/add_isbn/{{ book.id }}">here</a> to add. </i></small>
                     {% endif %}
                 </td>
             </tr>
