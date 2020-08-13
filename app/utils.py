@@ -1,17 +1,17 @@
 import os
-from flask import current_app
+
 import folium
 import folium.plugins
-from flask_login import current_user
-from app.models import User, Book
-from app.thumbs import thumbnail
-from app.db_handlers import (
-    get_expired_bi_with_users,
-    deactivate_any_bi_if_expired,
-)
-from app.email import send_bi_is_expired_email
-import sys
 import ipapi
+from flask import current_app
+from flask_login import current_user
+
+from app.db_handlers import (book_counter_created_by_user,
+                             deactivate_any_bi_if_expired,
+                             get_expired_bi_with_users)
+from app.email import send_bi_is_expired_email
+from app.models import Book, User
+
 ipapi.location(ip=None, key=None, field=None)
 
 
@@ -20,8 +20,8 @@ def get_num(x: str) -> int:
     return int(''.join(ele for ele in x if ele.isdigit()))
 
 
-#! TODO write the check
 def has_allowed_filesize(obj, filesize_name) -> bool:
+    # ! TODO write the check
     # return bool(int(sys.getsizeof(obj)) <= current_app.config[filesize_name])
     return True
 
@@ -113,7 +113,7 @@ def generate_map_by_book_id(book_ids: list):
     m.save('app/templates/_map.html')
 
 
-def get_coordinates_by_ip(visitor_ip:str) -> tuple:
+def get_coordinates_by_ip(visitor_ip: str) -> tuple:
     '''
     Returns longitude, latitude by ip.
 
@@ -152,7 +152,8 @@ def expired_bi_handler():
 
     for DBG sending emails use data
     expired_bis = {'kovalyov.volodymyr@gmail.com': [
-        (25, 'The Great Gatsby'), (10, 'The Great Gatsby'), (9, 'War and Peace')]}
+        (25, 'The Great Gatsby'), (10, 'The Great Gatsby'),
+        (9, 'War and Peace')]}
     """
 
     # Get expired bi & pack expired_bi to dict:
@@ -172,3 +173,17 @@ def expired_bi_handler():
 
     # Deactivate all expired books
     deactivate_any_bi_if_expired()
+
+
+def allow_create_new_book(current_user_id: int, limit: int) -> bool:
+    """ Return answer 'is it allowed to the User to add new_book?'
+    Args:
+     - current_user_id - User.id
+    Returns:
+     - allow_create_book: boolean, it's True till books_created_by_user below
+       limit
+    """
+    books_created_by_user = book_counter_created_by_user(
+        user_id=current_user.id)
+    allow_create_book = bool(books_created_by_user <= limit)
+    return allow_create_book

@@ -265,7 +265,13 @@ def add_book():
             utils.cover_upload(cover, new_book.id)
 
         return redirect(url_for('add_book_instance', book_id=new_book.id))
-    return render_template('add_book.html', title='add_book', form=form)
+    limit = current_app.config["NEW_BOOKS_PER_DAY_LIMIT"]
+    if utils.allow_create_new_book(
+            current_user_id=current_user.id,
+            limit=limit):
+        return render_template('add_book.html', title='add_book', form=form)
+    flash('Sorry, you are not allowed to create any more books today.')
+    return redirect(url_for('index'))
 
 
 @app.route('/add_book_instance/<book_id>', methods=['GET', 'POST'])
@@ -374,7 +380,7 @@ def edit_book_instance(book_instance_id):
     return render_template(
         'edit_book_instance.html',
         form=form,
-        book_instance=book_instance,
+        book_instance=_book_instance,
     )
 
 

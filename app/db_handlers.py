@@ -204,6 +204,22 @@ def decr_instance_counter(book_id) -> int:
         return book.instance_counter
     raise ValueError(f'instance_counter Value error for book_id={book_id}')
 
+
+def book_counter_created_by_user(
+        user_id,
+        exp_period_days=1) -> int:
+    """ Returns how many Books created by User during last day """
+    exp_time = datetime.today() - timedelta(days=exp_period_days)
+    exp_time_timestamp = datetime.timestamp(exp_time)
+
+    _books = (db.session.query(
+        Book.title,
+    )
+        .filter(Book.created_by == user_id)
+        .filter(Book.timestamp > exp_time_timestamp)
+        .count())
+    return _books
+
 #  ------------  BOOK INSTANCE ------------------
 
 
@@ -301,7 +317,8 @@ def delete_book_instance(book_instance_id: str) -> None:
     db.session.commit()
 
 
-def get_book_instance_by_id(book_instance_id: str) -> Union[BookInstance, None]:
+def get_book_instance_by_id(
+        book_instance_id: str) -> Union[BookInstance, None]:
     """ Returns BookInstance object if exists in DB or None"""
     book_instance = (db.session.query(
         User.username,
@@ -385,7 +402,7 @@ def get_expired_bi_with_users(expiration_period_days=30) -> List[BookInstance]:
         Book.title,
     )
         .filter(BookInstance.book_id == Book.id)
-        .filter(BookInstance.is_active == True)
+        .filter(BookInstance.is_active is True)
         .filter(BookInstance.activation_time <= expiration_time_timestamp)
         .filter(BookInstance.owner_id == User.id)
         .order_by(BookInstance.id.desc())
@@ -399,7 +416,7 @@ def deactivate_any_bi_if_expired(expiration_period_days=30) -> None:
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
     expiration_time_timestamp = datetime.timestamp(expiration_time)
     (db.session.query(BookInstance)
-     .filter(BookInstance.is_active == True)
+     .filter(BookInstance.is_active is True)
      .filter(BookInstance.activation_time <= expiration_time_timestamp)
      .update({
          BookInstance.is_active: False,
@@ -473,7 +490,8 @@ def create_user(username: str, email: str, avatar: str, latitude=50.4547,
 def delete_user(user_id) -> None:
     User.query.filter_by(id=user_id).delete()
     # TODO cascade delete all users book_instances???
-    # Check if it generate any errors related to messages (no recepient for exmpl)
+    # Check if it generate any errors related to messages
+    # (no recepient for exmpl)
     db.session.commit()
 
 #  ------------ MESSAGE ------------------

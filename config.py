@@ -15,17 +15,18 @@ class Config(object):
     SECRET_KEY = os.urandom(32)
 
     # Image upload settings
-    MAX_IMAGE_FILESIZE = 2 * 1024 * 1024 # first multiplier = 1 Mb
+    MAX_IMAGE_FILESIZE = 2 * 1024 * 1024  # first multiplier = 1 Mb
     IMAGE_UPLOADS = os.path.join(basedir, 'app/static/covers')
-    IMAGE_TARGET_SIZE = '110x160' # i.e. width = 100 px, height = 160 px
+    IMAGE_TARGET_SIZE = '110x160'  # i.e. width = 100 px, height = 160 px
     ALLOWED_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "GIF"]
 
     # Map settings
-    DEFAULT_MAP_COORDINADES = (50.4547, 30.520) # Kyiv
+    DEFAULT_MAP_COORDINADES = (50.4547, 30.520)  # Kyiv
 
     # Other
     CHECK_EXPIRED_BOOK_INSTANCES = True
     EXPIRATION_PERIOD_DAYS = 30
+    NEW_BOOKS_PER_DAY_LIMIT = 3
 
     # Google OAUth2 credentials
     GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
@@ -39,4 +40,3 @@ class Config(object):
 
     # GOOGLE_API_KEY for Google books. Expired at 12.09.20 (?)
     GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
-

@@ -23,25 +23,28 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_56944ff5c37e4895a44711ab4044a923 {
+                #map_b1defc3bf2b94f71ad1f5453c1d088ad {
                     position: relative;
                     width: 100.0%;
-                    height: 200.0px;
+                    height: 500.0px;
                     left: 0.0%;
                     top: 0.0%;
                 }
             </style>
         
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
 </head>
 <body>    
     
-            <div class="folium-map" id="map_56944ff5c37e4895a44711ab4044a923" ></div>
+            <div class="folium-map" id="map_b1defc3bf2b94f71ad1f5453c1d088ad" ></div>
         
 </body>
 <script>    
     
-            var map_56944ff5c37e4895a44711ab4044a923 = L.map(
-                "map_56944ff5c37e4895a44711ab4044a923",
+            var map_b1defc3bf2b94f71ad1f5453c1d088ad = L.map(
+                "map_b1defc3bf2b94f71ad1f5453c1d088ad",
                 {
                     center: [50.4547, 30.52],
                     crs: L.CRS.EPSG3857,
@@ -55,32 +58,3302 @@
 
         
     
-            var tile_layer_b476472830ca4d6c8d4475a928b838b7 = L.tileLayer(
+            var tile_layer_1e50bcd775a5476b9831b09a93726938 = L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_56944ff5c37e4895a44711ab4044a923);
+            ).addTo(map_b1defc3bf2b94f71ad1f5453c1d088ad);
         
     
-            var marker_7144c6275a474ecb8434c42142b13730 = L.marker(
-                [50.4547, 30.52],
+            var marker_cluster_fe17b9962e534d2899c6fc05e416120f = L.markerClusterGroup(
                 {}
-            ).addTo(map_56944ff5c37e4895a44711ab4044a923);
-        
-    
-            var icon_4c66a9627d4e43519fa9da3b9e06815d = L.AwesomeMarkers.icon(
-                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
             );
-            marker_7144c6275a474ecb8434c42142b13730.setIcon(icon_4c66a9627d4e43519fa9da3b9e06815d);
+            map_b1defc3bf2b94f71ad1f5453c1d088ad.addLayer(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
         
     
-        var popup_ed7a7dc80df940adb773b59416b88395 = L.popup({"maxWidth": "100%"});
+            var marker_733a5b8c41d84a0ea1802fc89b18db7e = L.marker(
+                [50.301224104913196, 30.65958899431215],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_3502512a815a4de386d42e7be9fcdbfc = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_733a5b8c41d84a0ea1802fc89b18db7e.setIcon(custom_icon_3502512a815a4de386d42e7be9fcdbfc);
+        
+    
+        var popup_3f77c4e6a99f44bba35d887dff9e5d8a = L.popup({"maxWidth": "100%"});
 
         
-            var html_5f5d9522253c484192548cc0e7b30dad = $(`<div id="html_5f5d9522253c484192548cc0e7b30dad" style="width: 100.0%; height: 100.0%;">popup content</div>`)[0];
-            popup_ed7a7dc80df940adb773b59416b88395.setContent(html_5f5d9522253c484192548cc0e7b30dad);
+            var html_cd7fbac6c59c459fac0b71c910b21953 = $(`<div id="html_cd7fbac6c59c459fac0b71c910b21953" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/5><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>77 uah</div>`)[0];
+            popup_3f77c4e6a99f44bba35d887dff9e5d8a.setContent(html_cd7fbac6c59c459fac0b71c910b21953);
         
 
-        marker_7144c6275a474ecb8434c42142b13730.bindPopup(popup_ed7a7dc80df940adb773b59416b88395)
+        marker_733a5b8c41d84a0ea1802fc89b18db7e.bindPopup(popup_3f77c4e6a99f44bba35d887dff9e5d8a)
+        ;
+
+        
+    
+    
+            var marker_f15870d3c58c41c6a84aad4d3c375faf = L.marker(
+                [50.3474271295054, 30.556347652178],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_5f8f50b6589c4f80a6b56cb9619b79de = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_f15870d3c58c41c6a84aad4d3c375faf.setIcon(custom_icon_5f8f50b6589c4f80a6b56cb9619b79de);
+        
+    
+        var popup_1e9d91d3881b42aca27189a4e690abca = L.popup({"maxWidth": "100%"});
+
+        
+            var html_524c1b09358d4f9da75b5b96b2cece6c = $(`<div id="html_524c1b09358d4f9da75b5b96b2cece6c" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/75><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>49 uah</div>`)[0];
+            popup_1e9d91d3881b42aca27189a4e690abca.setContent(html_524c1b09358d4f9da75b5b96b2cece6c);
+        
+
+        marker_f15870d3c58c41c6a84aad4d3c375faf.bindPopup(popup_1e9d91d3881b42aca27189a4e690abca)
+        ;
+
+        
+    
+    
+            var marker_0f0cb38f354745e9b99a1351feb90785 = L.marker(
+                [50.43621565213726, 30.373090247644434],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_060deeb8d47a45a28a5d1718194c8e84 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_0f0cb38f354745e9b99a1351feb90785.setIcon(custom_icon_060deeb8d47a45a28a5d1718194c8e84);
+        
+    
+        var popup_7ee7c24f24f742e49ba65a498d7373d1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d36a8a6bf0e249e9958db9a815c00355 = $(`<div id="html_d36a8a6bf0e249e9958db9a815c00355" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/100><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>75 uah</div>`)[0];
+            popup_7ee7c24f24f742e49ba65a498d7373d1.setContent(html_d36a8a6bf0e249e9958db9a815c00355);
+        
+
+        marker_0f0cb38f354745e9b99a1351feb90785.bindPopup(popup_7ee7c24f24f742e49ba65a498d7373d1)
+        ;
+
+        
+    
+    
+            var marker_5fb8ecedd3b649b2aceb3843abc280bc = L.marker(
+                [50.37415908083961, 30.49430809587417],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_a5f3927c33ec44769179f2be26069853 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_5fb8ecedd3b649b2aceb3843abc280bc.setIcon(custom_icon_a5f3927c33ec44769179f2be26069853);
+        
+    
+        var popup_dd4bc8b78ef64d02808141741e6387dd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6416abc6b8b84c59b2041c76fe429adf = $(`<div id="html_6416abc6b8b84c59b2041c76fe429adf" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/107><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>151 uah</div>`)[0];
+            popup_dd4bc8b78ef64d02808141741e6387dd.setContent(html_6416abc6b8b84c59b2041c76fe429adf);
+        
+
+        marker_5fb8ecedd3b649b2aceb3843abc280bc.bindPopup(popup_dd4bc8b78ef64d02808141741e6387dd)
+        ;
+
+        
+    
+    
+            var marker_e7b54fe6e4d4451ebf9e695b33e53d83 = L.marker(
+                [50.52390959454781, 30.57774457486212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_6550549e36c648038f9f3e8616041f7b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_e7b54fe6e4d4451ebf9e695b33e53d83.setIcon(custom_icon_6550549e36c648038f9f3e8616041f7b);
+        
+    
+        var popup_7f3218d31fb045e8b526dde92f736448 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_344d8e730c0d4d0bb49674540819a677 = $(`<div id="html_344d8e730c0d4d0bb49674540819a677" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/155><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>38 uah</div>`)[0];
+            popup_7f3218d31fb045e8b526dde92f736448.setContent(html_344d8e730c0d4d0bb49674540819a677);
+        
+
+        marker_e7b54fe6e4d4451ebf9e695b33e53d83.bindPopup(popup_7f3218d31fb045e8b526dde92f736448)
+        ;
+
+        
+    
+    
+            var marker_8b2168f86efc4cef9c79e2550db99c2f = L.marker(
+                [50.58149287716955, 30.62470401203929],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_284bd329556f4ad0bd3fe17e4a195250 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/1.jpg"});
+        marker_8b2168f86efc4cef9c79e2550db99c2f.setIcon(custom_icon_284bd329556f4ad0bd3fe17e4a195250);
+        
+    
+        var popup_8aa25e48e9fa4952a0d9e930fe5cb488 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1200f05a4b5449adb2379722b18ae29d = $(`<div id="html_1200f05a4b5449adb2379722b18ae29d" style="width: 100.0%; height: 100.0%;">In Search of Lost Time</br><a href=http://127.0.0.1:5000/bi/178><img src="/static/covers/1.jpg" width="50" height="70" ></a></br>168 uah</div>`)[0];
+            popup_8aa25e48e9fa4952a0d9e930fe5cb488.setContent(html_1200f05a4b5449adb2379722b18ae29d);
+        
+
+        marker_8b2168f86efc4cef9c79e2550db99c2f.bindPopup(popup_8aa25e48e9fa4952a0d9e930fe5cb488)
+        ;
+
+        
+    
+    
+            var marker_8c2664e833b54313bf80f8c635d465c2 = L.marker(
+                [50.43080138979096, 30.441480380239497],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_5395832bb637466483783b2651780d45 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_8c2664e833b54313bf80f8c635d465c2.setIcon(custom_icon_5395832bb637466483783b2651780d45);
+        
+    
+        var popup_f70dfeb062c647f2b7ed6214084b7e9f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_df1b319eb47c4aa999e80eddc699eed3 = $(`<div id="html_df1b319eb47c4aa999e80eddc699eed3" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/3><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>33 uah</div>`)[0];
+            popup_f70dfeb062c647f2b7ed6214084b7e9f.setContent(html_df1b319eb47c4aa999e80eddc699eed3);
+        
+
+        marker_8c2664e833b54313bf80f8c635d465c2.bindPopup(popup_f70dfeb062c647f2b7ed6214084b7e9f)
+        ;
+
+        
+    
+    
+            var marker_e9132401231949f6a0443d105ef9f8b8 = L.marker(
+                [50.4683527876795, 30.547468995446707],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_17af0a2c66964148b034a11ad10e26df = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_e9132401231949f6a0443d105ef9f8b8.setIcon(custom_icon_17af0a2c66964148b034a11ad10e26df);
+        
+    
+        var popup_290d0c53d40f402683df94e63b0e27bb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e95aa40819c945da901b179977b25c04 = $(`<div id="html_e95aa40819c945da901b179977b25c04" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/20><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>57 uah</div>`)[0];
+            popup_290d0c53d40f402683df94e63b0e27bb.setContent(html_e95aa40819c945da901b179977b25c04);
+        
+
+        marker_e9132401231949f6a0443d105ef9f8b8.bindPopup(popup_290d0c53d40f402683df94e63b0e27bb)
+        ;
+
+        
+    
+    
+            var marker_d42727e785e04f4190d1bfff5dd1fcd7 = L.marker(
+                [50.581730143297754, 30.43982403566459],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_9b46839680114130978c5dfe8519690e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_d42727e785e04f4190d1bfff5dd1fcd7.setIcon(custom_icon_9b46839680114130978c5dfe8519690e);
+        
+    
+        var popup_90a90376e37041638a6d8c98455b8d90 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f8557b7ff9e047298f2357b16359e4aa = $(`<div id="html_f8557b7ff9e047298f2357b16359e4aa" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/23><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>56 uah</div>`)[0];
+            popup_90a90376e37041638a6d8c98455b8d90.setContent(html_f8557b7ff9e047298f2357b16359e4aa);
+        
+
+        marker_d42727e785e04f4190d1bfff5dd1fcd7.bindPopup(popup_90a90376e37041638a6d8c98455b8d90)
+        ;
+
+        
+    
+    
+            var marker_81a5cc2e3a3d44aba1c67b79608a9a57 = L.marker(
+                [50.59581854979738, 30.618546730063287],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_7d524fbce8234242ae3c0c9a39c72ff0 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_81a5cc2e3a3d44aba1c67b79608a9a57.setIcon(custom_icon_7d524fbce8234242ae3c0c9a39c72ff0);
+        
+    
+        var popup_825c631a04f940f2abbf73752669e5e3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e6f34997bd2149b6bb42c91d8a6411f0 = $(`<div id="html_e6f34997bd2149b6bb42c91d8a6411f0" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/26><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>23 uah</div>`)[0];
+            popup_825c631a04f940f2abbf73752669e5e3.setContent(html_e6f34997bd2149b6bb42c91d8a6411f0);
+        
+
+        marker_81a5cc2e3a3d44aba1c67b79608a9a57.bindPopup(popup_825c631a04f940f2abbf73752669e5e3)
+        ;
+
+        
+    
+    
+            var marker_fce7d64257fe4aa6a79798c43ff01e2b = L.marker(
+                [50.35952326928268, 30.408151651584316],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_72f27e8bc1e244798962f271ae2527bc = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_fce7d64257fe4aa6a79798c43ff01e2b.setIcon(custom_icon_72f27e8bc1e244798962f271ae2527bc);
+        
+    
+        var popup_c6421ee6933a496b8ad0fbb6f7af734f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bdb8bac567864dabb2f13c9c9893fae5 = $(`<div id="html_bdb8bac567864dabb2f13c9c9893fae5" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/44><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>176 uah</div>`)[0];
+            popup_c6421ee6933a496b8ad0fbb6f7af734f.setContent(html_bdb8bac567864dabb2f13c9c9893fae5);
+        
+
+        marker_fce7d64257fe4aa6a79798c43ff01e2b.bindPopup(popup_c6421ee6933a496b8ad0fbb6f7af734f)
+        ;
+
+        
+    
+    
+            var marker_6ab02066bf0444a08a5e83c6bec15a75 = L.marker(
+                [50.527352483460746, 30.363829502199547],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_cc66dc9a88a646ae9486fe7b172afdf3 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_6ab02066bf0444a08a5e83c6bec15a75.setIcon(custom_icon_cc66dc9a88a646ae9486fe7b172afdf3);
+        
+    
+        var popup_7f1eb3878d974e7a93c0bbe931c531ec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fc1990d5e88d47a6bb692e8630d9a365 = $(`<div id="html_fc1990d5e88d47a6bb692e8630d9a365" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/59><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>24 uah</div>`)[0];
+            popup_7f1eb3878d974e7a93c0bbe931c531ec.setContent(html_fc1990d5e88d47a6bb692e8630d9a365);
+        
+
+        marker_6ab02066bf0444a08a5e83c6bec15a75.bindPopup(popup_7f1eb3878d974e7a93c0bbe931c531ec)
+        ;
+
+        
+    
+    
+            var marker_5241158af2524e37ae465a907d66bd74 = L.marker(
+                [50.43621565213726, 30.373090247644434],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_8dd726ca291b4797ad99795ee41a1f17 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_5241158af2524e37ae465a907d66bd74.setIcon(custom_icon_8dd726ca291b4797ad99795ee41a1f17);
+        
+    
+        var popup_19cb157d8717492fbcfd9f14058d27dc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6160e4b1077e47898a40944e56438c37 = $(`<div id="html_6160e4b1077e47898a40944e56438c37" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/97><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>110 uah</div>`)[0];
+            popup_19cb157d8717492fbcfd9f14058d27dc.setContent(html_6160e4b1077e47898a40944e56438c37);
+        
+
+        marker_5241158af2524e37ae465a907d66bd74.bindPopup(popup_19cb157d8717492fbcfd9f14058d27dc)
+        ;
+
+        
+    
+    
+            var marker_091954942967443cb014c02e812afebb = L.marker(
+                [50.59236791637463, 30.53436420700355],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_35aea8720f5b47ec8ba6400af68091a1 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_091954942967443cb014c02e812afebb.setIcon(custom_icon_35aea8720f5b47ec8ba6400af68091a1);
+        
+    
+        var popup_1a055ff63e0f4654ab9bd61005f479ce = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a2b2aab6eb6e424e952c744f37a2d603 = $(`<div id="html_a2b2aab6eb6e424e952c744f37a2d603" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/98><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>128 uah</div>`)[0];
+            popup_1a055ff63e0f4654ab9bd61005f479ce.setContent(html_a2b2aab6eb6e424e952c744f37a2d603);
+        
+
+        marker_091954942967443cb014c02e812afebb.bindPopup(popup_1a055ff63e0f4654ab9bd61005f479ce)
+        ;
+
+        
+    
+    
+            var marker_f2f403bc795849febcba315bcad67245 = L.marker(
+                [50.581730143297754, 30.43982403566459],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d066877b510d4b47b98738a0274ceb16 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_f2f403bc795849febcba315bcad67245.setIcon(custom_icon_d066877b510d4b47b98738a0274ceb16);
+        
+    
+        var popup_feaa8161ce0a4c86b00a4d76fd4c5721 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ec9a4560c5984951aabe407da06677b3 = $(`<div id="html_ec9a4560c5984951aabe407da06677b3" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/104><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>85 uah</div>`)[0];
+            popup_feaa8161ce0a4c86b00a4d76fd4c5721.setContent(html_ec9a4560c5984951aabe407da06677b3);
+        
+
+        marker_f2f403bc795849febcba315bcad67245.bindPopup(popup_feaa8161ce0a4c86b00a4d76fd4c5721)
+        ;
+
+        
+    
+    
+            var marker_a8f8233c3efb4105915800340778ad41 = L.marker(
+                [50.43410218455689, 30.536580636169212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_816731d17fa44bbb8bad2d9e1d5101f9 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_a8f8233c3efb4105915800340778ad41.setIcon(custom_icon_816731d17fa44bbb8bad2d9e1d5101f9);
+        
+    
+        var popup_0cb4b26127d94ef590caf4c30e1318da = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8f20b0a57f3949e1a74433cf3f199fe1 = $(`<div id="html_8f20b0a57f3949e1a74433cf3f199fe1" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/114><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>83 uah</div>`)[0];
+            popup_0cb4b26127d94ef590caf4c30e1318da.setContent(html_8f20b0a57f3949e1a74433cf3f199fe1);
+        
+
+        marker_a8f8233c3efb4105915800340778ad41.bindPopup(popup_0cb4b26127d94ef590caf4c30e1318da)
+        ;
+
+        
+    
+    
+            var marker_bda51dba63ba443ca6e2c46c7002ae09 = L.marker(
+                [50.41311312077125, 30.52576859817519],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_310ba238827649e584548b610938ca7c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_bda51dba63ba443ca6e2c46c7002ae09.setIcon(custom_icon_310ba238827649e584548b610938ca7c);
+        
+    
+        var popup_738c56ee65f1458e93f8feae70928c2f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3fa62f386286401283fbf96e5e0c2fb5 = $(`<div id="html_3fa62f386286401283fbf96e5e0c2fb5" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/142><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>185 uah</div>`)[0];
+            popup_738c56ee65f1458e93f8feae70928c2f.setContent(html_3fa62f386286401283fbf96e5e0c2fb5);
+        
+
+        marker_bda51dba63ba443ca6e2c46c7002ae09.bindPopup(popup_738c56ee65f1458e93f8feae70928c2f)
+        ;
+
+        
+    
+    
+            var marker_695abd5770b345ae9de01fba21464f41 = L.marker(
+                [50.54769050551521, 30.368403748128603],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_39f5b78347de49b39134b4df0be9edf6 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_695abd5770b345ae9de01fba21464f41.setIcon(custom_icon_39f5b78347de49b39134b4df0be9edf6);
+        
+    
+        var popup_033a28353d6142f68ec2d116e734c432 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4ae71483df34440d827c4dc392cda6e2 = $(`<div id="html_4ae71483df34440d827c4dc392cda6e2" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/149><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>34 uah</div>`)[0];
+            popup_033a28353d6142f68ec2d116e734c432.setContent(html_4ae71483df34440d827c4dc392cda6e2);
+        
+
+        marker_695abd5770b345ae9de01fba21464f41.bindPopup(popup_033a28353d6142f68ec2d116e734c432)
+        ;
+
+        
+    
+    
+            var marker_45a4737b8f9c466297707ca7e30d3387 = L.marker(
+                [50.54769050551521, 30.368403748128603],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c2ebe4995ed64f5798cf153a692cf2da = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_45a4737b8f9c466297707ca7e30d3387.setIcon(custom_icon_c2ebe4995ed64f5798cf153a692cf2da);
+        
+    
+        var popup_4fc1fd41d8f342d9874e2c56147a78aa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ad432f8c61ef4a87ba5fbb1486cd6591 = $(`<div id="html_ad432f8c61ef4a87ba5fbb1486cd6591" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/154><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>131 uah</div>`)[0];
+            popup_4fc1fd41d8f342d9874e2c56147a78aa.setContent(html_ad432f8c61ef4a87ba5fbb1486cd6591);
+        
+
+        marker_45a4737b8f9c466297707ca7e30d3387.bindPopup(popup_4fc1fd41d8f342d9874e2c56147a78aa)
+        ;
+
+        
+    
+    
+            var marker_ff0aaa31365d4c0ea81bf7ea676aeee5 = L.marker(
+                [50.40050045627517, 30.44011870917482],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c705cf3d0f7d42169704048b6f95f548 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/2.jpg"});
+        marker_ff0aaa31365d4c0ea81bf7ea676aeee5.setIcon(custom_icon_c705cf3d0f7d42169704048b6f95f548);
+        
+    
+        var popup_4036e1ae584744e39deace3e732857d1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dd1cd256d7814dd9a18f1133fd9f0a92 = $(`<div id="html_dd1cd256d7814dd9a18f1133fd9f0a92" style="width: 100.0%; height: 100.0%;">Ulysses</br><a href=http://127.0.0.1:5000/bi/171><img src="/static/covers/2.jpg" width="50" height="70" ></a></br>26 uah</div>`)[0];
+            popup_4036e1ae584744e39deace3e732857d1.setContent(html_dd1cd256d7814dd9a18f1133fd9f0a92);
+        
+
+        marker_ff0aaa31365d4c0ea81bf7ea676aeee5.bindPopup(popup_4036e1ae584744e39deace3e732857d1)
+        ;
+
+        
+    
+    
+            var marker_0aa9720a999247378cfb32066ac4299e = L.marker(
+                [50.54769050551521, 30.368403748128603],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c21633b4b6284f6da11bf787fe77e010 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_0aa9720a999247378cfb32066ac4299e.setIcon(custom_icon_c21633b4b6284f6da11bf787fe77e010);
+        
+    
+        var popup_75d824c487be4e1ba0441f340ce41f47 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a887d21a21954b07882af6c6cf888824 = $(`<div id="html_a887d21a21954b07882af6c6cf888824" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/6><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>104 uah</div>`)[0];
+            popup_75d824c487be4e1ba0441f340ce41f47.setContent(html_a887d21a21954b07882af6c6cf888824);
+        
+
+        marker_0aa9720a999247378cfb32066ac4299e.bindPopup(popup_75d824c487be4e1ba0441f340ce41f47)
+        ;
+
+        
+    
+    
+            var marker_95e1aa7967534540a06d349379450ee0 = L.marker(
+                [50.41648714215613, 30.47297298802378],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e2ab1941e29f482d8d08c0e70084bc9d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_95e1aa7967534540a06d349379450ee0.setIcon(custom_icon_e2ab1941e29f482d8d08c0e70084bc9d);
+        
+    
+        var popup_8599bf52c91c47dc8c147594445dc8d1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b41334dcd7f4420b90b0c37ef79fc0a1 = $(`<div id="html_b41334dcd7f4420b90b0c37ef79fc0a1" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/19><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>168 uah</div>`)[0];
+            popup_8599bf52c91c47dc8c147594445dc8d1.setContent(html_b41334dcd7f4420b90b0c37ef79fc0a1);
+        
+
+        marker_95e1aa7967534540a06d349379450ee0.bindPopup(popup_8599bf52c91c47dc8c147594445dc8d1)
+        ;
+
+        
+    
+    
+            var marker_4681e0461388420196b2f2e60484975a = L.marker(
+                [50.52406820651246, 30.606039235256386],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_fc40534f427243819349d5548321fdf8 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_4681e0461388420196b2f2e60484975a.setIcon(custom_icon_fc40534f427243819349d5548321fdf8);
+        
+    
+        var popup_aa4d33cc26394eb5bf59c6d1fe28010d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f8ac1dcbe0cb48f9a8eb3e7611d6b849 = $(`<div id="html_f8ac1dcbe0cb48f9a8eb3e7611d6b849" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/67><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>54 uah</div>`)[0];
+            popup_aa4d33cc26394eb5bf59c6d1fe28010d.setContent(html_f8ac1dcbe0cb48f9a8eb3e7611d6b849);
+        
+
+        marker_4681e0461388420196b2f2e60484975a.bindPopup(popup_aa4d33cc26394eb5bf59c6d1fe28010d)
+        ;
+
+        
+    
+    
+            var marker_2df47f6ce69141bd8e0ff04e3924f4ec = L.marker(
+                [50.3474271295054, 30.556347652178],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_2bca361ab65d4dbfaf2d006dd5f05441 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_2df47f6ce69141bd8e0ff04e3924f4ec.setIcon(custom_icon_2bca361ab65d4dbfaf2d006dd5f05441);
+        
+    
+        var popup_7d89457a86a544d4a35bc48191536096 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ed2903a943714de29947e7231bd0adbf = $(`<div id="html_ed2903a943714de29947e7231bd0adbf" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/82><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>159 uah</div>`)[0];
+            popup_7d89457a86a544d4a35bc48191536096.setContent(html_ed2903a943714de29947e7231bd0adbf);
+        
+
+        marker_2df47f6ce69141bd8e0ff04e3924f4ec.bindPopup(popup_7d89457a86a544d4a35bc48191536096)
+        ;
+
+        
+    
+    
+            var marker_5aa9723a66cd4f49b770a7b7f3ff5685 = L.marker(
+                [50.43621565213726, 30.373090247644434],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e31599d7b5034838b12c900c40e9d23e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_5aa9723a66cd4f49b770a7b7f3ff5685.setIcon(custom_icon_e31599d7b5034838b12c900c40e9d23e);
+        
+    
+        var popup_70c6e8bbb76c495ab07966d05ac4c1be = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6104c449151741e68f9d9788b25e233e = $(`<div id="html_6104c449151741e68f9d9788b25e233e" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/83><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>56 uah</div>`)[0];
+            popup_70c6e8bbb76c495ab07966d05ac4c1be.setContent(html_6104c449151741e68f9d9788b25e233e);
+        
+
+        marker_5aa9723a66cd4f49b770a7b7f3ff5685.bindPopup(popup_70c6e8bbb76c495ab07966d05ac4c1be)
+        ;
+
+        
+    
+    
+            var marker_7f3180e10add4ca6ac9d4f99eadf4487 = L.marker(
+                [50.40129269555117, 30.40529879085114],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_018522087420446ca1ff05f189c1e6da = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_7f3180e10add4ca6ac9d4f99eadf4487.setIcon(custom_icon_018522087420446ca1ff05f189c1e6da);
+        
+    
+        var popup_153eb70a32db4fd8a2c36113ad675d25 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1343479dcb1944c4952c2d17ef4ada67 = $(`<div id="html_1343479dcb1944c4952c2d17ef4ada67" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/86><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>111 uah</div>`)[0];
+            popup_153eb70a32db4fd8a2c36113ad675d25.setContent(html_1343479dcb1944c4952c2d17ef4ada67);
+        
+
+        marker_7f3180e10add4ca6ac9d4f99eadf4487.bindPopup(popup_153eb70a32db4fd8a2c36113ad675d25)
+        ;
+
+        
+    
+    
+            var marker_9081b3c90b22409fb8bcabf350b75ae9 = L.marker(
+                [50.58792329387564, 30.61945745031931],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d0cee9297dea4751ba1c4476906f1e0c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_9081b3c90b22409fb8bcabf350b75ae9.setIcon(custom_icon_d0cee9297dea4751ba1c4476906f1e0c);
+        
+    
+        var popup_48eb453fe4754c28b903cef3dac58636 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_11d087a3304c4f20960f93592131f866 = $(`<div id="html_11d087a3304c4f20960f93592131f866" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/91><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>144 uah</div>`)[0];
+            popup_48eb453fe4754c28b903cef3dac58636.setContent(html_11d087a3304c4f20960f93592131f866);
+        
+
+        marker_9081b3c90b22409fb8bcabf350b75ae9.bindPopup(popup_48eb453fe4754c28b903cef3dac58636)
+        ;
+
+        
+    
+    
+            var marker_69e3df50544b4adca5027c5f096cdc94 = L.marker(
+                [50.37999438926472, 30.561323089163093],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_018281b7e6d247968d286c0854916e0f = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_69e3df50544b4adca5027c5f096cdc94.setIcon(custom_icon_018281b7e6d247968d286c0854916e0f);
+        
+    
+        var popup_83dace9c31534919afe894ab502d04ec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5ff5abc9af734f7d955ccfcc36c474fe = $(`<div id="html_5ff5abc9af734f7d955ccfcc36c474fe" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/116><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>142 uah</div>`)[0];
+            popup_83dace9c31534919afe894ab502d04ec.setContent(html_5ff5abc9af734f7d955ccfcc36c474fe);
+        
+
+        marker_69e3df50544b4adca5027c5f096cdc94.bindPopup(popup_83dace9c31534919afe894ab502d04ec)
+        ;
+
+        
+    
+    
+            var marker_94e118480b944c5fa60ff7252fe620ca = L.marker(
+                [50.581730143297754, 30.43982403566459],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c94f60917070420ba76a25997cb7b7ee = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_94e118480b944c5fa60ff7252fe620ca.setIcon(custom_icon_c94f60917070420ba76a25997cb7b7ee);
+        
+    
+        var popup_65872dcd579d4ba288f639cf9e5eb76b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_619f2afa01694620bf6a49970804e9ca = $(`<div id="html_619f2afa01694620bf6a49970804e9ca" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/123><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>116 uah</div>`)[0];
+            popup_65872dcd579d4ba288f639cf9e5eb76b.setContent(html_619f2afa01694620bf6a49970804e9ca);
+        
+
+        marker_94e118480b944c5fa60ff7252fe620ca.bindPopup(popup_65872dcd579d4ba288f639cf9e5eb76b)
+        ;
+
+        
+    
+    
+            var marker_add677f1f64e49fab13049bf0b86b70e = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_90a514200695497aaac0fdd9a630e134 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_add677f1f64e49fab13049bf0b86b70e.setIcon(custom_icon_90a514200695497aaac0fdd9a630e134);
+        
+    
+        var popup_d7c7f12f46424c2e97ddb4ad56a9b621 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b06db79d944f47af87e217ef801b56a1 = $(`<div id="html_b06db79d944f47af87e217ef801b56a1" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/137><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>130 uah</div>`)[0];
+            popup_d7c7f12f46424c2e97ddb4ad56a9b621.setContent(html_b06db79d944f47af87e217ef801b56a1);
+        
+
+        marker_add677f1f64e49fab13049bf0b86b70e.bindPopup(popup_d7c7f12f46424c2e97ddb4ad56a9b621)
+        ;
+
+        
+    
+    
+            var marker_38b4627ed068473e84c52f9380fa0d8a = L.marker(
+                [50.527352483460746, 30.363829502199547],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_29b888b2e0594dafb1d7492f8c3c7c05 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_38b4627ed068473e84c52f9380fa0d8a.setIcon(custom_icon_29b888b2e0594dafb1d7492f8c3c7c05);
+        
+    
+        var popup_1468c9eb922b45a1aca320344c96c4ff = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ca905c3a8ab64bd582ba134f3d9a836d = $(`<div id="html_ca905c3a8ab64bd582ba134f3d9a836d" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/144><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>120 uah</div>`)[0];
+            popup_1468c9eb922b45a1aca320344c96c4ff.setContent(html_ca905c3a8ab64bd582ba134f3d9a836d);
+        
+
+        marker_38b4627ed068473e84c52f9380fa0d8a.bindPopup(popup_1468c9eb922b45a1aca320344c96c4ff)
+        ;
+
+        
+    
+    
+            var marker_bef2c899cb9640f8a120c9a4843d5b1e = L.marker(
+                [50.527352483460746, 30.363829502199547],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d20319baa9f8465687159fee2808203d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_bef2c899cb9640f8a120c9a4843d5b1e.setIcon(custom_icon_d20319baa9f8465687159fee2808203d);
+        
+    
+        var popup_5fb7847a6fd9426abc885412140bcad2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8a9f83539348485391f9cf596ab0021b = $(`<div id="html_8a9f83539348485391f9cf596ab0021b" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/160><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>109 uah</div>`)[0];
+            popup_5fb7847a6fd9426abc885412140bcad2.setContent(html_8a9f83539348485391f9cf596ab0021b);
+        
+
+        marker_bef2c899cb9640f8a120c9a4843d5b1e.bindPopup(popup_5fb7847a6fd9426abc885412140bcad2)
+        ;
+
+        
+    
+    
+            var marker_80dbccfc19fc4a09b514f7cfa62d9867 = L.marker(
+                [50.43080138979096, 30.441480380239497],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_968a4554849c4a498244ec7170fa6b2e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/3.jpg"});
+        marker_80dbccfc19fc4a09b514f7cfa62d9867.setIcon(custom_icon_968a4554849c4a498244ec7170fa6b2e);
+        
+    
+        var popup_b41b9efe04b940c4825f77bb9494bdbf = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6889c9bb8c07441fb2a98b8c39fc8320 = $(`<div id="html_6889c9bb8c07441fb2a98b8c39fc8320" style="width: 100.0%; height: 100.0%;">Don Quixote</br><a href=http://127.0.0.1:5000/bi/169><img src="/static/covers/3.jpg" width="50" height="70" ></a></br>177 uah</div>`)[0];
+            popup_b41b9efe04b940c4825f77bb9494bdbf.setContent(html_6889c9bb8c07441fb2a98b8c39fc8320);
+        
+
+        marker_80dbccfc19fc4a09b514f7cfa62d9867.bindPopup(popup_b41b9efe04b940c4825f77bb9494bdbf)
+        ;
+
+        
+    
+    
+            var marker_3dc2fb742b2e44efbe1512d66b9f17bc = L.marker(
+                [50.52390959454781, 30.57774457486212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_29ddd7e0bf6d47dbb42968772cfcc9dc = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_3dc2fb742b2e44efbe1512d66b9f17bc.setIcon(custom_icon_29ddd7e0bf6d47dbb42968772cfcc9dc);
+        
+    
+        var popup_6155352f340a45c6992017aa39f7a55b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2d3dd8a7aafb46a2852c2407850d035a = $(`<div id="html_2d3dd8a7aafb46a2852c2407850d035a" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/7><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>93 uah</div>`)[0];
+            popup_6155352f340a45c6992017aa39f7a55b.setContent(html_2d3dd8a7aafb46a2852c2407850d035a);
+        
+
+        marker_3dc2fb742b2e44efbe1512d66b9f17bc.bindPopup(popup_6155352f340a45c6992017aa39f7a55b)
+        ;
+
+        
+    
+    
+            var marker_eb2d02103269443293d67625be267736 = L.marker(
+                [50.54769050551521, 30.368403748128603],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_76af647b735a49c2bcdfa0f0d53b6a57 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_eb2d02103269443293d67625be267736.setIcon(custom_icon_76af647b735a49c2bcdfa0f0d53b6a57);
+        
+    
+        var popup_f71a493b748d406fa8254c8f231f5100 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_96e747d5232f41249b00231cc47cf5c9 = $(`<div id="html_96e747d5232f41249b00231cc47cf5c9" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/68><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>66 uah</div>`)[0];
+            popup_f71a493b748d406fa8254c8f231f5100.setContent(html_96e747d5232f41249b00231cc47cf5c9);
+        
+
+        marker_eb2d02103269443293d67625be267736.bindPopup(popup_f71a493b748d406fa8254c8f231f5100)
+        ;
+
+        
+    
+    
+            var marker_0909cbb4ce934988a113687f87dca4fa = L.marker(
+                [50.52076018801722, 30.67587368803205],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_686b8d3b394a486fa1e31716934aecaa = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_0909cbb4ce934988a113687f87dca4fa.setIcon(custom_icon_686b8d3b394a486fa1e31716934aecaa);
+        
+    
+        var popup_d6cc78f9b502434799bc16309d1e6099 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_73bc3d62d7f7411aa46b739b63b57239 = $(`<div id="html_73bc3d62d7f7411aa46b739b63b57239" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/119><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>136 uah</div>`)[0];
+            popup_d6cc78f9b502434799bc16309d1e6099.setContent(html_73bc3d62d7f7411aa46b739b63b57239);
+        
+
+        marker_0909cbb4ce934988a113687f87dca4fa.bindPopup(popup_d6cc78f9b502434799bc16309d1e6099)
+        ;
+
+        
+    
+    
+            var marker_4b94a14e4beb421e9179e4bec2277f92 = L.marker(
+                [50.44861927042222, 30.411128056295873],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_3047897d47a24cae9eee1f1cd53b6524 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_4b94a14e4beb421e9179e4bec2277f92.setIcon(custom_icon_3047897d47a24cae9eee1f1cd53b6524);
+        
+    
+        var popup_f1dc6039129d4b008b83b45153030e4b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bba0bc7fffae4647999e26379eaffc9a = $(`<div id="html_bba0bc7fffae4647999e26379eaffc9a" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/125><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>41 uah</div>`)[0];
+            popup_f1dc6039129d4b008b83b45153030e4b.setContent(html_bba0bc7fffae4647999e26379eaffc9a);
+        
+
+        marker_4b94a14e4beb421e9179e4bec2277f92.bindPopup(popup_f1dc6039129d4b008b83b45153030e4b)
+        ;
+
+        
+    
+    
+            var marker_58adfd2fd4e24c8db1b63546b20246d5 = L.marker(
+                [50.37902193224722, 30.450442071772923],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e51ac09fa9dd417794934da998086f46 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_58adfd2fd4e24c8db1b63546b20246d5.setIcon(custom_icon_e51ac09fa9dd417794934da998086f46);
+        
+    
+        var popup_6980b054ef4b41fb946c1a8e81adcaf5 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2741d4cc8b7a44fcb683bab01aa046f3 = $(`<div id="html_2741d4cc8b7a44fcb683bab01aa046f3" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/166><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>176 uah</div>`)[0];
+            popup_6980b054ef4b41fb946c1a8e81adcaf5.setContent(html_2741d4cc8b7a44fcb683bab01aa046f3);
+        
+
+        marker_58adfd2fd4e24c8db1b63546b20246d5.bindPopup(popup_6980b054ef4b41fb946c1a8e81adcaf5)
+        ;
+
+        
+    
+    
+            var marker_b59dd7dc47444f23b5bdb26fa65d70fb = L.marker(
+                [50.61768392258598, 30.565792188802266],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_05f44adb62bf456e9a60a079226b168b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_b59dd7dc47444f23b5bdb26fa65d70fb.setIcon(custom_icon_05f44adb62bf456e9a60a079226b168b);
+        
+    
+        var popup_c3a24fa28aa9495a8444528e5dd5909a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e491e0f6b8e3452e846cab2c0973ffe3 = $(`<div id="html_e491e0f6b8e3452e846cab2c0973ffe3" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/167><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>40 uah</div>`)[0];
+            popup_c3a24fa28aa9495a8444528e5dd5909a.setContent(html_e491e0f6b8e3452e846cab2c0973ffe3);
+        
+
+        marker_b59dd7dc47444f23b5bdb26fa65d70fb.bindPopup(popup_c3a24fa28aa9495a8444528e5dd5909a)
+        ;
+
+        
+    
+    
+            var marker_53f8d0f8fb1b4da69bd30916356f2a68 = L.marker(
+                [50.37999856736386, 30.53208298718988],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_3d9b454e47b04ee2a30f6591bdfd9249 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/4.jpg"});
+        marker_53f8d0f8fb1b4da69bd30916356f2a68.setIcon(custom_icon_3d9b454e47b04ee2a30f6591bdfd9249);
+        
+    
+        var popup_234c9fe5f4e744c8a0497ded286cdcff = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ce20de198dca4754a375f5831af4dcef = $(`<div id="html_ce20de198dca4754a375f5831af4dcef" style="width: 100.0%; height: 100.0%;">The Great Gatsby</br><a href=http://127.0.0.1:5000/bi/173><img src="/static/covers/4.jpg" width="50" height="70" ></a></br>161 uah</div>`)[0];
+            popup_234c9fe5f4e744c8a0497ded286cdcff.setContent(html_ce20de198dca4754a375f5831af4dcef);
+        
+
+        marker_53f8d0f8fb1b4da69bd30916356f2a68.bindPopup(popup_234c9fe5f4e744c8a0497ded286cdcff)
+        ;
+
+        
+    
+    
+            var marker_b3081ab746da4d689aa176fb956976b0 = L.marker(
+                [50.37287888889877, 30.677807806328516],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_977bbf06cd2e4a95abcb4b549e6f5e56 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_b3081ab746da4d689aa176fb956976b0.setIcon(custom_icon_977bbf06cd2e4a95abcb4b549e6f5e56);
+        
+    
+        var popup_b06878c2ce1e481b82fd0f38e0e0aa36 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_61fea3e8940d4e86904b1ce85300085a = $(`<div id="html_61fea3e8940d4e86904b1ce85300085a" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/34><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>109 uah</div>`)[0];
+            popup_b06878c2ce1e481b82fd0f38e0e0aa36.setContent(html_61fea3e8940d4e86904b1ce85300085a);
+        
+
+        marker_b3081ab746da4d689aa176fb956976b0.bindPopup(popup_b06878c2ce1e481b82fd0f38e0e0aa36)
+        ;
+
+        
+    
+    
+            var marker_755b6e7c057645128a93248a57a34ab3 = L.marker(
+                [50.43004849215031, 30.456866271601665],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_3ba826b7762a4a85abbe114050f2c87c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_755b6e7c057645128a93248a57a34ab3.setIcon(custom_icon_3ba826b7762a4a85abbe114050f2c87c);
+        
+    
+        var popup_743c54f313e54187b08c974311d6680a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1e41bff710b2466b8162ffb11b27bd73 = $(`<div id="html_1e41bff710b2466b8162ffb11b27bd73" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/37><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>151 uah</div>`)[0];
+            popup_743c54f313e54187b08c974311d6680a.setContent(html_1e41bff710b2466b8162ffb11b27bd73);
+        
+
+        marker_755b6e7c057645128a93248a57a34ab3.bindPopup(popup_743c54f313e54187b08c974311d6680a)
+        ;
+
+        
+    
+    
+            var marker_3e43e79b26a84969b0998fab8f4e7de3 = L.marker(
+                [50.37415908083961, 30.49430809587417],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_0a89dc064b4e44379b14c768dc2cfa0c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_3e43e79b26a84969b0998fab8f4e7de3.setIcon(custom_icon_0a89dc064b4e44379b14c768dc2cfa0c);
+        
+    
+        var popup_64c55cf9fa86411184a37cb6ee9c4aec = L.popup({"maxWidth": "100%"});
+
+        
+            var html_92fc3d723bc64df2b2cc747bd09d8765 = $(`<div id="html_92fc3d723bc64df2b2cc747bd09d8765" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/38><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>151 uah</div>`)[0];
+            popup_64c55cf9fa86411184a37cb6ee9c4aec.setContent(html_92fc3d723bc64df2b2cc747bd09d8765);
+        
+
+        marker_3e43e79b26a84969b0998fab8f4e7de3.bindPopup(popup_64c55cf9fa86411184a37cb6ee9c4aec)
+        ;
+
+        
+    
+    
+            var marker_ea387d526bd44208b093e6977464a259 = L.marker(
+                [50.48102032736575, 30.606477055727677],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_5104488f2f4740cd9a74846f6d9d3ed2 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_ea387d526bd44208b093e6977464a259.setIcon(custom_icon_5104488f2f4740cd9a74846f6d9d3ed2);
+        
+    
+        var popup_d05443cca53d42b5aed994eb2736e897 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_cdbb79f5fef44ba5b36fa9d4b481753b = $(`<div id="html_cdbb79f5fef44ba5b36fa9d4b481753b" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/39><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>137 uah</div>`)[0];
+            popup_d05443cca53d42b5aed994eb2736e897.setContent(html_cdbb79f5fef44ba5b36fa9d4b481753b);
+        
+
+        marker_ea387d526bd44208b093e6977464a259.bindPopup(popup_d05443cca53d42b5aed994eb2736e897)
+        ;
+
+        
+    
+    
+            var marker_8e6cba1cc5d9409bad3f9a5520dac41c = L.marker(
+                [50.43080138979096, 30.441480380239497],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_ae160606d2e44404b2040cbc7b6b95cd = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_8e6cba1cc5d9409bad3f9a5520dac41c.setIcon(custom_icon_ae160606d2e44404b2040cbc7b6b95cd);
+        
+    
+        var popup_8d7ed557880d43ec9798e7f02860ebd6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f77bbe09bfdf412a85cdddf044353cad = $(`<div id="html_f77bbe09bfdf412a85cdddf044353cad" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/46><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>21 uah</div>`)[0];
+            popup_8d7ed557880d43ec9798e7f02860ebd6.setContent(html_f77bbe09bfdf412a85cdddf044353cad);
+        
+
+        marker_8e6cba1cc5d9409bad3f9a5520dac41c.bindPopup(popup_8d7ed557880d43ec9798e7f02860ebd6)
+        ;
+
+        
+    
+    
+            var marker_953b0dd4c32c40f0b823fd023a8e5b9e = L.marker(
+                [50.48102032736575, 30.606477055727677],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1cc8825add1b4c3dabaec675fab1f6f8 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_953b0dd4c32c40f0b823fd023a8e5b9e.setIcon(custom_icon_1cc8825add1b4c3dabaec675fab1f6f8);
+        
+    
+        var popup_ce5e7522a8bf4204a9a928fbf12d9082 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_488a27aae12c472b853e8b6f77ed4086 = $(`<div id="html_488a27aae12c472b853e8b6f77ed4086" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/58><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>148 uah</div>`)[0];
+            popup_ce5e7522a8bf4204a9a928fbf12d9082.setContent(html_488a27aae12c472b853e8b6f77ed4086);
+        
+
+        marker_953b0dd4c32c40f0b823fd023a8e5b9e.bindPopup(popup_ce5e7522a8bf4204a9a928fbf12d9082)
+        ;
+
+        
+    
+    
+            var marker_0bf92f5f288847a0a8c4329dc3e0b155 = L.marker(
+                [50.57015254439595, 30.489610294223255],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_ef3f35af6bc84c55a68db6c98450883b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_0bf92f5f288847a0a8c4329dc3e0b155.setIcon(custom_icon_ef3f35af6bc84c55a68db6c98450883b);
+        
+    
+        var popup_a7760d67e1c34ddfa091492fe3d2d908 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_52575e01ec214369aead1cc0dfc71d12 = $(`<div id="html_52575e01ec214369aead1cc0dfc71d12" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/95><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>25 uah</div>`)[0];
+            popup_a7760d67e1c34ddfa091492fe3d2d908.setContent(html_52575e01ec214369aead1cc0dfc71d12);
+        
+
+        marker_0bf92f5f288847a0a8c4329dc3e0b155.bindPopup(popup_a7760d67e1c34ddfa091492fe3d2d908)
+        ;
+
+        
+    
+    
+            var marker_606bd8a4c9c44c6fbd6f813d40e5043e = L.marker(
+                [50.48102032736575, 30.606477055727677],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_f31cc7fe0e704410a22690acb5f7e5ec = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_606bd8a4c9c44c6fbd6f813d40e5043e.setIcon(custom_icon_f31cc7fe0e704410a22690acb5f7e5ec);
+        
+    
+        var popup_a607edf1bc2b457b98d374b797d5f875 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_849a045da77c473687aad3acaa70ba12 = $(`<div id="html_849a045da77c473687aad3acaa70ba12" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/150><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>109 uah</div>`)[0];
+            popup_a607edf1bc2b457b98d374b797d5f875.setContent(html_849a045da77c473687aad3acaa70ba12);
+        
+
+        marker_606bd8a4c9c44c6fbd6f813d40e5043e.bindPopup(popup_a607edf1bc2b457b98d374b797d5f875)
+        ;
+
+        
+    
+    
+            var marker_48447cb5e6c84ad785031e75f33417e2 = L.marker(
+                [50.52076018801722, 30.67587368803205],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_80e57ab3c5094be3974ba5d26751ce9d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_48447cb5e6c84ad785031e75f33417e2.setIcon(custom_icon_80e57ab3c5094be3974ba5d26751ce9d);
+        
+    
+        var popup_f960cb40a4b8406d99b9a9e71950251e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4760b2172f5340549ad58cae5fc1b9f6 = $(`<div id="html_4760b2172f5340549ad58cae5fc1b9f6" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/164><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>29 uah</div>`)[0];
+            popup_f960cb40a4b8406d99b9a9e71950251e.setContent(html_4760b2172f5340549ad58cae5fc1b9f6);
+        
+
+        marker_48447cb5e6c84ad785031e75f33417e2.bindPopup(popup_f960cb40a4b8406d99b9a9e71950251e)
+        ;
+
+        
+    
+    
+            var marker_438c394853774937a7f5ad82c0c9a65d = L.marker(
+                [50.3032809379625, 30.450417216116804],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_cd2c8151209d4ec2a769fa1744819445 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_438c394853774937a7f5ad82c0c9a65d.setIcon(custom_icon_cd2c8151209d4ec2a769fa1744819445);
+        
+    
+        var popup_dc443f286307448fa6d6b5c7fade7982 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_07717fae99ac47a0b1bdb2bb3e4a943e = $(`<div id="html_07717fae99ac47a0b1bdb2bb3e4a943e" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/168><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>124 uah</div>`)[0];
+            popup_dc443f286307448fa6d6b5c7fade7982.setContent(html_07717fae99ac47a0b1bdb2bb3e4a943e);
+        
+
+        marker_438c394853774937a7f5ad82c0c9a65d.bindPopup(popup_dc443f286307448fa6d6b5c7fade7982)
+        ;
+
+        
+    
+    
+            var marker_807047fff0f44a67ab7450fe22535546 = L.marker(
+                [50.301224104913196, 30.65958899431215],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_dd4dbf2c9feb43528dd9cf727249cb7a = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_807047fff0f44a67ab7450fe22535546.setIcon(custom_icon_dd4dbf2c9feb43528dd9cf727249cb7a);
+        
+    
+        var popup_2ed94fd510f24e7c9b05a8e1727719d4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_99190efb8927480aaa70e1ef2d3e980e = $(`<div id="html_99190efb8927480aaa70e1ef2d3e980e" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/170><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>135 uah</div>`)[0];
+            popup_2ed94fd510f24e7c9b05a8e1727719d4.setContent(html_99190efb8927480aaa70e1ef2d3e980e);
+        
+
+        marker_807047fff0f44a67ab7450fe22535546.bindPopup(popup_2ed94fd510f24e7c9b05a8e1727719d4)
+        ;
+
+        
+    
+    
+            var marker_d09d1fb9c5d64decacec3a849ef67985 = L.marker(
+                [50.40050045627517, 30.44011870917482],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_23fa38dc75bc4dbba3a516efd413e124 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_d09d1fb9c5d64decacec3a849ef67985.setIcon(custom_icon_23fa38dc75bc4dbba3a516efd413e124);
+        
+    
+        var popup_3b263b12c8e048548b97f9db1c8579af = L.popup({"maxWidth": "100%"});
+
+        
+            var html_bfab1388fa754828bfd93bbb86b05e30 = $(`<div id="html_bfab1388fa754828bfd93bbb86b05e30" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/177><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>113 uah</div>`)[0];
+            popup_3b263b12c8e048548b97f9db1c8579af.setContent(html_bfab1388fa754828bfd93bbb86b05e30);
+        
+
+        marker_d09d1fb9c5d64decacec3a849ef67985.bindPopup(popup_3b263b12c8e048548b97f9db1c8579af)
+        ;
+
+        
+    
+    
+            var marker_3e594d5fb45d44659ca56e6c74656de1 = L.marker(
+                [50.517889855467, 30.519105614234675],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b185faee1c9b457a8e71369b1b67df15 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/5.jpg"});
+        marker_3e594d5fb45d44659ca56e6c74656de1.setIcon(custom_icon_b185faee1c9b457a8e71369b1b67df15);
+        
+    
+        var popup_6703b16e20984732aadd5673a2931f57 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d62d96c2a65e433ea58c5f03da820e8d = $(`<div id="html_d62d96c2a65e433ea58c5f03da820e8d" style="width: 100.0%; height: 100.0%;">One Hundred Years of Solitude</br><a href=http://127.0.0.1:5000/bi/180><img src="/static/covers/5.jpg" width="50" height="70" ></a></br>86 uah</div>`)[0];
+            popup_6703b16e20984732aadd5673a2931f57.setContent(html_d62d96c2a65e433ea58c5f03da820e8d);
+        
+
+        marker_3e594d5fb45d44659ca56e6c74656de1.bindPopup(popup_6703b16e20984732aadd5673a2931f57)
+        ;
+
+        
+    
+    
+            var marker_81745d1056674a0fb6a7aa8e8ec5f851 = L.marker(
+                [50.51914467720666, 30.676891865603075],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_4e50afcc802a47b8ae35305d276928de = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_81745d1056674a0fb6a7aa8e8ec5f851.setIcon(custom_icon_4e50afcc802a47b8ae35305d276928de);
+        
+    
+        var popup_bbb733cddd07422d88182eda285a8767 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7361d5d8e3de432489b80299c51cf947 = $(`<div id="html_7361d5d8e3de432489b80299c51cf947" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/13><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>180 uah</div>`)[0];
+            popup_bbb733cddd07422d88182eda285a8767.setContent(html_7361d5d8e3de432489b80299c51cf947);
+        
+
+        marker_81745d1056674a0fb6a7aa8e8ec5f851.bindPopup(popup_bbb733cddd07422d88182eda285a8767)
+        ;
+
+        
+    
+    
+            var marker_e9394362ff034b198bd49007daac7f4f = L.marker(
+                [50.327745273508675, 30.54209347989064],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_8f80b54b41cf4c268d24b241624ec9d2 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_e9394362ff034b198bd49007daac7f4f.setIcon(custom_icon_8f80b54b41cf4c268d24b241624ec9d2);
+        
+    
+        var popup_488e2ee9438c46999b795b04cea0c640 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a618ebb2f9384a0fa61fec5cc82e8be2 = $(`<div id="html_a618ebb2f9384a0fa61fec5cc82e8be2" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/25><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>153 uah</div>`)[0];
+            popup_488e2ee9438c46999b795b04cea0c640.setContent(html_a618ebb2f9384a0fa61fec5cc82e8be2);
+        
+
+        marker_e9394362ff034b198bd49007daac7f4f.bindPopup(popup_488e2ee9438c46999b795b04cea0c640)
+        ;
+
+        
+    
+    
+            var marker_ca10f6b6c9374085a99e3f57b04f218d = L.marker(
+                [50.35952326928268, 30.408151651584316],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1c2cc8c610fc4c3e936921a3e5e30900 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_ca10f6b6c9374085a99e3f57b04f218d.setIcon(custom_icon_1c2cc8c610fc4c3e936921a3e5e30900);
+        
+    
+        var popup_a2bb9802224b4bc398273268f1ce5d1b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_017a2b26b8e94f3196599834bd93a5a6 = $(`<div id="html_017a2b26b8e94f3196599834bd93a5a6" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/28><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>96 uah</div>`)[0];
+            popup_a2bb9802224b4bc398273268f1ce5d1b.setContent(html_017a2b26b8e94f3196599834bd93a5a6);
+        
+
+        marker_ca10f6b6c9374085a99e3f57b04f218d.bindPopup(popup_a2bb9802224b4bc398273268f1ce5d1b)
+        ;
+
+        
+    
+    
+            var marker_7c40925c4ff84e2481b23644db93501b = L.marker(
+                [50.4683527876795, 30.547468995446707],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_6adf167593784c658d1d17b930e13f7c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_7c40925c4ff84e2481b23644db93501b.setIcon(custom_icon_6adf167593784c658d1d17b930e13f7c);
+        
+    
+        var popup_7544bcf69c2449458996e9ffd8e47e04 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b9b188b86f75424b9592a0c2b1a8d394 = $(`<div id="html_b9b188b86f75424b9592a0c2b1a8d394" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/48><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>82 uah</div>`)[0];
+            popup_7544bcf69c2449458996e9ffd8e47e04.setContent(html_b9b188b86f75424b9592a0c2b1a8d394);
+        
+
+        marker_7c40925c4ff84e2481b23644db93501b.bindPopup(popup_7544bcf69c2449458996e9ffd8e47e04)
+        ;
+
+        
+    
+    
+            var marker_a242ace47ef34e7ca20f45d2441fb2d6 = L.marker(
+                [50.59581854979738, 30.618546730063287],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_187262a337f74e119d83f3e981d5a6d1 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_a242ace47ef34e7ca20f45d2441fb2d6.setIcon(custom_icon_187262a337f74e119d83f3e981d5a6d1);
+        
+    
+        var popup_09bbf04339e148bd881e221841f54afa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2ee6f60f8e13422981eac1b5d589fc7b = $(`<div id="html_2ee6f60f8e13422981eac1b5d589fc7b" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/69><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>75 uah</div>`)[0];
+            popup_09bbf04339e148bd881e221841f54afa.setContent(html_2ee6f60f8e13422981eac1b5d589fc7b);
+        
+
+        marker_a242ace47ef34e7ca20f45d2441fb2d6.bindPopup(popup_09bbf04339e148bd881e221841f54afa)
+        ;
+
+        
+    
+    
+            var marker_9d17190a99ab405a98da29c0eff246f5 = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b5ea932771714c7b94d4e17e545acbad = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_9d17190a99ab405a98da29c0eff246f5.setIcon(custom_icon_b5ea932771714c7b94d4e17e545acbad);
+        
+    
+        var popup_bc9b4dab4bfa402785fb3387ba01fb0c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8348bffae3b54458856a5b256c765751 = $(`<div id="html_8348bffae3b54458856a5b256c765751" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/81><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>98 uah</div>`)[0];
+            popup_bc9b4dab4bfa402785fb3387ba01fb0c.setContent(html_8348bffae3b54458856a5b256c765751);
+        
+
+        marker_9d17190a99ab405a98da29c0eff246f5.bindPopup(popup_bc9b4dab4bfa402785fb3387ba01fb0c)
+        ;
+
+        
+    
+    
+            var marker_14085f370194460082a8f9cf3d523d6c = L.marker(
+                [50.301224104913196, 30.65958899431215],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_925624f738ed4208944621e013acd86c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_14085f370194460082a8f9cf3d523d6c.setIcon(custom_icon_925624f738ed4208944621e013acd86c);
+        
+    
+        var popup_edce192961fb4eca91ba2c2c052f4750 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_40fe8bcda1e04a1aae0ee0d938e8e391 = $(`<div id="html_40fe8bcda1e04a1aae0ee0d938e8e391" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/90><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>130 uah</div>`)[0];
+            popup_edce192961fb4eca91ba2c2c052f4750.setContent(html_40fe8bcda1e04a1aae0ee0d938e8e391);
+        
+
+        marker_14085f370194460082a8f9cf3d523d6c.bindPopup(popup_edce192961fb4eca91ba2c2c052f4750)
+        ;
+
+        
+    
+    
+            var marker_4bb9e34a776e4ed79074580f7c314b1f = L.marker(
+                [50.37999438926472, 30.561323089163093],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_31d7c36b65884237af567458a14e03ab = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_4bb9e34a776e4ed79074580f7c314b1f.setIcon(custom_icon_31d7c36b65884237af567458a14e03ab);
+        
+    
+        var popup_de7f10e3523f461aaf3e5820e4babd9a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f08ea66afbfd44ff845bace612db4c14 = $(`<div id="html_f08ea66afbfd44ff845bace612db4c14" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/102><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>69 uah</div>`)[0];
+            popup_de7f10e3523f461aaf3e5820e4babd9a.setContent(html_f08ea66afbfd44ff845bace612db4c14);
+        
+
+        marker_4bb9e34a776e4ed79074580f7c314b1f.bindPopup(popup_de7f10e3523f461aaf3e5820e4babd9a)
+        ;
+
+        
+    
+    
+            var marker_94633713f75f4350b130a1b48fac506b = L.marker(
+                [50.301224104913196, 30.65958899431215],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_32394616ad014cb5860367fbc0cb0236 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_94633713f75f4350b130a1b48fac506b.setIcon(custom_icon_32394616ad014cb5860367fbc0cb0236);
+        
+    
+        var popup_bf1b930c4ef647adac399085e71cfce6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_719defa6fd194c66bd43b48a172a3d8e = $(`<div id="html_719defa6fd194c66bd43b48a172a3d8e" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/139><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>55 uah</div>`)[0];
+            popup_bf1b930c4ef647adac399085e71cfce6.setContent(html_719defa6fd194c66bd43b48a172a3d8e);
+        
+
+        marker_94633713f75f4350b130a1b48fac506b.bindPopup(popup_bf1b930c4ef647adac399085e71cfce6)
+        ;
+
+        
+    
+    
+            var marker_081a2798d972405eba6e090a4eaa4248 = L.marker(
+                [50.59236791637463, 30.53436420700355],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_56c098e7619f487bb602893e8d5d3852 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/8.jpg"});
+        marker_081a2798d972405eba6e090a4eaa4248.setIcon(custom_icon_56c098e7619f487bb602893e8d5d3852);
+        
+    
+        var popup_e4c9f9b4524b40dea450c79b06113757 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_373efdce01b94aeab61b652e67c8c601 = $(`<div id="html_373efdce01b94aeab61b652e67c8c601" style="width: 100.0%; height: 100.0%;">Lolita</br><a href=http://127.0.0.1:5000/bi/158><img src="/static/covers/8.jpg" width="50" height="70" ></a></br>112 uah</div>`)[0];
+            popup_e4c9f9b4524b40dea450c79b06113757.setContent(html_373efdce01b94aeab61b652e67c8c601);
+        
+
+        marker_081a2798d972405eba6e090a4eaa4248.bindPopup(popup_e4c9f9b4524b40dea450c79b06113757)
+        ;
+
+        
+    
+    
+            var marker_e6b2a0018bf449f28069fcd65d7f8f80 = L.marker(
+                [50.3474271295054, 30.556347652178],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_a61e6a9e86e646f988331ca165481266 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_e6b2a0018bf449f28069fcd65d7f8f80.setIcon(custom_icon_a61e6a9e86e646f988331ca165481266);
+        
+    
+        var popup_6e0e6abda04b4f51b24137b53a2ddb3c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7ed4b1fd8e644c078cfb8bb1e700cc38 = $(`<div id="html_7ed4b1fd8e644c078cfb8bb1e700cc38" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/1><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>145 uah</div>`)[0];
+            popup_6e0e6abda04b4f51b24137b53a2ddb3c.setContent(html_7ed4b1fd8e644c078cfb8bb1e700cc38);
+        
+
+        marker_e6b2a0018bf449f28069fcd65d7f8f80.bindPopup(popup_6e0e6abda04b4f51b24137b53a2ddb3c)
+        ;
+
+        
+    
+    
+            var marker_e08e0810d24c48a78718f9cb43df26a8 = L.marker(
+                [50.37999438926472, 30.561323089163093],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_6b2b776ad11344daa379428dbf3f78dc = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_e08e0810d24c48a78718f9cb43df26a8.setIcon(custom_icon_6b2b776ad11344daa379428dbf3f78dc);
+        
+    
+        var popup_2a939ab9e53d4b6c91fd59642bd7e41d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_709efd6c1f324f1cbc9060ee6451a8ec = $(`<div id="html_709efd6c1f324f1cbc9060ee6451a8ec" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/16><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>169 uah</div>`)[0];
+            popup_2a939ab9e53d4b6c91fd59642bd7e41d.setContent(html_709efd6c1f324f1cbc9060ee6451a8ec);
+        
+
+        marker_e08e0810d24c48a78718f9cb43df26a8.bindPopup(popup_2a939ab9e53d4b6c91fd59642bd7e41d)
+        ;
+
+        
+    
+    
+            var marker_8ef65b9a26184cd5822b89cd771990a8 = L.marker(
+                [50.59236791637463, 30.53436420700355],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_19f823e8f6ec4c7d92cde5ed7308e6db = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_8ef65b9a26184cd5822b89cd771990a8.setIcon(custom_icon_19f823e8f6ec4c7d92cde5ed7308e6db);
+        
+    
+        var popup_c57d1553b7854481a931a7b51a479c8a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_da7ca0ff33fa40bd9ee7cbd7c0efe660 = $(`<div id="html_da7ca0ff33fa40bd9ee7cbd7c0efe660" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/27><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>22 uah</div>`)[0];
+            popup_c57d1553b7854481a931a7b51a479c8a.setContent(html_da7ca0ff33fa40bd9ee7cbd7c0efe660);
+        
+
+        marker_8ef65b9a26184cd5822b89cd771990a8.bindPopup(popup_c57d1553b7854481a931a7b51a479c8a)
+        ;
+
+        
+    
+    
+            var marker_da40ec6251b8402ea75c26cc14b16a13 = L.marker(
+                [50.43004849215031, 30.456866271601665],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_656f9a8dca4a48bebef474b578cd51ec = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_da40ec6251b8402ea75c26cc14b16a13.setIcon(custom_icon_656f9a8dca4a48bebef474b578cd51ec);
+        
+    
+        var popup_ac958cafa3d447f6aeb33a83bed83629 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d11c780f312047d1a17a3f5005682e27 = $(`<div id="html_d11c780f312047d1a17a3f5005682e27" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/53><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>176 uah</div>`)[0];
+            popup_ac958cafa3d447f6aeb33a83bed83629.setContent(html_d11c780f312047d1a17a3f5005682e27);
+        
+
+        marker_da40ec6251b8402ea75c26cc14b16a13.bindPopup(popup_ac958cafa3d447f6aeb33a83bed83629)
+        ;
+
+        
+    
+    
+            var marker_68a90dbab8f945a19bf637462de9d7a7 = L.marker(
+                [50.47067809691922, 30.565183332656005],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1c23c62a61b140bfb427e6eefefb8b6a = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_68a90dbab8f945a19bf637462de9d7a7.setIcon(custom_icon_1c23c62a61b140bfb427e6eefefb8b6a);
+        
+    
+        var popup_2b6c108119fb4524b51cc6413bd04c7d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_92d10d08bc8e467084cdf017d8f803cd = $(`<div id="html_92d10d08bc8e467084cdf017d8f803cd" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/62><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>147 uah</div>`)[0];
+            popup_2b6c108119fb4524b51cc6413bd04c7d.setContent(html_92d10d08bc8e467084cdf017d8f803cd);
+        
+
+        marker_68a90dbab8f945a19bf637462de9d7a7.bindPopup(popup_2b6c108119fb4524b51cc6413bd04c7d)
+        ;
+
+        
+    
+    
+            var marker_c61cd4ed6d224fac9df95c031fe428d0 = L.marker(
+                [50.35952326928268, 30.408151651584316],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1a07bd564357426faa50ecc41ba192ee = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_c61cd4ed6d224fac9df95c031fe428d0.setIcon(custom_icon_1a07bd564357426faa50ecc41ba192ee);
+        
+    
+        var popup_85dbcd29396942c69e7f1de01f66bcb3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5df5cd16cc8b480fb6b731aa18403589 = $(`<div id="html_5df5cd16cc8b480fb6b731aa18403589" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/96><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>40 uah</div>`)[0];
+            popup_85dbcd29396942c69e7f1de01f66bcb3.setContent(html_5df5cd16cc8b480fb6b731aa18403589);
+        
+
+        marker_c61cd4ed6d224fac9df95c031fe428d0.bindPopup(popup_85dbcd29396942c69e7f1de01f66bcb3)
+        ;
+
+        
+    
+    
+            var marker_b2566370e847428cbfa97a95e2c2d5cf = L.marker(
+                [50.48102032736575, 30.606477055727677],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_9733b5005bcc47d6b8725105a4d5f6bd = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_b2566370e847428cbfa97a95e2c2d5cf.setIcon(custom_icon_9733b5005bcc47d6b8725105a4d5f6bd);
+        
+    
+        var popup_eb7d467f32274faeb824234c3a1dd2b6 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_36e6570c43c747fc983a6722f6bb6a1e = $(`<div id="html_36e6570c43c747fc983a6722f6bb6a1e" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/120><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>192 uah</div>`)[0];
+            popup_eb7d467f32274faeb824234c3a1dd2b6.setContent(html_36e6570c43c747fc983a6722f6bb6a1e);
+        
+
+        marker_b2566370e847428cbfa97a95e2c2d5cf.bindPopup(popup_eb7d467f32274faeb824234c3a1dd2b6)
+        ;
+
+        
+    
+    
+            var marker_222d38f6b35043e7bfbe4cfcb5b56e62 = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e8a855863db64f47b2eaeb42b5be9bea = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_222d38f6b35043e7bfbe4cfcb5b56e62.setIcon(custom_icon_e8a855863db64f47b2eaeb42b5be9bea);
+        
+    
+        var popup_5044d21a8a724a26a5cdb2feced3e3fb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d25c853e57454cafbe008c9e9b6dd649 = $(`<div id="html_d25c853e57454cafbe008c9e9b6dd649" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/124><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>47 uah</div>`)[0];
+            popup_5044d21a8a724a26a5cdb2feced3e3fb.setContent(html_d25c853e57454cafbe008c9e9b6dd649);
+        
+
+        marker_222d38f6b35043e7bfbe4cfcb5b56e62.bindPopup(popup_5044d21a8a724a26a5cdb2feced3e3fb)
+        ;
+
+        
+    
+    
+            var marker_ff27c25383374ce98fc347ca08a4f9ce = L.marker(
+                [50.59581854979738, 30.618546730063287],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c4666b5ad76843c980a5f37ba87e0825 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_ff27c25383374ce98fc347ca08a4f9ce.setIcon(custom_icon_c4666b5ad76843c980a5f37ba87e0825);
+        
+    
+        var popup_0ca43fdf43e54988a2f636975866d901 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a2767f0c1fc443ff99fc0868b050430c = $(`<div id="html_a2767f0c1fc443ff99fc0868b050430c" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/130><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>45 uah</div>`)[0];
+            popup_0ca43fdf43e54988a2f636975866d901.setContent(html_a2767f0c1fc443ff99fc0868b050430c);
+        
+
+        marker_ff27c25383374ce98fc347ca08a4f9ce.bindPopup(popup_0ca43fdf43e54988a2f636975866d901)
+        ;
+
+        
+    
+    
+            var marker_c18bf66d4c43439a8fc1bbac5060cd32 = L.marker(
+                [50.37999438926472, 30.561323089163093],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_2cb005b809734c5e8e3353d943690aff = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_c18bf66d4c43439a8fc1bbac5060cd32.setIcon(custom_icon_2cb005b809734c5e8e3353d943690aff);
+        
+    
+        var popup_70c44bf09a694b3bb11a8d8d6bceb943 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8bc30f4a9d2b48de8a6723a6007f8eab = $(`<div id="html_8bc30f4a9d2b48de8a6723a6007f8eab" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/134><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>189 uah</div>`)[0];
+            popup_70c44bf09a694b3bb11a8d8d6bceb943.setContent(html_8bc30f4a9d2b48de8a6723a6007f8eab);
+        
+
+        marker_c18bf66d4c43439a8fc1bbac5060cd32.bindPopup(popup_70c44bf09a694b3bb11a8d8d6bceb943)
+        ;
+
+        
+    
+    
+            var marker_7ac087d676a445349693df2f1c78696f = L.marker(
+                [50.536460144174974, 30.42573606899181],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e6022f1913c04fbfb4c06f5d64d297da = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_7ac087d676a445349693df2f1c78696f.setIcon(custom_icon_e6022f1913c04fbfb4c06f5d64d297da);
+        
+    
+        var popup_0e26435518104620b769b1146eac9c93 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_68625cf8c5784b69a9373e06e478640b = $(`<div id="html_68625cf8c5784b69a9373e06e478640b" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/138><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>127 uah</div>`)[0];
+            popup_0e26435518104620b769b1146eac9c93.setContent(html_68625cf8c5784b69a9373e06e478640b);
+        
+
+        marker_7ac087d676a445349693df2f1c78696f.bindPopup(popup_0e26435518104620b769b1146eac9c93)
+        ;
+
+        
+    
+    
+            var marker_f9a80fb34b174b588350bc6246608c4b = L.marker(
+                [50.431624345628045, 30.51052517014947],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_f5ce2e63b3364354bbb0816c3f3f2483 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_f9a80fb34b174b588350bc6246608c4b.setIcon(custom_icon_f5ce2e63b3364354bbb0816c3f3f2483);
+        
+    
+        var popup_b6cd6783f82a4181b2e0392658d967b3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_af4c9069faab48e88cd6273238af6771 = $(`<div id="html_af4c9069faab48e88cd6273238af6771" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/147><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>38 uah</div>`)[0];
+            popup_b6cd6783f82a4181b2e0392658d967b3.setContent(html_af4c9069faab48e88cd6273238af6771);
+        
+
+        marker_f9a80fb34b174b588350bc6246608c4b.bindPopup(popup_b6cd6783f82a4181b2e0392658d967b3)
+        ;
+
+        
+    
+    
+            var marker_fb002f66dfb24d849e8fb00f30d22647 = L.marker(
+                [50.52390959454781, 30.57774457486212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_66752ee0b74c4d4ea3bf3162278f860d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_fb002f66dfb24d849e8fb00f30d22647.setIcon(custom_icon_66752ee0b74c4d4ea3bf3162278f860d);
+        
+    
+        var popup_972b56ace07b433987c67fc5aeb4a74d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e256b94cf5954bd9ac54b5448fbe7b22 = $(`<div id="html_e256b94cf5954bd9ac54b5448fbe7b22" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/153><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>88 uah</div>`)[0];
+            popup_972b56ace07b433987c67fc5aeb4a74d.setContent(html_e256b94cf5954bd9ac54b5448fbe7b22);
+        
+
+        marker_fb002f66dfb24d849e8fb00f30d22647.bindPopup(popup_972b56ace07b433987c67fc5aeb4a74d)
+        ;
+
+        
+    
+    
+            var marker_d9bc0876192143b6a310003c66c48cd1 = L.marker(
+                [50.42797947153097, 30.412975283975186],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_92b62125655e432a92bd7e3c62c9382c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/9.jpg"});
+        marker_d9bc0876192143b6a310003c66c48cd1.setIcon(custom_icon_92b62125655e432a92bd7e3c62c9382c);
+        
+    
+        var popup_0dcda6249f074e52baaa110417facd6c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c0ad4044cf54468a888ab85ff7ecb0d4 = $(`<div id="html_c0ad4044cf54468a888ab85ff7ecb0d4" style="width: 100.0%; height: 100.0%;">Hamlet</br><a href=http://127.0.0.1:5000/bi/179><img src="/static/covers/9.jpg" width="50" height="70" ></a></br>69 uah</div>`)[0];
+            popup_0dcda6249f074e52baaa110417facd6c.setContent(html_c0ad4044cf54468a888ab85ff7ecb0d4);
+        
+
+        marker_d9bc0876192143b6a310003c66c48cd1.bindPopup(popup_0dcda6249f074e52baaa110417facd6c)
+        ;
+
+        
+    
+    
+            var marker_ae964093786147f6a13faba83f60b95e = L.marker(
+                [50.37902193224722, 30.450442071772923],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_710f680231df4816a9c3f18a1607c622 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_ae964093786147f6a13faba83f60b95e.setIcon(custom_icon_710f680231df4816a9c3f18a1607c622);
+        
+    
+        var popup_2410cb59bd1e4d71ab798a973ad055f0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3a10acf9744a4796983f00d5f3ee4de2 = $(`<div id="html_3a10acf9744a4796983f00d5f3ee4de2" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/8><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>93 uah</div>`)[0];
+            popup_2410cb59bd1e4d71ab798a973ad055f0.setContent(html_3a10acf9744a4796983f00d5f3ee4de2);
+        
+
+        marker_ae964093786147f6a13faba83f60b95e.bindPopup(popup_2410cb59bd1e4d71ab798a973ad055f0)
+        ;
+
+        
+    
+    
+            var marker_314b933916684f38b2d8b98a8cb35170 = L.marker(
+                [50.35101206987568, 30.638074138349285],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_80c5f4d9336942d98ea5e39230cb93bb = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_314b933916684f38b2d8b98a8cb35170.setIcon(custom_icon_80c5f4d9336942d98ea5e39230cb93bb);
+        
+    
+        var popup_75aa726e75dc4d3b8a49120f6bc08648 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1165d7ff03bc423c8d17ad8b6169693c = $(`<div id="html_1165d7ff03bc423c8d17ad8b6169693c" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/18><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>44 uah</div>`)[0];
+            popup_75aa726e75dc4d3b8a49120f6bc08648.setContent(html_1165d7ff03bc423c8d17ad8b6169693c);
+        
+
+        marker_314b933916684f38b2d8b98a8cb35170.bindPopup(popup_75aa726e75dc4d3b8a49120f6bc08648)
+        ;
+
+        
+    
+    
+            var marker_6ea575b5dbb6437a941d96936827543a = L.marker(
+                [50.56991766579977, 30.46656605955823],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_55868041f17348fe8381a823f27c9dde = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_6ea575b5dbb6437a941d96936827543a.setIcon(custom_icon_55868041f17348fe8381a823f27c9dde);
+        
+    
+        var popup_b751f9affeea4aae9ef27f63249e22e0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_86f72f7a83614b3ab613359a71e0908e = $(`<div id="html_86f72f7a83614b3ab613359a71e0908e" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/30><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>165 uah</div>`)[0];
+            popup_b751f9affeea4aae9ef27f63249e22e0.setContent(html_86f72f7a83614b3ab613359a71e0908e);
+        
+
+        marker_6ea575b5dbb6437a941d96936827543a.bindPopup(popup_b751f9affeea4aae9ef27f63249e22e0)
+        ;
+
+        
+    
+    
+            var marker_40fd0982badd46b7915a1cbd97f3f1f7 = L.marker(
+                [50.571780499748506, 30.630396587279336],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b5355c7859ca45aab6bed2d681a428b7 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_40fd0982badd46b7915a1cbd97f3f1f7.setIcon(custom_icon_b5355c7859ca45aab6bed2d681a428b7);
+        
+    
+        var popup_55ce6abaf9fb454099baf8d4b871ac78 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b160c162c96441ac9786eed5a6808164 = $(`<div id="html_b160c162c96441ac9786eed5a6808164" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/33><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>35 uah</div>`)[0];
+            popup_55ce6abaf9fb454099baf8d4b871ac78.setContent(html_b160c162c96441ac9786eed5a6808164);
+        
+
+        marker_40fd0982badd46b7915a1cbd97f3f1f7.bindPopup(popup_55ce6abaf9fb454099baf8d4b871ac78)
+        ;
+
+        
+    
+    
+            var marker_bee9c4a0cd5e4c2cabf1b8ce920223d7 = L.marker(
+                [50.37287888889877, 30.677807806328516],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_33fcb99de477491684044aa2a95c3669 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_bee9c4a0cd5e4c2cabf1b8ce920223d7.setIcon(custom_icon_33fcb99de477491684044aa2a95c3669);
+        
+    
+        var popup_1ec0c832fd204f8890789f76026c8865 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f895d2ba83bc41448efc61c80332e506 = $(`<div id="html_f895d2ba83bc41448efc61c80332e506" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/45><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>28 uah</div>`)[0];
+            popup_1ec0c832fd204f8890789f76026c8865.setContent(html_f895d2ba83bc41448efc61c80332e506);
+        
+
+        marker_bee9c4a0cd5e4c2cabf1b8ce920223d7.bindPopup(popup_1ec0c832fd204f8890789f76026c8865)
+        ;
+
+        
+    
+    
+            var marker_ae93c1554cd2469c9fe7dc7a7ab1afc3 = L.marker(
+                [50.431624345628045, 30.51052517014947],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d550f7d3ec3a418198d8bff1dc13f03e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_ae93c1554cd2469c9fe7dc7a7ab1afc3.setIcon(custom_icon_d550f7d3ec3a418198d8bff1dc13f03e);
+        
+    
+        var popup_700736d93ab04844b3dca10173516bff = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a3cc232a20d1441e92bc695d91282bae = $(`<div id="html_a3cc232a20d1441e92bc695d91282bae" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/60><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>63 uah</div>`)[0];
+            popup_700736d93ab04844b3dca10173516bff.setContent(html_a3cc232a20d1441e92bc695d91282bae);
+        
+
+        marker_ae93c1554cd2469c9fe7dc7a7ab1afc3.bindPopup(popup_700736d93ab04844b3dca10173516bff)
+        ;
+
+        
+    
+    
+            var marker_709ebbcd5dce4f52bac9d2b2e8cdb17b = L.marker(
+                [50.31410348213164, 30.40302238046783],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_959cb499c51b492ab618e983d2fa1fec = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_709ebbcd5dce4f52bac9d2b2e8cdb17b.setIcon(custom_icon_959cb499c51b492ab618e983d2fa1fec);
+        
+    
+        var popup_16eac04603554bbdbc6f04c764b79945 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4945b0478c0a4041a18026ffd460634e = $(`<div id="html_4945b0478c0a4041a18026ffd460634e" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/76><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>138 uah</div>`)[0];
+            popup_16eac04603554bbdbc6f04c764b79945.setContent(html_4945b0478c0a4041a18026ffd460634e);
+        
+
+        marker_709ebbcd5dce4f52bac9d2b2e8cdb17b.bindPopup(popup_16eac04603554bbdbc6f04c764b79945)
+        ;
+
+        
+    
+    
+            var marker_792e344cf9354aabb1269d70d19b6ec2 = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_57c2601954ad47ca8035002a509f5bc5 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_792e344cf9354aabb1269d70d19b6ec2.setIcon(custom_icon_57c2601954ad47ca8035002a509f5bc5);
+        
+    
+        var popup_efa2ecc84a3940b7a09c888be21a2490 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f68735522c7c422da291a50b79056902 = $(`<div id="html_f68735522c7c422da291a50b79056902" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/79><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>187 uah</div>`)[0];
+            popup_efa2ecc84a3940b7a09c888be21a2490.setContent(html_f68735522c7c422da291a50b79056902);
+        
+
+        marker_792e344cf9354aabb1269d70d19b6ec2.bindPopup(popup_efa2ecc84a3940b7a09c888be21a2490)
+        ;
+
+        
+    
+    
+            var marker_5dbaebcafa6a44499ab58fb2b54454e4 = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_026dc000c0e9460abc969506fd0c5087 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_5dbaebcafa6a44499ab58fb2b54454e4.setIcon(custom_icon_026dc000c0e9460abc969506fd0c5087);
+        
+    
+        var popup_3f4efb5e97c44735bc09f65d6ec79f66 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_8a991904b78a497f91af829e29fa5424 = $(`<div id="html_8a991904b78a497f91af829e29fa5424" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/84><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>88 uah</div>`)[0];
+            popup_3f4efb5e97c44735bc09f65d6ec79f66.setContent(html_8a991904b78a497f91af829e29fa5424);
+        
+
+        marker_5dbaebcafa6a44499ab58fb2b54454e4.bindPopup(popup_3f4efb5e97c44735bc09f65d6ec79f66)
+        ;
+
+        
+    
+    
+            var marker_b33c932eed5b4a1ea5981e6141e57ba5 = L.marker(
+                [50.43004849215031, 30.456866271601665],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_44bc11faad8849018b45fe807805ca08 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_b33c932eed5b4a1ea5981e6141e57ba5.setIcon(custom_icon_44bc11faad8849018b45fe807805ca08);
+        
+    
+        var popup_8c5af5a810c642439a7a528fadafbb44 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5a19b4b78a7d47778afcae99d3ad5240 = $(`<div id="html_5a19b4b78a7d47778afcae99d3ad5240" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/85><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>191 uah</div>`)[0];
+            popup_8c5af5a810c642439a7a528fadafbb44.setContent(html_5a19b4b78a7d47778afcae99d3ad5240);
+        
+
+        marker_b33c932eed5b4a1ea5981e6141e57ba5.bindPopup(popup_8c5af5a810c642439a7a528fadafbb44)
+        ;
+
+        
+    
+    
+            var marker_7b8dadfb63864c158dcc838b916b460d = L.marker(
+                [50.51914467720666, 30.676891865603075],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_370aaeacb4bc4b16a0d7e8dbd7204dc5 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_7b8dadfb63864c158dcc838b916b460d.setIcon(custom_icon_370aaeacb4bc4b16a0d7e8dbd7204dc5);
+        
+    
+        var popup_5c40347978ff478a9a75e7802d95cbde = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9ef1bf46fcdc479ba910ba06eb319782 = $(`<div id="html_9ef1bf46fcdc479ba910ba06eb319782" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/105><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>50 uah</div>`)[0];
+            popup_5c40347978ff478a9a75e7802d95cbde.setContent(html_9ef1bf46fcdc479ba910ba06eb319782);
+        
+
+        marker_7b8dadfb63864c158dcc838b916b460d.bindPopup(popup_5c40347978ff478a9a75e7802d95cbde)
+        ;
+
+        
+    
+    
+            var marker_379ebf840df146058d69ab0085861f3a = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_74a5fafe05594b13bbf206686a844155 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_379ebf840df146058d69ab0085861f3a.setIcon(custom_icon_74a5fafe05594b13bbf206686a844155);
+        
+    
+        var popup_60eaf89cba504e87984b4936198ed263 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_21e26963afa44f318f843bcdf259faf5 = $(`<div id="html_21e26963afa44f318f843bcdf259faf5" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/108><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>87 uah</div>`)[0];
+            popup_60eaf89cba504e87984b4936198ed263.setContent(html_21e26963afa44f318f843bcdf259faf5);
+        
+
+        marker_379ebf840df146058d69ab0085861f3a.bindPopup(popup_60eaf89cba504e87984b4936198ed263)
+        ;
+
+        
+    
+    
+            var marker_71a642085b314a709daf82dd724735e0 = L.marker(
+                [50.52406820651246, 30.606039235256386],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d19852cae7e248ec9b3acb86007499f2 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_71a642085b314a709daf82dd724735e0.setIcon(custom_icon_d19852cae7e248ec9b3acb86007499f2);
+        
+    
+        var popup_d64e2f5242bb42a3a1e45700acbff76d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ca51bb11fc2f4c7bb09a861e9623de70 = $(`<div id="html_ca51bb11fc2f4c7bb09a861e9623de70" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/109><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>162 uah</div>`)[0];
+            popup_d64e2f5242bb42a3a1e45700acbff76d.setContent(html_ca51bb11fc2f4c7bb09a861e9623de70);
+        
+
+        marker_71a642085b314a709daf82dd724735e0.bindPopup(popup_d64e2f5242bb42a3a1e45700acbff76d)
+        ;
+
+        
+    
+    
+            var marker_e10fdc383b464981b9a4e1d2564d9e1e = L.marker(
+                [50.4029447433305, 30.44088231142244],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_4409eca50d954de58813521fcd9d5b41 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_e10fdc383b464981b9a4e1d2564d9e1e.setIcon(custom_icon_4409eca50d954de58813521fcd9d5b41);
+        
+    
+        var popup_252c6e8ba45e4631878f9f50af6e3090 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6c93c444996846ae9ab4f25ec1883f3a = $(`<div id="html_6c93c444996846ae9ab4f25ec1883f3a" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/121><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>130 uah</div>`)[0];
+            popup_252c6e8ba45e4631878f9f50af6e3090.setContent(html_6c93c444996846ae9ab4f25ec1883f3a);
+        
+
+        marker_e10fdc383b464981b9a4e1d2564d9e1e.bindPopup(popup_252c6e8ba45e4631878f9f50af6e3090)
+        ;
+
+        
+    
+    
+            var marker_e0debe57f11d464387f7c9744ceb9969 = L.marker(
+                [50.56991766579977, 30.46656605955823],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_112ae81d4c474a93812fb884eee79cbf = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_e0debe57f11d464387f7c9744ceb9969.setIcon(custom_icon_112ae81d4c474a93812fb884eee79cbf);
+        
+    
+        var popup_b10a296fb45943d78929551c492bf711 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dac6c12ad67345eebfc1e47e09c71d09 = $(`<div id="html_dac6c12ad67345eebfc1e47e09c71d09" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/141><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>62 uah</div>`)[0];
+            popup_b10a296fb45943d78929551c492bf711.setContent(html_dac6c12ad67345eebfc1e47e09c71d09);
+        
+
+        marker_e0debe57f11d464387f7c9744ceb9969.bindPopup(popup_b10a296fb45943d78929551c492bf711)
+        ;
+
+        
+    
+    
+            var marker_718f050ccb7e499b80cc2b89173970c3 = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d841904c0b2949c6b8f78afb2a1b6432 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_718f050ccb7e499b80cc2b89173970c3.setIcon(custom_icon_d841904c0b2949c6b8f78afb2a1b6432);
+        
+    
+        var popup_4d3573660b6f4ce2a3b0ad2aab1b0a47 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e1c16011163548c3bb5751c7f802d22a = $(`<div id="html_e1c16011163548c3bb5751c7f802d22a" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/148><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>66 uah</div>`)[0];
+            popup_4d3573660b6f4ce2a3b0ad2aab1b0a47.setContent(html_e1c16011163548c3bb5751c7f802d22a);
+        
+
+        marker_718f050ccb7e499b80cc2b89173970c3.bindPopup(popup_4d3573660b6f4ce2a3b0ad2aab1b0a47)
+        ;
+
+        
+    
+    
+            var marker_cbf5b89d096e404c817af838f8576814 = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_58c9b9825c6d4f34acf822855f5db587 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/10.jpg"});
+        marker_cbf5b89d096e404c817af838f8576814.setIcon(custom_icon_58c9b9825c6d4f34acf822855f5db587);
+        
+    
+        var popup_7621194f1ec647b8a28e01e29863459e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ca3559a70b1440718bc98a8dc7fec936 = $(`<div id="html_ca3559a70b1440718bc98a8dc7fec936" style="width: 100.0%; height: 100.0%;">The Catcher in the Rye</br><a href=http://127.0.0.1:5000/bi/162><img src="/static/covers/10.jpg" width="50" height="70" ></a></br>135 uah</div>`)[0];
+            popup_7621194f1ec647b8a28e01e29863459e.setContent(html_ca3559a70b1440718bc98a8dc7fec936);
+        
+
+        marker_cbf5b89d096e404c817af838f8576814.bindPopup(popup_7621194f1ec647b8a28e01e29863459e)
+        ;
+
+        
+    
+    
+            var marker_3ccab20722474572a213ef5e5fe9da0c = L.marker(
+                [50.56991766579977, 30.46656605955823],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_fc202e54232d492abb497dc2d97ef2d8 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_3ccab20722474572a213ef5e5fe9da0c.setIcon(custom_icon_fc202e54232d492abb497dc2d97ef2d8);
+        
+    
+        var popup_3fb207ebcf3a46aa8fa6427abb8f55e3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f1c7dcef14e54b0f9a3ad14e6a3773db = $(`<div id="html_f1c7dcef14e54b0f9a3ad14e6a3773db" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/4><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>21 uah</div>`)[0];
+            popup_3fb207ebcf3a46aa8fa6427abb8f55e3.setContent(html_f1c7dcef14e54b0f9a3ad14e6a3773db);
+        
+
+        marker_3ccab20722474572a213ef5e5fe9da0c.bindPopup(popup_3fb207ebcf3a46aa8fa6427abb8f55e3)
+        ;
+
+        
+    
+    
+            var marker_5df01d021ec74a89b8392421f768119d = L.marker(
+                [50.40050045627517, 30.44011870917482],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b40b7db31b6e43ad8e8528627d9f17fe = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_5df01d021ec74a89b8392421f768119d.setIcon(custom_icon_b40b7db31b6e43ad8e8528627d9f17fe);
+        
+    
+        var popup_cce58059fc77439e935220d7b6efd1d0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0162cfa8f7de4dd39de7d76856a20f47 = $(`<div id="html_0162cfa8f7de4dd39de7d76856a20f47" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/71><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>22 uah</div>`)[0];
+            popup_cce58059fc77439e935220d7b6efd1d0.setContent(html_0162cfa8f7de4dd39de7d76856a20f47);
+        
+
+        marker_5df01d021ec74a89b8392421f768119d.bindPopup(popup_cce58059fc77439e935220d7b6efd1d0)
+        ;
+
+        
+    
+    
+            var marker_41c90a37de054345b78e960246b36f3b = L.marker(
+                [50.41648714215613, 30.47297298802378],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_2e7b522978b34a8bbaf15ab9db66c4a3 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_41c90a37de054345b78e960246b36f3b.setIcon(custom_icon_2e7b522978b34a8bbaf15ab9db66c4a3);
+        
+    
+        var popup_ac910175598e41a6864d64a9a02aba20 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_130b9fb06e5941acbb94c167f2a3da9c = $(`<div id="html_130b9fb06e5941acbb94c167f2a3da9c" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/101><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>33 uah</div>`)[0];
+            popup_ac910175598e41a6864d64a9a02aba20.setContent(html_130b9fb06e5941acbb94c167f2a3da9c);
+        
+
+        marker_41c90a37de054345b78e960246b36f3b.bindPopup(popup_ac910175598e41a6864d64a9a02aba20)
+        ;
+
+        
+    
+    
+            var marker_f9dc346fa75a4e6fab632656e8942c8c = L.marker(
+                [50.58792329387564, 30.61945745031931],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_587d036b75d54d63b93f540138ed3813 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_f9dc346fa75a4e6fab632656e8942c8c.setIcon(custom_icon_587d036b75d54d63b93f540138ed3813);
+        
+    
+        var popup_d4b35eeaba44467aa010b267186c286e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3a7101157d7048eb837a170d375d7e03 = $(`<div id="html_3a7101157d7048eb837a170d375d7e03" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/112><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>67 uah</div>`)[0];
+            popup_d4b35eeaba44467aa010b267186c286e.setContent(html_3a7101157d7048eb837a170d375d7e03);
+        
+
+        marker_f9dc346fa75a4e6fab632656e8942c8c.bindPopup(popup_d4b35eeaba44467aa010b267186c286e)
+        ;
+
+        
+    
+    
+            var marker_533de541fad44071abd21fc814564d33 = L.marker(
+                [50.46057765806256, 30.416888232274367],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e92d620c0ba14bbfa0e18a7b5763cd0c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_533de541fad44071abd21fc814564d33.setIcon(custom_icon_e92d620c0ba14bbfa0e18a7b5763cd0c);
+        
+    
+        var popup_eef8fd0580eb45e6b8119d022fbc5dc4 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b2d391f7970d463585cee78a350de15d = $(`<div id="html_b2d391f7970d463585cee78a350de15d" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/113><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>193 uah</div>`)[0];
+            popup_eef8fd0580eb45e6b8119d022fbc5dc4.setContent(html_b2d391f7970d463585cee78a350de15d);
+        
+
+        marker_533de541fad44071abd21fc814564d33.bindPopup(popup_eef8fd0580eb45e6b8119d022fbc5dc4)
+        ;
+
+        
+    
+    
+            var marker_ec971531473648a2bcc47f99310ae68f = L.marker(
+                [50.344163169224906, 30.576539148571992],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_4df5a7cb391149c58a14e705103f9e2c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_ec971531473648a2bcc47f99310ae68f.setIcon(custom_icon_4df5a7cb391149c58a14e705103f9e2c);
+        
+    
+        var popup_4b86d37e528f4a8da77d3e91f7c16590 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4298838d6e494e5ca4569ef60ae5d07c = $(`<div id="html_4298838d6e494e5ca4569ef60ae5d07c" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/117><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>128 uah</div>`)[0];
+            popup_4b86d37e528f4a8da77d3e91f7c16590.setContent(html_4298838d6e494e5ca4569ef60ae5d07c);
+        
+
+        marker_ec971531473648a2bcc47f99310ae68f.bindPopup(popup_4b86d37e528f4a8da77d3e91f7c16590)
+        ;
+
+        
+    
+    
+            var marker_50075601acd64c98a280ba996a8bf729 = L.marker(
+                [50.61768392258598, 30.565792188802266],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_35d0d94c7cd04ba58cb6a049554d1524 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_50075601acd64c98a280ba996a8bf729.setIcon(custom_icon_35d0d94c7cd04ba58cb6a049554d1524);
+        
+    
+        var popup_abd9170a3f424da59c95b79b7303eb99 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_80c53b5cc9ca4cb4abc0dcca276bc68e = $(`<div id="html_80c53b5cc9ca4cb4abc0dcca276bc68e" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/132><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>74 uah</div>`)[0];
+            popup_abd9170a3f424da59c95b79b7303eb99.setContent(html_80c53b5cc9ca4cb4abc0dcca276bc68e);
+        
+
+        marker_50075601acd64c98a280ba996a8bf729.bindPopup(popup_abd9170a3f424da59c95b79b7303eb99)
+        ;
+
+        
+    
+    
+            var marker_19668029a49a4d9298d63df6e351aac9 = L.marker(
+                [50.431624345628045, 30.51052517014947],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_11beb6ebac5c4bb1b6cac47108878e4c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_19668029a49a4d9298d63df6e351aac9.setIcon(custom_icon_11beb6ebac5c4bb1b6cac47108878e4c);
+        
+    
+        var popup_14facb36eca547068b351cd768c55263 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b4b847bd56eb4dea87236828d6610793 = $(`<div id="html_b4b847bd56eb4dea87236828d6610793" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/136><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>96 uah</div>`)[0];
+            popup_14facb36eca547068b351cd768c55263.setContent(html_b4b847bd56eb4dea87236828d6610793);
+        
+
+        marker_19668029a49a4d9298d63df6e351aac9.bindPopup(popup_14facb36eca547068b351cd768c55263)
+        ;
+
+        
+    
+    
+            var marker_8a7f2f97a97e4f67bde50fcf2ae6c409 = L.marker(
+                [50.35952326928268, 30.408151651584316],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_08f5456f2bae4d649848cb963cc5c526 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_8a7f2f97a97e4f67bde50fcf2ae6c409.setIcon(custom_icon_08f5456f2bae4d649848cb963cc5c526);
+        
+    
+        var popup_2e1b855802d040ff841ad14124275bf9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d24ccb8ac7bf4ad0a39f3c902a5904a4 = $(`<div id="html_d24ccb8ac7bf4ad0a39f3c902a5904a4" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/163><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>190 uah</div>`)[0];
+            popup_2e1b855802d040ff841ad14124275bf9.setContent(html_d24ccb8ac7bf4ad0a39f3c902a5904a4);
+        
+
+        marker_8a7f2f97a97e4f67bde50fcf2ae6c409.bindPopup(popup_2e1b855802d040ff841ad14124275bf9)
+        ;
+
+        
+    
+    
+            var marker_eb51347c86754edf82935902e5f8e40a = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_16b417a530de441f8b044712637630b0 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/12.jpg"});
+        marker_eb51347c86754edf82935902e5f8e40a.setIcon(custom_icon_16b417a530de441f8b044712637630b0);
+        
+    
+        var popup_c61e21623ebe4b35b40e910d7edde296 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0514b6e02a9a4beb9b0b2baa95486355 = $(`<div id="html_0514b6e02a9a4beb9b0b2baa95486355" style="width: 100.0%; height: 100.0%;">The Brothers Karamazov</br><a href=http://127.0.0.1:5000/bi/176><img src="/static/covers/12.jpg" width="50" height="70" ></a></br>107 uah</div>`)[0];
+            popup_c61e21623ebe4b35b40e910d7edde296.setContent(html_0514b6e02a9a4beb9b0b2baa95486355);
+        
+
+        marker_eb51347c86754edf82935902e5f8e40a.bindPopup(popup_c61e21623ebe4b35b40e910d7edde296)
+        ;
+
+        
+    
+    
+            var marker_1d191db05e314e57bac0f87ace213801 = L.marker(
+                [50.48102032736575, 30.606477055727677],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_74d147d5afbe446cab078d0263ff91ca = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_1d191db05e314e57bac0f87ace213801.setIcon(custom_icon_74d147d5afbe446cab078d0263ff91ca);
+        
+    
+        var popup_306877bf467a4428949cb4880b9999a1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_85192aa92de94deb9cf9126fef8e5730 = $(`<div id="html_85192aa92de94deb9cf9126fef8e5730" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/17><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>181 uah</div>`)[0];
+            popup_306877bf467a4428949cb4880b9999a1.setContent(html_85192aa92de94deb9cf9126fef8e5730);
+        
+
+        marker_1d191db05e314e57bac0f87ace213801.bindPopup(popup_306877bf467a4428949cb4880b9999a1)
+        ;
+
+        
+    
+    
+            var marker_bd0c4665cf9245fbb68effafbdee3c59 = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_45e8a1ffa5814d629457fdaa6cdeed90 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_bd0c4665cf9245fbb68effafbdee3c59.setIcon(custom_icon_45e8a1ffa5814d629457fdaa6cdeed90);
+        
+    
+        var popup_edc8930aec4d41f0872b0a7cd1ec87e8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_65519ffae98444b9a3489b8048d6430b = $(`<div id="html_65519ffae98444b9a3489b8048d6430b" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/22><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>28 uah</div>`)[0];
+            popup_edc8930aec4d41f0872b0a7cd1ec87e8.setContent(html_65519ffae98444b9a3489b8048d6430b);
+        
+
+        marker_bd0c4665cf9245fbb68effafbdee3c59.bindPopup(popup_edc8930aec4d41f0872b0a7cd1ec87e8)
+        ;
+
+        
+    
+    
+            var marker_da96d28cb9a44968932d80834f78b676 = L.marker(
+                [50.58149287716955, 30.62470401203929],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_6bcb320e66d94f8caf1ca9bf44ee8bc6 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_da96d28cb9a44968932d80834f78b676.setIcon(custom_icon_6bcb320e66d94f8caf1ca9bf44ee8bc6);
+        
+    
+        var popup_b2066a12b97b44828959df58598fb461 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7986950d00c84932afae9f67077405c1 = $(`<div id="html_7986950d00c84932afae9f67077405c1" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/41><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>84 uah</div>`)[0];
+            popup_b2066a12b97b44828959df58598fb461.setContent(html_7986950d00c84932afae9f67077405c1);
+        
+
+        marker_da96d28cb9a44968932d80834f78b676.bindPopup(popup_b2066a12b97b44828959df58598fb461)
+        ;
+
+        
+    
+    
+            var marker_36bb8fa8b722488eaaa89422cd3a0019 = L.marker(
+                [50.404351898152534, 30.53592514012951],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_eb5bba2b18f54f988d5dbf143b85e0ee = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_36bb8fa8b722488eaaa89422cd3a0019.setIcon(custom_icon_eb5bba2b18f54f988d5dbf143b85e0ee);
+        
+    
+        var popup_49a84ef0704647ce8ec19fd226bdc22a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0ac30b72b54f4b05affb3866aec74bf1 = $(`<div id="html_0ac30b72b54f4b05affb3866aec74bf1" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/47><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>71 uah</div>`)[0];
+            popup_49a84ef0704647ce8ec19fd226bdc22a.setContent(html_0ac30b72b54f4b05affb3866aec74bf1);
+        
+
+        marker_36bb8fa8b722488eaaa89422cd3a0019.bindPopup(popup_49a84ef0704647ce8ec19fd226bdc22a)
+        ;
+
+        
+    
+    
+            var marker_fb56f67acf9548549962b49a474d7b99 = L.marker(
+                [50.482821266696284, 30.458367481579693],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_90d95536aaf940f7acdab99f652f6045 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_fb56f67acf9548549962b49a474d7b99.setIcon(custom_icon_90d95536aaf940f7acdab99f652f6045);
+        
+    
+        var popup_5434c135c4c649dab370835d9d63b454 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_40e0d7d1840b45058201b8850b329e6b = $(`<div id="html_40e0d7d1840b45058201b8850b329e6b" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/52><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>181 uah</div>`)[0];
+            popup_5434c135c4c649dab370835d9d63b454.setContent(html_40e0d7d1840b45058201b8850b329e6b);
+        
+
+        marker_fb56f67acf9548549962b49a474d7b99.bindPopup(popup_5434c135c4c649dab370835d9d63b454)
+        ;
+
+        
+    
+    
+            var marker_81e426d39c8a42c583cf6e05ab72ac7b = L.marker(
+                [50.344163169224906, 30.576539148571992],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_f20c0374d8be459bbf7591c8dbda3a3f = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_81e426d39c8a42c583cf6e05ab72ac7b.setIcon(custom_icon_f20c0374d8be459bbf7591c8dbda3a3f);
+        
+    
+        var popup_5c3007f5b72e48d892fde243a37463b2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_af374d25873d4b71b5d36cbbad7583cf = $(`<div id="html_af374d25873d4b71b5d36cbbad7583cf" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/54><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>146 uah</div>`)[0];
+            popup_5c3007f5b72e48d892fde243a37463b2.setContent(html_af374d25873d4b71b5d36cbbad7583cf);
+        
+
+        marker_81e426d39c8a42c583cf6e05ab72ac7b.bindPopup(popup_5c3007f5b72e48d892fde243a37463b2)
+        ;
+
+        
+    
+    
+            var marker_e8d39a2b914e4637813bc2806fda1c93 = L.marker(
+                [50.43080138979096, 30.441480380239497],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_13745f2d6d2146f8936307cc0c4a8855 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_e8d39a2b914e4637813bc2806fda1c93.setIcon(custom_icon_13745f2d6d2146f8936307cc0c4a8855);
+        
+    
+        var popup_886c701db767438a8d4609b2675e0756 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_869c49fdbb1d4551ad25eb516867cdc2 = $(`<div id="html_869c49fdbb1d4551ad25eb516867cdc2" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/103><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>106 uah</div>`)[0];
+            popup_886c701db767438a8d4609b2675e0756.setContent(html_869c49fdbb1d4551ad25eb516867cdc2);
+        
+
+        marker_e8d39a2b914e4637813bc2806fda1c93.bindPopup(popup_886c701db767438a8d4609b2675e0756)
+        ;
+
+        
+    
+    
+            var marker_057bc18255af48c4a6b3d5aeefb33c95 = L.marker(
+                [50.536460144174974, 30.42573606899181],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1f8f10cababa41e2bfd17c733c728e9e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_057bc18255af48c4a6b3d5aeefb33c95.setIcon(custom_icon_1f8f10cababa41e2bfd17c733c728e9e);
+        
+    
+        var popup_176499c668dc4cba9b68cf240d5d22d2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_18539bfe073246c29e8244ede222a0c6 = $(`<div id="html_18539bfe073246c29e8244ede222a0c6" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/146><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>195 uah</div>`)[0];
+            popup_176499c668dc4cba9b68cf240d5d22d2.setContent(html_18539bfe073246c29e8244ede222a0c6);
+        
+
+        marker_057bc18255af48c4a6b3d5aeefb33c95.bindPopup(popup_176499c668dc4cba9b68cf240d5d22d2)
+        ;
+
+        
+    
+    
+            var marker_1aeb43725a8d424ba090e43ababf3fab = L.marker(
+                [50.53509833983168, 30.67017413040365],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_4691e60089a045519cc3a9b9c8e272b2 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/13.jpg"});
+        marker_1aeb43725a8d424ba090e43ababf3fab.setIcon(custom_icon_4691e60089a045519cc3a9b9c8e272b2);
+        
+    
+        var popup_728045e3875a41a889896ed9428e075e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_372eda2599494afc94c0e9709e8c3ff9 = $(`<div id="html_372eda2599494afc94c0e9709e8c3ff9" style="width: 100.0%; height: 100.0%;">Crime and Punishment</br><a href=http://127.0.0.1:5000/bi/175><img src="/static/covers/13.jpg" width="50" height="70" ></a></br>118 uah</div>`)[0];
+            popup_728045e3875a41a889896ed9428e075e.setContent(html_372eda2599494afc94c0e9709e8c3ff9);
+        
+
+        marker_1aeb43725a8d424ba090e43ababf3fab.bindPopup(popup_728045e3875a41a889896ed9428e075e)
+        ;
+
+        
+    
+    
+            var marker_b01517a6577248b48253cdef3e148825 = L.marker(
+                [50.517889855467, 30.519105614234675],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_37bbb254c35a4c9f93cf13af7900aa51 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_b01517a6577248b48253cdef3e148825.setIcon(custom_icon_37bbb254c35a4c9f93cf13af7900aa51);
+        
+    
+        var popup_ae1a425a4af6401182e7041e9c58615e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e2962dca03bb46cd92530b0a4d06fce1 = $(`<div id="html_e2962dca03bb46cd92530b0a4d06fce1" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/12><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>195 uah</div>`)[0];
+            popup_ae1a425a4af6401182e7041e9c58615e.setContent(html_e2962dca03bb46cd92530b0a4d06fce1);
+        
+
+        marker_b01517a6577248b48253cdef3e148825.bindPopup(popup_ae1a425a4af6401182e7041e9c58615e)
+        ;
+
+        
+    
+    
+            var marker_089dc71486334432a173a1c692dff045 = L.marker(
+                [50.58389822141046, 30.477434910086608],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_fcc2f6aec94242b38fb81a233c31a619 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_089dc71486334432a173a1c692dff045.setIcon(custom_icon_fcc2f6aec94242b38fb81a233c31a619);
+        
+    
+        var popup_b08dd3feab8b4ace87d796ba74bf57bf = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c9dd4f0434dc4141b1d88a922087028a = $(`<div id="html_c9dd4f0434dc4141b1d88a922087028a" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/21><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>177 uah</div>`)[0];
+            popup_b08dd3feab8b4ace87d796ba74bf57bf.setContent(html_c9dd4f0434dc4141b1d88a922087028a);
+        
+
+        marker_089dc71486334432a173a1c692dff045.bindPopup(popup_b08dd3feab8b4ace87d796ba74bf57bf)
+        ;
+
+        
+    
+    
+            var marker_2a3fdd2ec46b4b4a8fea67cf340c32df = L.marker(
+                [50.56991766579977, 30.46656605955823],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1164714e4817446e85c63c7869266860 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_2a3fdd2ec46b4b4a8fea67cf340c32df.setIcon(custom_icon_1164714e4817446e85c63c7869266860);
+        
+    
+        var popup_64b0de50a78e436c875e49bc67d5cea7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_340eb957f4ab428386f48a8ccce9fb28 = $(`<div id="html_340eb957f4ab428386f48a8ccce9fb28" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/56><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>39 uah</div>`)[0];
+            popup_64b0de50a78e436c875e49bc67d5cea7.setContent(html_340eb957f4ab428386f48a8ccce9fb28);
+        
+
+        marker_2a3fdd2ec46b4b4a8fea67cf340c32df.bindPopup(popup_64b0de50a78e436c875e49bc67d5cea7)
+        ;
+
+        
+    
+    
+            var marker_458c94cf23914d6fbbcb24725abfccf9 = L.marker(
+                [50.60118146652517, 30.480365613836536],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_662a77730e5d4471b59d359b09a300ae = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_458c94cf23914d6fbbcb24725abfccf9.setIcon(custom_icon_662a77730e5d4471b59d359b09a300ae);
+        
+    
+        var popup_04522629bad94a58845bd877cf7d9429 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_271bd288cfd946b09f072cae1c367225 = $(`<div id="html_271bd288cfd946b09f072cae1c367225" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/57><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>54 uah</div>`)[0];
+            popup_04522629bad94a58845bd877cf7d9429.setContent(html_271bd288cfd946b09f072cae1c367225);
+        
+
+        marker_458c94cf23914d6fbbcb24725abfccf9.bindPopup(popup_04522629bad94a58845bd877cf7d9429)
+        ;
+
+        
+    
+    
+            var marker_425af1cc8e944012b04ce92ac3145bf6 = L.marker(
+                [50.6061355459602, 30.38768439606066],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_02556f58a36c47b3a91ef170febb046b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_425af1cc8e944012b04ce92ac3145bf6.setIcon(custom_icon_02556f58a36c47b3a91ef170febb046b);
+        
+    
+        var popup_3de6e4ab303f440b91a957208385317e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_33c48771a2734c8eb78ffc371443a1c6 = $(`<div id="html_33c48771a2734c8eb78ffc371443a1c6" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/88><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>126 uah</div>`)[0];
+            popup_3de6e4ab303f440b91a957208385317e.setContent(html_33c48771a2734c8eb78ffc371443a1c6);
+        
+
+        marker_425af1cc8e944012b04ce92ac3145bf6.bindPopup(popup_3de6e4ab303f440b91a957208385317e)
+        ;
+
+        
+    
+    
+            var marker_e421df7db5564440aeee0f333184b72a = L.marker(
+                [50.344163169224906, 30.576539148571992],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1ee8427e627b4ddcb12cad3eed987d85 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_e421df7db5564440aeee0f333184b72a.setIcon(custom_icon_1ee8427e627b4ddcb12cad3eed987d85);
+        
+    
+        var popup_a23df57f99734159a1a30cfc09fd31af = L.popup({"maxWidth": "100%"});
+
+        
+            var html_45c7e1be8e974895a594f9ca524b45c5 = $(`<div id="html_45c7e1be8e974895a594f9ca524b45c5" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/92><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>110 uah</div>`)[0];
+            popup_a23df57f99734159a1a30cfc09fd31af.setContent(html_45c7e1be8e974895a594f9ca524b45c5);
+        
+
+        marker_e421df7db5564440aeee0f333184b72a.bindPopup(popup_a23df57f99734159a1a30cfc09fd31af)
+        ;
+
+        
+    
+    
+            var marker_8da34cb6d9594bd1950eddf14cc4b30a = L.marker(
+                [50.52390959454781, 30.57774457486212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c69dc42c0db14b118808fd3bef38c209 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_8da34cb6d9594bd1950eddf14cc4b30a.setIcon(custom_icon_c69dc42c0db14b118808fd3bef38c209);
+        
+    
+        var popup_6e737fd5d683418c86567f6859988e29 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0e19cb51f46e4c25acff7d2fae264eb9 = $(`<div id="html_0e19cb51f46e4c25acff7d2fae264eb9" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/122><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>171 uah</div>`)[0];
+            popup_6e737fd5d683418c86567f6859988e29.setContent(html_0e19cb51f46e4c25acff7d2fae264eb9);
+        
+
+        marker_8da34cb6d9594bd1950eddf14cc4b30a.bindPopup(popup_6e737fd5d683418c86567f6859988e29)
+        ;
+
+        
+    
+    
+            var marker_8f289b4b59d24d5c85d89c827b41cad9 = L.marker(
+                [50.44861927042222, 30.411128056295873],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_018fb325b82f40dd8f2f3c7824517227 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_8f289b4b59d24d5c85d89c827b41cad9.setIcon(custom_icon_018fb325b82f40dd8f2f3c7824517227);
+        
+    
+        var popup_7f97878e540b4e88857b049a84f6f715 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c605a66bc54045619520f2314e11965f = $(`<div id="html_c605a66bc54045619520f2314e11965f" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/128><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>129 uah</div>`)[0];
+            popup_7f97878e540b4e88857b049a84f6f715.setContent(html_c605a66bc54045619520f2314e11965f);
+        
+
+        marker_8f289b4b59d24d5c85d89c827b41cad9.bindPopup(popup_7f97878e540b4e88857b049a84f6f715)
+        ;
+
+        
+    
+    
+            var marker_5b1f3e8010934498b1d6099e68859cff = L.marker(
+                [50.52406820651246, 30.606039235256386],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_bb81ec524c044944a8c465aee29c0f31 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_5b1f3e8010934498b1d6099e68859cff.setIcon(custom_icon_bb81ec524c044944a8c465aee29c0f31);
+        
+    
+        var popup_6aeeec0b408b4f2ba61bc99590e46a3a = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7506ba7009264d3ea3dfe6524def18b6 = $(`<div id="html_7506ba7009264d3ea3dfe6524def18b6" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/133><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>135 uah</div>`)[0];
+            popup_6aeeec0b408b4f2ba61bc99590e46a3a.setContent(html_7506ba7009264d3ea3dfe6524def18b6);
+        
+
+        marker_5b1f3e8010934498b1d6099e68859cff.bindPopup(popup_6aeeec0b408b4f2ba61bc99590e46a3a)
+        ;
+
+        
+    
+    
+            var marker_0fc0cf01556b48dd8b65b3620393667e = L.marker(
+                [50.59854245436283, 30.409258624608963],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_52248871528b4dfda92053ab480a3765 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_0fc0cf01556b48dd8b65b3620393667e.setIcon(custom_icon_52248871528b4dfda92053ab480a3765);
+        
+    
+        var popup_3bb3aad2e9614962a83d7a5018012cbb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f7d0bf2f545148ba919826d74aa66031 = $(`<div id="html_f7d0bf2f545148ba919826d74aa66031" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/152><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>118 uah</div>`)[0];
+            popup_3bb3aad2e9614962a83d7a5018012cbb.setContent(html_f7d0bf2f545148ba919826d74aa66031);
+        
+
+        marker_0fc0cf01556b48dd8b65b3620393667e.bindPopup(popup_3bb3aad2e9614962a83d7a5018012cbb)
+        ;
+
+        
+    
+    
+            var marker_a4716d56f1df45bab3092ac03555f79b = L.marker(
+                [50.37999856736386, 30.53208298718988],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_19d16eba718c4745be0846b44579a874 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_a4716d56f1df45bab3092ac03555f79b.setIcon(custom_icon_19d16eba718c4745be0846b44579a874);
+        
+    
+        var popup_32e867dcda714e2a87a0662be1af4ab3 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_126030fc6b384108ae7dad33a7ab779c = $(`<div id="html_126030fc6b384108ae7dad33a7ab779c" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/156><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>69 uah</div>`)[0];
+            popup_32e867dcda714e2a87a0662be1af4ab3.setContent(html_126030fc6b384108ae7dad33a7ab779c);
+        
+
+        marker_a4716d56f1df45bab3092ac03555f79b.bindPopup(popup_32e867dcda714e2a87a0662be1af4ab3)
+        ;
+
+        
+    
+    
+            var marker_d87b1188c7334b43bfd98a58dde7a147 = L.marker(
+                [50.3474271295054, 30.556347652178],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_68ed260697b34841be6ac1c5dfbd73f0 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_d87b1188c7334b43bfd98a58dde7a147.setIcon(custom_icon_68ed260697b34841be6ac1c5dfbd73f0);
+        
+    
+        var popup_02bdb9334ac54f42b762298cb4ab6668 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ac94ad28feba4a3f99290ab8e31fe596 = $(`<div id="html_ac94ad28feba4a3f99290ab8e31fe596" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/159><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>106 uah</div>`)[0];
+            popup_02bdb9334ac54f42b762298cb4ab6668.setContent(html_ac94ad28feba4a3f99290ab8e31fe596);
+        
+
+        marker_d87b1188c7334b43bfd98a58dde7a147.bindPopup(popup_02bdb9334ac54f42b762298cb4ab6668)
+        ;
+
+        
+    
+    
+            var marker_02aacf2c64ca4db1bcf5eb4dc0f0a3be = L.marker(
+                [50.37902193224722, 30.450442071772923],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c1fc4eb17ebb409ebe4dfdff516e1c39 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_02aacf2c64ca4db1bcf5eb4dc0f0a3be.setIcon(custom_icon_c1fc4eb17ebb409ebe4dfdff516e1c39);
+        
+    
+        var popup_f07d07d3bd144eba8d8cbacbc8612bc7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_eb0807c3b0f943bdadd4fc473e38dc17 = $(`<div id="html_eb0807c3b0f943bdadd4fc473e38dc17" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/161><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>46 uah</div>`)[0];
+            popup_f07d07d3bd144eba8d8cbacbc8612bc7.setContent(html_eb0807c3b0f943bdadd4fc473e38dc17);
+        
+
+        marker_02aacf2c64ca4db1bcf5eb4dc0f0a3be.bindPopup(popup_f07d07d3bd144eba8d8cbacbc8612bc7)
+        ;
+
+        
+    
+    
+            var marker_f4893716384941f3a8595072c50232cf = L.marker(
+                [50.40129269555117, 30.40529879085114],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b705ed274b5444d4ae11128611f5637d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_f4893716384941f3a8595072c50232cf.setIcon(custom_icon_b705ed274b5444d4ae11128611f5637d);
+        
+    
+        var popup_6c0e56e064a84544aebbf580a104d306 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0a412ce69707418fad23672db1f7cc3c = $(`<div id="html_0a412ce69707418fad23672db1f7cc3c" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/172><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>76 uah</div>`)[0];
+            popup_6c0e56e064a84544aebbf580a104d306.setContent(html_0a412ce69707418fad23672db1f7cc3c);
+        
+
+        marker_f4893716384941f3a8595072c50232cf.bindPopup(popup_6c0e56e064a84544aebbf580a104d306)
+        ;
+
+        
+    
+    
+            var marker_7d2d669ffc77435ca60386ecea20a21b = L.marker(
+                [50.57015254439595, 30.489610294223255],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_b7635c3c9ef640cdbe5d3db592c1fd7e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/14.jpg"});
+        marker_7d2d669ffc77435ca60386ecea20a21b.setIcon(custom_icon_b7635c3c9ef640cdbe5d3db592c1fd7e);
+        
+    
+        var popup_51bf6eaf388f4b3787aa62f38e29dc1c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7edfabd9774940d39f04fe686d2e8735 = $(`<div id="html_7edfabd9774940d39f04fe686d2e8735" style="width: 100.0%; height: 100.0%;">Madame Bovary</br><a href=http://127.0.0.1:5000/bi/174><img src="/static/covers/14.jpg" width="50" height="70" ></a></br>153 uah</div>`)[0];
+            popup_51bf6eaf388f4b3787aa62f38e29dc1c.setContent(html_7edfabd9774940d39f04fe686d2e8735);
+        
+
+        marker_7d2d669ffc77435ca60386ecea20a21b.bindPopup(popup_51bf6eaf388f4b3787aa62f38e29dc1c)
+        ;
+
+        
+    
+    
+            var marker_dbf8282cd78d41a9b2e8cce2962f2cd5 = L.marker(
+                [50.40050045627517, 30.44011870917482],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_025e2a889ca24c7eaadca73076b6b00c = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_dbf8282cd78d41a9b2e8cce2962f2cd5.setIcon(custom_icon_025e2a889ca24c7eaadca73076b6b00c);
+        
+    
+        var popup_944f29a672a842988bc5e3deafd018de = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ece649c368b4458a8848a21182678ec4 = $(`<div id="html_ece649c368b4458a8848a21182678ec4" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/2><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>82 uah</div>`)[0];
+            popup_944f29a672a842988bc5e3deafd018de.setContent(html_ece649c368b4458a8848a21182678ec4);
+        
+
+        marker_dbf8282cd78d41a9b2e8cce2962f2cd5.bindPopup(popup_944f29a672a842988bc5e3deafd018de)
+        ;
+
+        
+    
+    
+            var marker_932579952ca44e1096f528fda8f60405 = L.marker(
+                [50.52390959454781, 30.57774457486212],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_0c99812c15904d79b6b87381f70e176d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_932579952ca44e1096f528fda8f60405.setIcon(custom_icon_0c99812c15904d79b6b87381f70e176d);
+        
+    
+        var popup_b46fc0253ea9489d964b504609ab8747 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9be0485f00ec42459ccc2d7c1a3e9cf8 = $(`<div id="html_9be0485f00ec42459ccc2d7c1a3e9cf8" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/31><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>54 uah</div>`)[0];
+            popup_b46fc0253ea9489d964b504609ab8747.setContent(html_9be0485f00ec42459ccc2d7c1a3e9cf8);
+        
+
+        marker_932579952ca44e1096f528fda8f60405.bindPopup(popup_b46fc0253ea9489d964b504609ab8747)
+        ;
+
+        
+    
+    
+            var marker_cb16dad5117d4f359b7cd258ccfcbf50 = L.marker(
+                [50.56991766579977, 30.46656605955823],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_d03f1b158a89432bb76acb8c0600128a = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_cb16dad5117d4f359b7cd258ccfcbf50.setIcon(custom_icon_d03f1b158a89432bb76acb8c0600128a);
+        
+    
+        var popup_55b08b9152094a6faf92372461f7571e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_dccaf103d0b64441963506c114561a22 = $(`<div id="html_dccaf103d0b64441963506c114561a22" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/32><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>125 uah</div>`)[0];
+            popup_55b08b9152094a6faf92372461f7571e.setContent(html_dccaf103d0b64441963506c114561a22);
+        
+
+        marker_cb16dad5117d4f359b7cd258ccfcbf50.bindPopup(popup_55b08b9152094a6faf92372461f7571e)
+        ;
+
+        
+    
+    
+            var marker_3c1a36dee6a442fe9bff8654afb46d49 = L.marker(
+                [50.4029447433305, 30.44088231142244],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_02a6b0416f7442d9bc5bfa607fb8124d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_3c1a36dee6a442fe9bff8654afb46d49.setIcon(custom_icon_02a6b0416f7442d9bc5bfa607fb8124d);
+        
+    
+        var popup_1b7fa59331814eb5a3107647a534a368 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ecce22108f8649ddb3369e381e946169 = $(`<div id="html_ecce22108f8649ddb3369e381e946169" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/43><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>128 uah</div>`)[0];
+            popup_1b7fa59331814eb5a3107647a534a368.setContent(html_ecce22108f8649ddb3369e381e946169);
+        
+
+        marker_3c1a36dee6a442fe9bff8654afb46d49.bindPopup(popup_1b7fa59331814eb5a3107647a534a368)
+        ;
+
+        
+    
+    
+            var marker_2f87e54db25b4688a6244f5ca36abd25 = L.marker(
+                [50.59854245436283, 30.409258624608963],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_e3e95f8cb75c421fa5860dadc43ba54b = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_2f87e54db25b4688a6244f5ca36abd25.setIcon(custom_icon_e3e95f8cb75c421fa5860dadc43ba54b);
+        
+    
+        var popup_4abd102b8baf437c9b316dc574df124e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_334119148e6b4454a5ef1b099441c527 = $(`<div id="html_334119148e6b4454a5ef1b099441c527" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/55><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>79 uah</div>`)[0];
+            popup_4abd102b8baf437c9b316dc574df124e.setContent(html_334119148e6b4454a5ef1b099441c527);
+        
+
+        marker_2f87e54db25b4688a6244f5ca36abd25.bindPopup(popup_4abd102b8baf437c9b316dc574df124e)
+        ;
+
+        
+    
+    
+            var marker_369c2b3ecdf940a48568f3f61d039875 = L.marker(
+                [50.47067809691922, 30.565183332656005],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_1f658fd6963447629e2b344c0337d43e = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_369c2b3ecdf940a48568f3f61d039875.setIcon(custom_icon_1f658fd6963447629e2b344c0337d43e);
+        
+    
+        var popup_ea8ddc24cbce407ca2c558816e9a7896 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_010c38dffa3543bea73dd60199690f01 = $(`<div id="html_010c38dffa3543bea73dd60199690f01" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/64><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>75 uah</div>`)[0];
+            popup_ea8ddc24cbce407ca2c558816e9a7896.setContent(html_010c38dffa3543bea73dd60199690f01);
+        
+
+        marker_369c2b3ecdf940a48568f3f61d039875.bindPopup(popup_ea8ddc24cbce407ca2c558816e9a7896)
+        ;
+
+        
+    
+    
+            var marker_cd2c4ecdc50049d4a9cce3f5ca9c5ecb = L.marker(
+                [50.53509833983168, 30.67017413040365],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_6ae9f1f25e7c4040b99e2ed5b62165f3 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_cd2c4ecdc50049d4a9cce3f5ca9c5ecb.setIcon(custom_icon_6ae9f1f25e7c4040b99e2ed5b62165f3);
+        
+    
+        var popup_32129c4aca2f4e85adb0fb060fb4bc29 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_76c17f6b8db54dd29dcc96854e2e8284 = $(`<div id="html_76c17f6b8db54dd29dcc96854e2e8284" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/65><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>68 uah</div>`)[0];
+            popup_32129c4aca2f4e85adb0fb060fb4bc29.setContent(html_76c17f6b8db54dd29dcc96854e2e8284);
+        
+
+        marker_cd2c4ecdc50049d4a9cce3f5ca9c5ecb.bindPopup(popup_32129c4aca2f4e85adb0fb060fb4bc29)
+        ;
+
+        
+    
+    
+            var marker_0af6aebe19044d558087acc0247968d8 = L.marker(
+                [50.483267869853606, 30.37852311291351],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_7b2ffbd00eaf47eb8f38ae0000e4f7a2 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_0af6aebe19044d558087acc0247968d8.setIcon(custom_icon_7b2ffbd00eaf47eb8f38ae0000e4f7a2);
+        
+    
+        var popup_ed09befd9a53495996cc9d60b0ea84cc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_adcbf69fda6c4fe5824dfa5d57618eca = $(`<div id="html_adcbf69fda6c4fe5824dfa5d57618eca" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/77><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>184 uah</div>`)[0];
+            popup_ed09befd9a53495996cc9d60b0ea84cc.setContent(html_adcbf69fda6c4fe5824dfa5d57618eca);
+        
+
+        marker_0af6aebe19044d558087acc0247968d8.bindPopup(popup_ed09befd9a53495996cc9d60b0ea84cc)
+        ;
+
+        
+    
+    
+            var marker_e9231a9b0d0b4e6580770e4db84f1a28 = L.marker(
+                [50.301224104913196, 30.65958899431215],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_57422e5064504239810f276498402ad1 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_e9231a9b0d0b4e6580770e4db84f1a28.setIcon(custom_icon_57422e5064504239810f276498402ad1);
+        
+    
+        var popup_403d279c67984c84bb69c69fcdc7c3ed = L.popup({"maxWidth": "100%"});
+
+        
+            var html_81c46eeab4674a30910127b01bd5de52 = $(`<div id="html_81c46eeab4674a30910127b01bd5de52" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/80><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>95 uah</div>`)[0];
+            popup_403d279c67984c84bb69c69fcdc7c3ed.setContent(html_81c46eeab4674a30910127b01bd5de52);
+        
+
+        marker_e9231a9b0d0b4e6580770e4db84f1a28.bindPopup(popup_403d279c67984c84bb69c69fcdc7c3ed)
+        ;
+
+        
+    
+    
+            var marker_f06b7634a2f3478d9eb644a6f9741d8a = L.marker(
+                [50.58389822141046, 30.477434910086608],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c83ef3ca8ba34ae387112c71ab6ab98f = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_f06b7634a2f3478d9eb644a6f9741d8a.setIcon(custom_icon_c83ef3ca8ba34ae387112c71ab6ab98f);
+        
+    
+        var popup_df8da84c3778424b862fb4bfaadc1c2f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d1c074d38ec24a5f8ac026e5d9806a2d = $(`<div id="html_d1c074d38ec24a5f8ac026e5d9806a2d" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/89><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>120 uah</div>`)[0];
+            popup_df8da84c3778424b862fb4bfaadc1c2f.setContent(html_d1c074d38ec24a5f8ac026e5d9806a2d);
+        
+
+        marker_f06b7634a2f3478d9eb644a6f9741d8a.bindPopup(popup_df8da84c3778424b862fb4bfaadc1c2f)
+        ;
+
+        
+    
+    
+            var marker_60ff84da1ae04a4da19a36e8499ddaee = L.marker(
+                [50.517889855467, 30.519105614234675],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_790220f5122444e88b74058407d45051 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_60ff84da1ae04a4da19a36e8499ddaee.setIcon(custom_icon_790220f5122444e88b74058407d45051);
+        
+    
+        var popup_66b2f512a7da4ed9b6c55a5577357369 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_426477ee541b4a99ac9bf02378889f27 = $(`<div id="html_426477ee541b4a99ac9bf02378889f27" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/126><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>151 uah</div>`)[0];
+            popup_66b2f512a7da4ed9b6c55a5577357369.setContent(html_426477ee541b4a99ac9bf02378889f27);
+        
+
+        marker_60ff84da1ae04a4da19a36e8499ddaee.bindPopup(popup_66b2f512a7da4ed9b6c55a5577357369)
+        ;
+
+        
+    
+    
+            var marker_37407076e97c428680a231394676af5f = L.marker(
+                [50.483267869853606, 30.37852311291351],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_2b58b3c24ff341b3b9de9df1ecd3ee47 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_37407076e97c428680a231394676af5f.setIcon(custom_icon_2b58b3c24ff341b3b9de9df1ecd3ee47);
+        
+    
+        var popup_53ac88725d894b2e9e414513f533fd56 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d750d012204d4486a970284bc9ba63f6 = $(`<div id="html_d750d012204d4486a970284bc9ba63f6" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/140><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>144 uah</div>`)[0];
+            popup_53ac88725d894b2e9e414513f533fd56.setContent(html_d750d012204d4486a970284bc9ba63f6);
+        
+
+        marker_37407076e97c428680a231394676af5f.bindPopup(popup_53ac88725d894b2e9e414513f533fd56)
+        ;
+
+        
+    
+    
+            var marker_9abff39e6ff14f309fcc3bf7c7aaccb3 = L.marker(
+                [50.59236791637463, 30.53436420700355],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_30a46837c36c43e8a4fdf68ad252dd7d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_9abff39e6ff14f309fcc3bf7c7aaccb3.setIcon(custom_icon_30a46837c36c43e8a4fdf68ad252dd7d);
+        
+    
+        var popup_3723add869bd4c9e9931b72c8208bbe7 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ad7fbbb09cab4aa69ca6afdbb6b2620b = $(`<div id="html_ad7fbbb09cab4aa69ca6afdbb6b2620b" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/151><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>161 uah</div>`)[0];
+            popup_3723add869bd4c9e9931b72c8208bbe7.setContent(html_ad7fbbb09cab4aa69ca6afdbb6b2620b);
+        
+
+        marker_9abff39e6ff14f309fcc3bf7c7aaccb3.bindPopup(popup_3723add869bd4c9e9931b72c8208bbe7)
+        ;
+
+        
+    
+    
+            var marker_101a89ffc2094c66ae846d939e755268 = L.marker(
+                [50.52076018801722, 30.67587368803205],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_f0d7f284f67e4cee8c268f4abb619801 = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_101a89ffc2094c66ae846d939e755268.setIcon(custom_icon_f0d7f284f67e4cee8c268f4abb619801);
+        
+    
+        var popup_09cf8c7e05eb4292b6d1f3c522b3bf4f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_239c0ac5df284bae832093076920525d = $(`<div id="html_239c0ac5df284bae832093076920525d" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/157><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>148 uah</div>`)[0];
+            popup_09cf8c7e05eb4292b6d1f3c522b3bf4f.setContent(html_239c0ac5df284bae832093076920525d);
+        
+
+        marker_101a89ffc2094c66ae846d939e755268.bindPopup(popup_09cf8c7e05eb4292b6d1f3c522b3bf4f)
+        ;
+
+        
+    
+    
+            var marker_95defc25938a4e00966088324b4ca685 = L.marker(
+                [50.49847432890928, 30.646276548425142],
+                {}
+            ).addTo(marker_cluster_fe17b9962e534d2899c6fc05e416120f);
+        
+    
+        var custom_icon_c259efefe4144e278219560c8adf434d = L.icon({"iconSize": [30, 50], "iconUrl": "http://127.0.0.1:5000/static/covers/15.jpg"});
+        marker_95defc25938a4e00966088324b4ca685.setIcon(custom_icon_c259efefe4144e278219560c8adf434d);
+        
+    
+        var popup_b3a529e0f49642df8c235fbee8a06093 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e8746a9428c9436bac0ac48358c95484 = $(`<div id="html_e8746a9428c9436bac0ac48358c95484" style="width: 100.0%; height: 100.0%;">The Divine Comedy</br><a href=http://127.0.0.1:5000/bi/165><img src="/static/covers/15.jpg" width="50" height="70" ></a></br>194 uah</div>`)[0];
+            popup_b3a529e0f49642df8c235fbee8a06093.setContent(html_e8746a9428c9436bac0ac48358c95484);
+        
+
+        marker_95defc25938a4e00966088324b4ca685.bindPopup(popup_b3a529e0f49642df8c235fbee8a06093)
         ;
 
         

@@ -25,6 +25,5 @@ here is a lot of bugs, I know ;)
 * replace http://127.0.0.1:5000 with DOMAIN_NAME
 * If noone or only you have BI then you can manage the related Book. how to? add book.is_editable
 
-* Add limitation for new book creation, just do not allow generates a lot of garbage data.
-* data caching?
+* Data caching? For example do not show 'new book' button for urers who not allow_to_create_a_book()
 * try to switch to GraphQL (what for?)
