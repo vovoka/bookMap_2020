@@ -64,6 +64,12 @@ def isbn_13_validator(form, field):
     return True
 
 
+def isbn_validator(form, field):
+    if not (is_isbn_13(form, 'isbn') or is_isbn_10(form, 'isbn')):
+        raise ValidationError('Sorry, is NOT a valid ISBN')
+    return True
+
+
 class AddBookForm(FlaskForm):
     title = StringField(
         'Title',
@@ -88,6 +94,14 @@ class AddBookForm(FlaskForm):
     submit = SubmitField('Add Book')
 
 
+class AddBookByIsbnForm(FlaskForm):
+    isbn = StringField(
+        'Find book by ISBN',
+        validators=[Optional(), isbn_validator]
+    )
+    submit = SubmitField('Try to find a book by ISBN')
+
+
 class AddIsbnForm(FlaskForm):
     isbn_10 = StringField(
         'ISBN 10 (leave blank if no ISBN)',
@@ -97,7 +111,7 @@ class AddIsbnForm(FlaskForm):
         'ISBN 13 (leave blank if no ISBN)',
         validators=[Optional(), isbn_13_validator]
     )
-    submit = SubmitField('Add ISBN')
+    submit = SubmitField('Check book by ISBN')
 
 
 class EditBookInstanceForm(FlaskForm):

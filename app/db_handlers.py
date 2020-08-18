@@ -142,25 +142,25 @@ def get_books_by_user_id(user_id) -> List[Book]:
     return books
 
 
-def get_book(book_id) -> Book:
+def get_book(book_id) -> Union[Book, None]:
     book = Book.query.filter_by(
         id=book_id).first()
     return book
 
 
-def get_book_by_isbn_10(isbn_10) -> Book:
+def get_book_by_isbn_10(isbn_10) -> Union[Book, None]:
     book = Book.query.filter_by(
         isbn_10=isbn_10).first()
     return book
 
 
-def get_book_by_isbn_13(isbn_13) -> Book:
+def get_book_by_isbn_13(isbn_13) -> Union[Book, None]:
     book = Book.query.filter_by(
         isbn_13=isbn_13).first()
     return book
 
 
-def update_book_isbn_10(book_id, isbn_10) -> Book:
+def update_book_isbn_10(book_id, isbn_10) -> Union[Book, None]:
     book = (
         db.session.query(Book)
         .filter(Book.id == book_id)
@@ -174,7 +174,7 @@ def update_book_isbn_10(book_id, isbn_10) -> Book:
 
 def update_book_isbn_13(
         book_id,
-        isbn_13) -> Book:
+        isbn_13) -> Union[Book, None]:
     book = (
         db.session.query(Book)
         .filter(Book.id == book_id)

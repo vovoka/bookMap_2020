@@ -24,6 +24,8 @@ here is a lot of bugs, I know ;)
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
 * replace http://127.0.0.1:5000 with DOMAIN_NAME
 * If noone or only you have BI then you can manage the related Book. how to? add book.is_editable
+* Add 'blame for the book (incorrect/ violent data)'
+* Add offer book cover (if no bookcover currently) -> 'Offer better book cover'(?)
 
 * Data caching? For example do not show 'new book' button for urers who not allow_to_create_a_book()
 * try to switch to GraphQL (what for?)

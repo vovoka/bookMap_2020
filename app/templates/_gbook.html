@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <img src="{{ gbook.imageLinks }}" width="70" height="100"
+      onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+    <h5>
+      {{ gbook['title'] }} </br>
+      {{ gbook['author'] }} </br>
+      ISBN_10: {{ gbook.ISBN_10 }} </br>
+      ISBN_13: {{ gbook.ISBN_13 }} </br>
+    </h5>
+  </tr>
+</table>

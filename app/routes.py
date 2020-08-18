@@ -6,12 +6,14 @@ import folium.plugins
 from apscheduler.schedulers.background import BackgroundScheduler
 from authlib.integrations.flask_client import OAuth
 from flask import (current_app, flash, g, redirect, render_template, request,
-                   url_for)
+                   session, url_for)
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app import app, db, db_handlers, utils
-from app.forms import (AddBookForm, AddIsbnForm, EditBookInstanceForm,
-                       EditProfileForm, MessageForm, SearchForm)
+from app.forms import (AddBookByIsbnForm, AddBookForm, AddIsbnForm,
+                       EditBookInstanceForm, EditProfileForm, MessageForm,
+                       SearchForm)
+from app.gbooks import get_book_by_isbn
 from app.models import Book, Message, User
 from app.thumbs import thumbnail
 
@@ -219,6 +221,85 @@ def edit_profile():
 @app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
+    """ Add book by ISBN:
+    1) received ISBN from user
+    2) checks if book with the ISBN exist local DB
+    3) checks among google books
+    4) If book found among google book -> offer user to add it to the library
+
+    # ISBN for DBG:
+    9780749386429 (Thomas Mann w cover)
+        # 9781461492986 (REST w cover)
+        # 9785171157340 (Сорокин, no cover)
+    """
+    gbook = None
+    form_by_isbn = AddBookByIsbnForm()
+    if form_by_isbn.validate_on_submit():
+        isbn = str(''.join(filter(str.isdigit, form_by_isbn.isbn.data)))
+
+        # check if book with the ISBN exist local DB:
+        # TODO simplify next block to one function
+        book_by_isbn = (db_handlers.get_book_by_isbn_10(isbn) or
+                        db_handlers.get_book_by_isbn_13(isbn) or
+                        None)
+        if book_by_isbn:
+            flash('The book with ISBN you entered alreaty exists in DB')
+            return redirect(url_for(
+                'add_book_instance',
+                book_id=book_by_isbn.id
+            ))
+
+        # send GET request to gbooks
+        gbook = get_book_by_isbn(isbn)
+        session['gbook'] = gbook
+        return render_template(
+            'add_book_by_isbn.html', form_by_isbn=form_by_isbn, gbook=gbook)
+
+    create_new_book_limit = current_app.config["NEW_BOOKS_PER_DAY_LIMIT"]
+    if utils.allow_create_new_book(
+            current_user_id=current_user.id,
+            limit=create_new_book_limit):
+        return render_template(
+            'add_book_by_isbn.html', form_by_isbn=form_by_isbn, gbook=gbook)
+    flash('Sorry, you are not allowed to create any more books today.')
+    return redirect(url_for('index'))
+
+
+@app.route('/add_book_by_data', methods=['GET', 'POST'])
+@login_required
+def add_book_by_data():
+    """ Add new book to DB, load a cover
+    #   ? TODO "app/static/tmp/" --> config vars
+    """
+    book = session.get('gbook', None)
+
+    # create new_book
+    new_book = db_handlers.create_book(
+        title=book['title'],
+        author=book['author'],
+        isbn_10=book['ISBN_10'] or None,
+        isbn_13=book['ISBN_13'] or None,
+        current_user_id=current_user.id,
+    )
+
+    tmp_cover_dir = "app/static/tmp/"
+    tmp_cover_filename = str(book['gbook_id']) + ".jpg"
+    filepath = tmp_cover_dir + tmp_cover_filename
+    cover_found = bool(os.path.exists(filepath))
+    if cover_found:
+        cover = thumbnail(
+            filepath,
+            current_app.config["IMAGE_TARGET_SIZE"],
+        )
+        utils.cover_upload(cover, new_book.id)
+        os.remove(tmp_cover_dir + tmp_cover_filename)  # remove tmp file
+
+    return redirect(url_for('add_book_instance', book_id=new_book.id))
+
+
+@app.route('/add_book_manual', methods=['GET', 'POST'])
+@login_required
+def add_book_manual():
     form = AddBookForm()
     if form.validate_on_submit():
         title = form.title.data
@@ -269,7 +350,9 @@ def add_book():
     if utils.allow_create_new_book(
             current_user_id=current_user.id,
             limit=limit):
-        return render_template('add_book.html', title='add_book', form=form)
+
+        return render_template('add_book_manual.html', title='add_book',
+                               form=form)
     flash('Sorry, you are not allowed to create any more books today.')
     return redirect(url_for('index'))
 

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+<h1>Add Book</h1>
+<hr>
+<div class="container-sm">
+  <div class="col-md-2">
+    <h4>Add book by ISBN</h4>
+    It's a simplest way:</br>
+    * Enter your book ISBN</br>
+    * We will search for the book name, author, cover... </br>
+    {{ wtf.quick_form(form_by_isbn) }}
+    <button type="button" onclick='window.location.href="{{ url_for('add_book_manual')}}"'>I don't have ISBN</button>
+  </div>
+</div>
+
+{% if gbook %}
+<div class="card">
+  {% include '_gbook.html' %}
+  <button type="button" onclick='window.location.href="{{ url_for('add_book_by_data')}}"'>Yes, it's my book</button>
+  <button type="button" onclick='window.location.href="{{ url_for('add_book_manual')}}"'>It's not my book</button>
+</div>
+</br>
+{% else %}
+Sorry, we did not find a book by entered ISBN.</br>
+You can try another ISBN or enter book details manually.
+{% endif %}
+
+{% endblock %}
