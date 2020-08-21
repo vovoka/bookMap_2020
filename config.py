@@ -36,7 +36,9 @@ class Config(object):
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_ADMIN = os.environ.get('MAIL_ADMIN')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
 
     # GOOGLE_API_KEY for Google books. Expired at 12.09.20 (?)
     GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')

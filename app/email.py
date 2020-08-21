@@ -1,46 +1,36 @@
-from threading import Thread
-from flask import render_template
-from flask_mail import Message
-from app import app, mail
-import smtplib
 import os
+from threading import Thread
+
+from flask_mail import Message
+
+from app import mail
 
 
-def send_email(recipients, subject, body):
+def send_email(subject, sender, recipients, text_body, html_body):
+    msg = Message(subject, sender=sender, recipients=recipients)
+    msg.body = text_body
+    msg.html = html_body
+    mail.send(msg)
+
+
+def send_bi_is_expired_email(recipients: str, expired_bis: list):
     """
-    # TODO made email sending in threads! (def send_async_email(app, msg)...)
+    Args:
+     - recipients(str) - user's email
+     - list of the user expired book_instances
     """
-
-    sender = os.environ.get('MAIL_ADMIN')
-    pwd = os.environ.get('MAIL_PASSWORD')
-    recipients = recipients if isinstance(recipients, list) else [recipients]
-    # Prepare actual message
-    message = """From: %s\nTo: %s\nSubject: %s\n\n%s
-    """ % (sender, ", ".join(recipients), subject, body)
-
-    try:
-        server = smtplib.SMTP(
-            os.environ.get('MAIL_SERVER'),
-            os.environ.get('MAIL_PORT'),
-        )
-        server.ehlo()
-        server.starttls()
-        server.login(sender, pwd)
-        server.sendmail(sender, recipients, message)
-        server.close()
-        app.logger.info(f'Successfully sent the mail to {recipients}')
-    except:
-        app.logger.info(f'Failed to send mail to {recipients}')
-
-
-def send_bi_is_expired_email(recipients:str, expired_bis:list):
-    body = """ Your next books are expired. Please, log in and update it's status \n\n"""
+    domain = 'http://127.0.0.1:5000/'  # ! TODO replace with config vars
+    subject = 'Some your books needs to be updated'
+    sender = os.environ.get('MAIL_USERNAME')
+    recipients = [recipients]
+    text_body = """ Your next books are expired.
+    Please, log in and update it's status \n\n"""
     for bi in expired_bis:
-        body += f'{bi} \n'
-    body += '\n BR, BookLib team'
-
-    send_email(
-        recipients = recipients,
-        subject = '[BookLib] Your Book Instance is expired',
-        body=body,
-    )
+        text_body += f'{bi} \n'
+    text_body += '\n BR, BookLib team'
+    html_body = f'<h2>{subject}</h2>\n<p> Your next books are expired:</p>'
+    for bi in expired_bis:
+        html_body += f"<hr><b>{bi['title']}</b></br> by {bi['author']}\n"
+    html_body += f'''To update your books status <a href="{domain}">Login</a>
+    and visit your profile page</br> BR, Booklib team.'''
+    send_email(subject, sender, recipients, text_body, html_body)

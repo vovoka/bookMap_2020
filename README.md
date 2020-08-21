@@ -13,7 +13,6 @@ here is a lot of bugs, I know ;)
 
 
 ###### TODO (unsorted ideas):
-* email notifications as html (now txt only)
 * email notifications as thread
 * email notifications 'You got a new message '
 * Docker
@@ -29,3 +28,7 @@ here is a lot of bugs, I know ;)
 
 * Data caching? For example do not show 'new book' button for urers who not allow_to_create_a_book()
 * try to switch to GraphQL (what for?)
+
+
+# Gmail allows to send 100-150 messages daily.
+# If out of the limit -> look at SendGrid или MailChimp.

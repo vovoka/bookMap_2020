@@ -150,26 +150,26 @@ def expired_bi_handler():
     the letter html body
     2) send emails in threads or replace it as a Redis worker
 
-    for DBG sending emails use data
+    for DBG emails use data:
     expired_bis = {'kovalyov.volodymyr@gmail.com': [
-        (25, 'The Great Gatsby'), (10, 'The Great Gatsby'),
-        (9, 'War and Peace')]}
+        {'id': 25, 'title': 'The Great Gatsby', 'author': 'Andersen'},
+        {'id': 26, 'title': 'The Great Gatsby 2', 'author': 'Andersen 2'},
+        {'id': 27, 'title': 'The Great Gatsby 3', 'author': 'Andersen 3'}
+        ]}
     """
 
     # Get expired bi & pack expired_bi to dict:
     expired_bis = dict()
-    for user_email, bi_id, bi_title in get_expired_bi_with_users():
+    for user_email, bi_id, bi_title, bi_author in get_expired_bi_with_users():
         if(user_email in expired_bis.keys()):
-            expired_bis[user_email].append((bi_id, bi_title))
+            expired_bi = {'id': bi_id, 'title': bi_title, 'author': bi_author}
+            expired_bis[user_email].append(expired_bi)
         else:
-            expired_bis[user_email] = [(bi_id, bi_title)]
+            expired_bis[user_email] = [expired_bi]
 
     # Send an email to each user
-    for user, bis in expired_bis.items():
-        bi_list = list()
-        for bi in bis:
-            bi_list.append(bi[1])
-        send_bi_is_expired_email(user, bi_list)
+    for user_email, user_expired_bis in expired_bis.items():
+        send_bi_is_expired_email(user_email, user_expired_bis)
 
     # Deactivate all expired books
     deactivate_any_bi_if_expired()

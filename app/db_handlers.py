@@ -391,7 +391,7 @@ def get_book_instances_id_by_book_id(book_id) -> tuple:
 
 
 def get_expired_bi_with_users(expiration_period_days=30) -> List[BookInstance]:
-    """ Returns user_email and bi_id & title for
+    """ Returns user_email and bi_id & title & author for
     expired bi only."""
     expiration_time = datetime.today() - timedelta(days=expiration_period_days)
     expiration_time_timestamp = datetime.timestamp(expiration_time)
@@ -400,6 +400,7 @@ def get_expired_bi_with_users(expiration_period_days=30) -> List[BookInstance]:
         User.email,
         BookInstance.id,
         Book.title,
+        Book.author,
     )
         .filter(BookInstance.book_id == Book.id)
         .filter(BookInstance.is_active is True)
