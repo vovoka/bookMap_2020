@@ -24,8 +24,10 @@
 </div>
 </br>
 {% else %}
-Sorry, we did not find a book by entered ISBN.</br>
-You can try another ISBN or enter book details manually.
+  {% if show_gbook_not_found %}
+  Sorry, we did not find a book by entered ISBN.</br>
+  You can try another ISBN or enter book details manually.
+  {% endif %}
 {% endif %}
 
 {% endblock %}

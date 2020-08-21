@@ -3,14 +3,19 @@ from threading import Thread
 
 from flask_mail import Message
 
-from app import mail
+from app import app, mail
+
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
 
 
 def send_email(subject, sender, recipients, text_body, html_body):
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
-    mail.send(msg)
+    Thread(target=send_async_email, args=(app, msg)).start()
 
 
 def send_bi_is_expired_email(recipients: str, expired_bis: list):
@@ -31,6 +36,7 @@ def send_bi_is_expired_email(recipients: str, expired_bis: list):
     html_body = f'<h2>{subject}</h2>\n<p> Your next books are expired:</p>'
     for bi in expired_bis:
         html_body += f"<hr><b>{bi['title']}</b></br> by {bi['author']}\n"
-    html_body += f'''To update your books status <a href="{domain}">Login</a>
+    html_body += f'''</br>To update your books status
+    <a href="{domain}">Login</a>
     and visit your profile page</br> BR, Booklib team.'''
     send_email(subject, sender, recipients, text_body, html_body)

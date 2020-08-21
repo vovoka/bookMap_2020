@@ -253,14 +253,22 @@ def add_book():
         gbook = get_book_by_isbn(isbn)
         session['gbook'] = gbook
         return render_template(
-            'add_book_by_isbn.html', form_by_isbn=form_by_isbn, gbook=gbook)
+            'add_book_by_isbn.html',
+            form_by_isbn=form_by_isbn,
+            gbook=gbook,
+            show_gbook_not_found=True,
+        )
 
     create_new_book_limit = current_app.config["NEW_BOOKS_PER_DAY_LIMIT"]
     if utils.allow_create_new_book(
             current_user_id=current_user.id,
             limit=create_new_book_limit):
         return render_template(
-            'add_book_by_isbn.html', form_by_isbn=form_by_isbn, gbook=gbook)
+            'add_book_by_isbn.html',
+            form_by_isbn=form_by_isbn,
+            gbook=gbook,
+            show_gbook_not_found=False,
+        )
     flash('Sorry, you are not allowed to create any more books today.')
     return redirect(url_for('index'))
 
