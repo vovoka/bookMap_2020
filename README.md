@@ -13,7 +13,6 @@ here is a lot of bugs, I know ;)
 
 
 ###### TODO (unsorted ideas):
-* email notifications 'You got a new message '
 * 'It's not my book' button --> delete tmp_cover, only then redirect back to 'add_book' or add handler which will clear tmp folder. But how not to delede needed tmp? Think about.
 * Docker
 * Clasterize book instances by location

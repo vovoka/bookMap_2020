@@ -9,7 +9,7 @@ from flask_login import current_user
 from app.db_handlers import (book_counter_created_by_user,
                              deactivate_any_bi_if_expired,
                              get_expired_bi_with_users)
-from app.email import send_bi_is_expired_email
+from app.email import send_email_bi_is_expired
 from app.models import Book, User
 
 ipapi.location(ip=None, key=None, field=None)
@@ -169,7 +169,7 @@ def expired_bi_handler():
 
     # Send an email to each user
     for user_email, user_expired_bis in expired_bis.items():
-        send_bi_is_expired_email(user_email, user_expired_bis)
+        send_email_bi_is_expired(user_email, user_expired_bis)
 
     # Deactivate all expired books
     deactivate_any_bi_if_expired()

@@ -18,7 +18,7 @@ def send_email(subject, sender, recipients, text_body, html_body):
     Thread(target=send_async_email, args=(app, msg)).start()
 
 
-def send_bi_is_expired_email(recipients: str, expired_bis: list):
+def send_email_bi_is_expired(recipients: str, expired_bis: list):
     """
     Args:
      - recipients(str) - user's email
@@ -39,4 +39,34 @@ def send_bi_is_expired_email(recipients: str, expired_bis: list):
     html_body += f'''</br>To update your books status
     <a href="{domain}">Login</a>
     and visit your profile page</br> BR, Booklib team.'''
+    send_email(subject, sender, recipients, text_body, html_body)
+
+
+def send_email_got_new_message(
+        recipients: list,
+        body: str,
+        book_title: str) -> None:
+    """
+    Send an email with notification that the addressee got new message.
+    Args:
+        - sender(str)
+        - recipients(list) - list with only email message recipient
+        - body(str) - message body
+        - book_title(str) - book_title
+    """
+
+    domain = 'http://127.0.0.1:5000/'
+    subject = 'You got new private message'
+    message_body = body
+    sender = os.environ.get('MAIL_USERNAME')
+    recipients = [recipients]
+    text_body = f""" You got next message related to book "{book_title}".
+    Please, log in and reply. \n\n
+    {message_body} \n
+    BR, BookLib team"""
+    html_body = f'''<h2> {subject} </h2> You got next message related to book
+    "{book_title}".</br>
+     <p>{message_body}</p></br>
+     Please, </br><a href="{domain}">login</a> to answer.</br>
+     BR, BookLib team '''
     send_email(subject, sender, recipients, text_body, html_body)

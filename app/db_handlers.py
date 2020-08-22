@@ -448,6 +448,10 @@ def get_user_by_username(username: str) -> User:
     return User.query.filter_by(username=username).first_or_404()
 
 
+def get_user_by_id(id: int) -> User:
+    return User.query.filter_by(id=id).first_or_404()
+
+
 def update_user_profile(
     about_me: str,
     latitude: str,

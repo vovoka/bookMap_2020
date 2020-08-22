@@ -10,6 +10,7 @@ from flask import (current_app, flash, g, redirect, render_template, request,
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app import app, db, db_handlers, utils
+from app.email import send_email_got_new_message
 from app.forms import (AddBookByIsbnForm, AddBookForm, AddIsbnForm,
                        EditBookInstanceForm, EditProfileForm, MessageForm,
                        SearchForm)
@@ -177,6 +178,16 @@ def book_instance(book_instance_id):
         )
         db.session.add(msg)
         db.session.commit()
+
+        # send email nofication to msg recipient
+        recipient_email = (db_handlers.get_user_by_id(_book_instance.owner_id)
+                           .email)
+        send_email_got_new_message(
+            recipients=[recipient_email],
+            body=form.message.data,
+            book_title=_book_instance.title,
+        )
+
         flash('Your message have been sent.')
         return redirect(url_for('messages'))
     utils.generate_map_single_marker()
@@ -563,6 +574,18 @@ def send_message(recipient, prev_message_id):
         )
         db.session.add(msg)
         db.session.commit()
+
+        # TODO test it (not tested).
+        # send email nofication to msg recipient
+        recipient_email = (db_handlers.get_user_by_id(prev_message.sender_id)
+                           .email)
+        book_title = db_handlers.get_book(prev_message.book_id).title
+        send_email_got_new_message(
+            recipients=[recipient_email],
+            body=form.message.data,
+            book_title=book_title,
+        )
+
         flash('Your message has been sent.')
         return redirect(url_for('messages'))
     return render_template('send_message.html',
