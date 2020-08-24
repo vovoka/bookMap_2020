@@ -17,7 +17,6 @@ here is a lot of bugs, I know ;)
 * Docker
 * Clasterize book instances by location
 * Add a service to visit goodreads / Google API and parse an info of new / searched book.
-* Find a way to exclude unused modules from requrements.txt (all related to graphql etc.)
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
 * replace http://127.0.0.1:5000 with DOMAIN_NAME
