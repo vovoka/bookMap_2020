@@ -285,6 +285,17 @@ def add_book():
     return redirect(url_for('index'))
 
 
+
+@app.route('/delete_tmp_cover/<gbook_id>')
+@login_required
+def delete_tmp_cover(gbook_id):
+    """ Delete tmp image cover"""
+    filepath = "app/static/tmp/" + str(gbook_id) + ".jpg"
+    if os.path.exists(filepath):
+        os.remove(filepath)  # remove tmp file
+    return redirect(url_for('add_book_manual'))
+
+
 @app.route('/add_book_by_data', methods=['GET', 'POST'])
 @login_required
 def add_book_by_data():
@@ -302,17 +313,14 @@ def add_book_by_data():
         current_user_id=current_user.id,
     )
 
-    tmp_cover_dir = "app/static/tmp/"
-    tmp_cover_filename = str(book['gbook_id']) + ".jpg"
-    filepath = tmp_cover_dir + tmp_cover_filename
-    cover_found = bool(os.path.exists(filepath))
-    if cover_found:
+    filepath = "app/static/tmp/" + str(book['gbook_id']) + ".jpg"
+    if os.path.exists(filepath):
         cover = thumbnail(
             filepath,
             current_app.config["IMAGE_TARGET_SIZE"],
         )
         utils.cover_upload(cover, new_book.id)
-        os.remove(tmp_cover_dir + tmp_cover_filename)  # remove tmp file
+        os.remove(filepath)  # remove tmp file
 
     return redirect(url_for('add_book_instance', book_id=new_book.id))
 

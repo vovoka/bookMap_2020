@@ -20,14 +20,15 @@
 <div class="card">
   {% include '_gbook.html' %}
   <button type="button" onclick='window.location.href="{{ url_for('add_book_by_data')}}"'>Yes, it's my book</button>
-  <button type="button" onclick='window.location.href="{{ url_for('add_book_manual')}}"'>It's not my book</button>
+  <button type="button" onclick='window.location.href="{{ url_for('delete_tmp_cover', gbook_id=gbook.gbook_id)}}"'>It's
+    not my book</button>
 </div>
 </br>
 {% else %}
-  {% if show_gbook_not_found %}
-  Sorry, we did not find a book by entered ISBN.</br>
-  You can try another ISBN or enter book details manually.
-  {% endif %}
+{% if show_gbook_not_found %}
+Sorry, we did not find a book by entered ISBN.</br>
+You can try another ISBN or enter book details manually.
+{% endif %}
 {% endif %}
 
 {% endblock %}
