@@ -2,12 +2,12 @@
 <table class="table table-hover">
     <tr>
         <td width=60px>
-            <a href='http://127.0.0.1:5000/bi/{{ message.book_instance_id }}'>
-                <img src='http://127.0.0.1:5000/static/covers/{{ message.book_id }}.jpg' width="50" height="70" ><br>
+            <a href='{{ basedir }}bi/{{ message.book_instance_id }}'>
+                <img src='{{ basedir }}static/covers/{{ message.book_id }}.jpg' width="50" height="70" ><br>
             </a>
         </td>
 
-        <td class="text-left"> 
+        <td class="text-left">
             {% if current_user.username == message.author.username %}
                 sent to <b>{{ message.recipient.username }}</b><br>
             {% else %}
@@ -16,12 +16,12 @@
             <br>
             {{ message.body }}<br>
 
-            <form action="http://127.0.0.1:5000/delete_message/{{ message.id }}">
+            <form action="{{ basedir }}delete_message/{{ message.id }}">
                 <input type="submit" value="Delete" />
             </form>
 
             {% if message.author.id != current_user.id %}
-                <form action="http://127.0.0.1:5000/send_message/{{ message.author.username }}/{{ message.id }}">
+                <form action="{{ basedir }}send_message/{{ message.author.username }}/{{ message.id }}">
                     <input type="submit" value="Reply" />
                 </form>
             {% endif %}

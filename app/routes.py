@@ -159,6 +159,7 @@ def book(book_id):
         'book_page.html',
         book=_book,
         book_instances=book_instances,
+        basedir=current_app.config['BASEDIR'],
     )
 
 
@@ -623,6 +624,7 @@ def messages():
         'messages.html',
         messages=_messages,
         form=MessageForm,
+        basedir=current_app.config['BASEDIR'],
     )
 
 

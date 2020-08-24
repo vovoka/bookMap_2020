@@ -42,3 +42,5 @@ class Config(object):
 
     # GOOGLE_API_KEY for Google books. Expired at 12.09.20 (?)
     GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+
+    BASEDIR = os.path.join(basedir, '/')

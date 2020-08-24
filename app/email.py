@@ -2,7 +2,7 @@ import os
 from threading import Thread
 
 from flask_mail import Message
-
+from flask import current_app
 from app import app, mail
 
 
@@ -24,7 +24,6 @@ def send_email_bi_is_expired(recipients: str, expired_bis: list):
      - recipients(str) - user's email
      - list of the user expired book_instances
     """
-    domain = 'http://127.0.0.1:5000/'  # ! TODO replace with config vars
     subject = 'Some your books needs to be updated'
     sender = os.environ.get('MAIL_USERNAME')
     recipients = [recipients]
@@ -37,7 +36,7 @@ def send_email_bi_is_expired(recipients: str, expired_bis: list):
     for bi in expired_bis:
         html_body += f"<hr><b>{bi['title']}</b></br> by {bi['author']}\n"
     html_body += f'''</br>To update your books status
-    <a href="{domain}">Login</a>
+    <a href="{current_app.config['BASEDIR']}">Login</a>
     and visit your profile page</br> BR, Booklib team.'''
     send_email(subject, sender, recipients, text_body, html_body)
 
@@ -55,7 +54,6 @@ def send_email_got_new_message(
         - book_title(str) - book_title
     """
 
-    domain = 'http://127.0.0.1:5000/'
     subject = 'You got new private message'
     message_body = body
     sender = os.environ.get('MAIL_USERNAME')
@@ -67,6 +65,6 @@ def send_email_got_new_message(
     html_body = f'''<h2> {subject} </h2> You got next message related to book
     "{book_title}".</br>
      <p>{message_body}</p></br>
-     Please, </br><a href="{domain}">login</a> to answer.</br>
+     Please, </br><a href="{current_app.config['BASEDIR']}">login</a> to answer.</br>
      BR, BookLib team '''
     send_email(subject, sender, recipients, text_body, html_body)

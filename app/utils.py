@@ -92,11 +92,12 @@ def generate_map_by_book_id(book_ids: list):
                     cover_id = 0
 
                 icon_url = (
-                    'http://127.0.0.1:5000/static/covers/' +
+                    current_app.config["IMAGE_UPLOADS"] + '/'+
                     str(cover_id) + '.jpg'
                 )
                 popup = (
-                    book.title + '</br><a href=http://127.0.0.1:5000/bi/' +
+                    book.title + '</br><a href=' +
+                    current_app.config["BASEDIR"] + 'bi/' +
                     str(bi.id) +
                     '><img src="/static/covers/' + str(cover_id) +
                     '.jpg" width="50" height="70" >' +

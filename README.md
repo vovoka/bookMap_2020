@@ -19,7 +19,6 @@ here is a lot of bugs, I know ;)
 * Add a service to visit goodreads / Google API and parse an info of new / searched book.
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
-* replace http://127.0.0.1:5000 with DOMAIN_NAME
 * If noone or only you have BI then you can manage the related Book. how to? add book.is_editable
 * Add 'blame for the book (incorrect/ violent data)'
 * Add offer book cover (if no bookcover currently) -> 'Offer better book cover'(?)

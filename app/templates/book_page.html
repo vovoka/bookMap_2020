@@ -9,7 +9,7 @@
         <p><a href="{{ url_for('index') }}">Back</a></p>
     {% endif %}
 
-    <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
+    <form action={{ basedir }}add_book_instance/{{ book.id }}">
         <input type="submit" value="Sell the book" />
     </form>
 
@@ -33,7 +33,7 @@
                     {% endif %}
 
                     {% if not (book.isbn_10 or book.isbn_13) %}
-                        isbn: not provided yet. <small><i> Click <a href="http://127.0.0.1:5000/add_isbn/{{ book.id }}">here</a> to add. </i></small>
+                        isbn: not provided yet. <small><i> Click <a href={{ basedir }}add_isbn/{{ book.id }}">here</a> to add. </i></small>
                     {% endif %}
                 </td>
             </tr>
@@ -56,7 +56,7 @@
     </table>
 
         {% if not book_instances %}
-        <form action="http://127.0.0.1:5000/add_book_instance/{{ book.id }}">
+        <form action={{ basedir }}add_book_instance/{{ book.id }}">
             <input type="submit" value="Sell the book" />
         </form>
         {% endif %}
