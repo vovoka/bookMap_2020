@@ -15,9 +15,9 @@ def make_db_data(db) -> None:
     """ Fill DB with users, Books, BookInstances """
 
     # how many to generate
-    users = 60
+    users = 6
     books = 15
-    book_instances = 180
+    book_instances = 30
 
     db.create_all()
     # create users
@@ -186,13 +186,14 @@ def update_book_isbn_13(
     return book
 
 
-def incr_instance_counter(book_id) -> int:
+def incr_instance_counter(book_id) -> Union[int, None]:
     """ Icrement book.instance_counter by 1.
     Return new value (int)"""
     book = Book.query.filter_by(id=book_id).first()
-    book.instance_counter += 1
-    db.session.commit()
-    return book.instance_counter
+    if book:
+        book.instance_counter += 1
+        db.session.commit()
+        return book.instance_counter
 
 
 def decr_instance_counter(book_id) -> int:

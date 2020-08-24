@@ -18,3 +18,8 @@ google_api_python_client==1.10.0
 Pillow==7.2.0
 protobuf==3.13.0
 python-dotenv==0.14.0
+
+
+# Deploy at Heroku
+gunicorn==20.0.4
+psycopg2

@@ -13,10 +13,9 @@ here is a lot of bugs, I know ;)
 
 
 ###### TODO (unsorted ideas):
-* 'It's not my book' button --> delete tmp_cover, only then redirect back to 'add_book' or add handler which will clear tmp folder. But how not to delede needed tmp? Think about.
+* Add job to  clear tmp folder (if many files found there).
 * Docker
-* Clasterize book instances by location
-* Add a service to visit goodreads / Google API and parse an info of new / searched book.
+* Clasterize book instances by location https://geoalchemy-2.readthedocs.io/ ? )
 * Add AdminPanel
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
 * If noone or only you have BI then you can manage the related Book. how to? add book.is_editable
