@@ -671,10 +671,9 @@ def auth():
             )
         login_user(user_from_db)
         flash('Please, made an initial set up of your profile:')
-        flash('    * Edit your location.')
-        #  (you can set any point you want, i.e. your home,
-        #  busstop or metro station convenient for you to meet buyers)
-        flash('    * Add contact info, if you want (telegram... etc.)')
+        flash('''* Edit your location.
+        (caffee or metro station convenient for you to meet buyers)''')
+        flash('* Add contact info, if you want (telegram... etc.)')
         return redirect('/edit_profile')
 
 

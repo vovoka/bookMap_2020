@@ -146,11 +146,6 @@ def expired_bi_handler():
     Send email notificasions to these books owners
     Deactivated all expired books. (in one separate request)
 
-    TODO:
-    1) bi_id still needed to create direct url(s) to the bi page inside
-    the letter html body
-    2) send emails in threads or replace it as a Redis worker
-
     for DBG emails use data:
     expired_bis = {'kovalyov.volodymyr@gmail.com': [
         {'id': 25, 'title': 'The Great Gatsby', 'author': 'Andersen'},
