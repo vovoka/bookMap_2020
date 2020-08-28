@@ -3,9 +3,9 @@
 {% block app_content %}
     {% include '_map.html' %}
     <h2>Search Results for key-phrase "{{ key_word }}"</h2>
-    <div class="parent--books">
+    <div class='book-tile'>
         {% for book in books %}
-            {% include '_book.html' %}
+            {% include 'book_tile.html' %}
         {% endfor %}
     </div>
 {% endblock %}

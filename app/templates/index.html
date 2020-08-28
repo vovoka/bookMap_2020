@@ -2,20 +2,23 @@
 
 {% block app_content %}
 
-    {% include '_map.html' %}
+<div class="container">
+  {% include '_map.html' %}
 
-    <h2>Recently added Book instances</h2>
-    <div class="parent--books">
-        {% for book_instance in book_instances %}
-            {% include '_book_instance.html' %}
-        {% endfor %}
-    </div>
+  <h2 class="text-center">Recently added Book instances</h2>
 
-    <h2>Library</h2>
+  <div class='book-tile'>
+    {% for book_instance in book_instances %}
+    {% include 'book_instance_tile.html' %}
+    {% endfor %}
+  </div>
 
-    <div class="parent--books">
-        {% for book in books %}
-            {% include '_book.html' %}
-        {% endfor %}
-      </div>
-{% endblock %}
+  <h2 class="text-center">Library</h2>
+
+  <div class='book-tile'>
+    {% for book in books %}
+    {% include 'book_tile.html' %}
+    {% endfor %}
+  </div>
+  {% endblock %}
+</div>

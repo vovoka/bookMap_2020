@@ -1,30 +1,38 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h2>Users list</h2>
-    <table class="table table-hover">
-        <tr>
-            <th>Avatar</th>
-            <th>Book_id</th>
-        </tr>
-        {% for user in users %}
-        <tr>
+<h2>Users list</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>Avatar</th>
+    <th>Book_id</th>
+  </tr>
+  {% for user in users %}
+  <tr>
 
-            <td>
-                {% if user.avatar %}
-                    <img src="{{ user.avatar }}">
-                {% else %}
-                    <img src="/static/avatar/default_avatar.png" >
-                {% endif %}
-            </td>
-            <td>
-                <b>User name: {{ user.username }}</b></br>
-                {% if user.last_seen %}
-                    <p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <td>
+      {% if user.avatar %}
+      <img src="{{ user.avatar }}">
+      {% else %}
+      <img src="/static/avatar/default_avatar.png">
+      {% endif %}
+    </td>
+    <td>
+      <b>User name: {{ user.username }}</b></br>
+      {% if user.last_seen %}
+      <p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
 {% endblock %}

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>{{ 'Messages' }}</h1>
+<h2 class="text-center">Messages</h2>
+<div class="container">
     {% for message in messages %}
-        {% include '_message.html' %}
+    {% include '_message.html' %}
     {% endfor %}
+</div>
 {% endblock %}

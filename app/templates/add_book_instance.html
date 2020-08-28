@@ -2,29 +2,31 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-<h1>Add Book instance</h1>
-<table>
-    <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
+  <h2 class="text-center">Add Book instance</h2>
+<div class="container">
+  <hr>
+  <div class="table-responsive col-md-6">
+    {{ wtf.quick_form(form) }}
+  </div>
+
+  <div class="table-responsive col-md-6">
+    <table>
+      <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
         <td>
-            <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
-                onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+          <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
+            onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
         </td>
         <td><b>{{ book.title }}</b><br>
-            by {{ book.author }}<br>
-        {% if book.isbn_10 %}
-            isbn 10: {{ book.isbn_10 }}<br>
-        {% endif %}
-        {% if book.isbn_13 %}
-            isbn 13: {{ book.isbn_13 }}<br>
-        {% endif %}
+          by {{ book.author }}<br>
+          {% if book.isbn_10 %}
+          isbn 10: {{ book.isbn_10 }}<br>
+          {% endif %}
+          {% if book.isbn_13 %}
+          isbn 13: {{ book.isbn_13 }}<br>
+          {% endif %}
         </td>
-    </tr>
-</table>
-
-<div class="container-sm">
-    <hr>
-    <div class="col-md-2">
-        {{ wtf.quick_form(form) }}
-    </div>
+      </tr>
+    </table>
+  </div>
 </div>
 {% endblock %}

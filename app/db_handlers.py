@@ -431,7 +431,7 @@ def activate_book_instance(book_instance_id) -> None:
      .filter(BookInstance.id == book_instance_id)
      .update({
          BookInstance.is_active: True,
-         BookInstance.activation_time: datetime.utcnow
+         BookInstance.activation_time: datetime.utcnow()
      }, synchronize_session=False))
     db.session.commit()
 
@@ -477,7 +477,7 @@ def update_user_profile(
 
 def create_user(username: str, email: str, avatar: str, latitude=50.4547,
                 longitude=30.520) -> User:
-    ''' create new user '''
+    ''' Create new user '''
 
     user = User(
         username=username,
@@ -485,7 +485,7 @@ def create_user(username: str, email: str, avatar: str, latitude=50.4547,
         avatar=avatar,
         latitude=latitude,
         longitude=longitude,
-        about_me='I will tell you a bit letter',
+        about_me='you can contact me at @Telegram_my_acc',
         is_active=True
     )
     db.session.add(user)

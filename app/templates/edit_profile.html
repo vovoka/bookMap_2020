@@ -1,50 +1,54 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<h3>Edit Profile</h3>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+<div class="container">
+  <h2 class="text-center">Edit Profile</h2>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
-<form action="" method="post">
+  <form action="" method="post">
+    <div class="table-responsive col-md-6">
+      Point your location
+      <div id="mapid" style="height: 300px;"></div>
+    </div>
+
+    <div class="table-responsive col-md-6">
+
     {{ form.hidden_tag() }}
-    <p>
-        {{ form.about_me.label }}<br>
-        {{ form.about_me(cols=50, rows=4) }}<br>
-        {% for error in form.about_me.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <div id="mapid" style="width: 300px; height: 300px;"></div>
-    <p>{{ form.submit() }}</p>
+    {{ form.about_me.label }}<br>
+    {{ form.about_me(cols=35, rows=4) }}<br>
+    <button type="submit" class="btn btn-default">Submit</button>
     <script>
-        var _lat = {{ current_user.latitude }}
-        var _lon = {{ current_user.longitude }}
-        var mymap = L.map('mapid').setView([_lat, _lon], 13);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1
-        }).addTo(mymap);
+      var _lat = {{ current_user.latitude }}
+      var _lon = {{ current_user.longitude }}
+      var mymap = L.map('mapid').setView([_lat, _lon], 13);
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1
+      }).addTo(mymap);
 
-        var marker = L.marker([_lat, _lon], {
-            draggable: true
-        }).addTo(mymap)
-            .bindPopup("<b>You are here</b>").openPopup();
+      var marker = L.marker([_lat, _lon], {
+        draggable: true
+      }).addTo(mymap)
+        .bindPopup("<b>You are here</b>").openPopup();
 
-        marker.on('dragend', function (e) {
-            document.getElementById('latitude').value = marker.getLatLng().lat;
-            document.getElementById('longitude').value = marker.getLatLng().lng;
-        });
+      marker.on('dragend', function (e) {
+        document.getElementById('latitude').value = marker.getLatLng().lat;
+        document.getElementById('longitude').value = marker.getLatLng().lng;
+      });
 
-        mymap.on('click', onMapClick);
+      mymap.on('click', onMapClick);
     </script>
+    </div>
 
+</div>
 </form>
 {% endblock %}

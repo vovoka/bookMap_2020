@@ -116,11 +116,11 @@ class AddIsbnForm(FlaskForm):
 
 class EditBookInstanceForm(FlaskForm):
     price = IntegerField(
-        'Price',
+        'My price, ₴',
         validators=[NumberRange(min=1, max=9999, message='Invalid price')]
     )
     condition = SelectField(
-        'The book instance condition',
+        'The book condition',
         choices=[
             ('4', 'Идеальное'),
             ('3', 'Хорошее (читана аккуратно, без пометок и заломов) '),
@@ -150,7 +150,7 @@ class MessageForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username')
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    about_me = TextAreaField('About me / alternative contact info', validators=[Length(min=0, max=140)])
     latitude = HiddenField('Latitude', validators=[DataRequired()])
     longitude = HiddenField('Longitude', validators=[DataRequired()])
     submit = SubmitField('Submit')

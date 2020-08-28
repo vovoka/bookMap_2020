@@ -1,4 +1,45 @@
-<tr onclick='location.href="{{ url_for('book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+<head>
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .checked {
+      color: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <tr onclick='location.href="{{ url_for('book_instance', book_instance_id=book_instance.id) }}"'
+    style="cursor:pointer;">
     <td>{{ book_instance.price }}</td>
+    <td>
+      {% if book_instance.condition == 1 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 2 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 3 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 4 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      {% endif %}
+    </td>
     <td><a href={{ url_for('user', username=book_instance.username) }}>{{ book_instance.username }}</a></td>
-</tr>
+  </tr>

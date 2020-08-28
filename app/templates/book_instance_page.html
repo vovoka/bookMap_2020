@@ -2,42 +2,122 @@
 
 {% block app_content %}
 
-    {% include '_map.html' %}
 
-    <table class="table table-hover">
-        {% include '_book_instance_2_column.html' %}
-        <tr>
-            <td>offered by user:</td><td> {{ book_instance.username }}</td>
-        </tr>
-        <tr>
-            <td>price: </td><td>{{ book_instance.price }}</td>
-        </tr>
-        <tr>
-            <td>condition:</td><td>{{ book_instance.condition }} of 4</td>
-        </tr>
-        <tr>
-            <td>description:</td><td>{{ book_instance.description }}</td>
-        </tr>
-    </table>
-    <br>
-    {% if editable %}
-        {% if book_instance.is_active %}
-            <button type="button" onclick="window.location.href='{{ url_for( "deactivate_book_instance", book_instance_id=book_instance.id) }}';">deactivate</button>
-        {% else %}
-            <button type="button" onclick="window.location.href='{{ url_for( "activate_book_instance", book_instance_id=book_instance.id) }}';">activate</button>
-        {% endif %}
-            <button type="button" onclick="window.location.href='{{ url_for( 'edit_book_instance', book_instance_id=book_instance.id) }}';">edit</button>
-            <button type="button" onclick="window.location.href='{{ url_for( 'delete_book_instance', book_instance_id=book_instance.id) }}';">delete</button>
 
-    {% else %}
-    <form action="" method="post" novalidate>
-        Send message to seller (User {{ book_instance.username }})
-        {{ form.hidden_tag() }}
-        <p>
+
+<div class="container">
+  {% include '_map.html' %}
+</div>
+
+<div class="container">
+<div class="table-responsive col-md-6">
+
+{% include '_book_instance_2_column.html' %}
+</div>
+
+<head>
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .checked {
+      color: orange;
+    }
+  </style>
+</head>
+
+
+<div class="table-responsive col-md-6">
+<table class="table table-responsible-md">
+  <tr>
+    <td>price: </td>
+    <td>{{ book_instance.price }} ₴</td>
+  </tr>
+  <tr>
+    <td>condition:</td>
+    <td>
+      {% if book_instance.condition == 1 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 2 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 3 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      {% endif %}
+
+      {% if book_instance.condition == 4 %}
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td>description:</td>
+    <td>{{ book_instance.description }}</td>
+  </tr>
+</table>
+
+<br>
+{% if editable %}
+<div class="btn-group btn-group-sm" role="group">
+  {% if book_instance.is_active %}
+  <a class="btn btn-default" href="{{ url_for('deactivate_book_instance', book_instance_id=book_instance.id) }}"
+    role="button"><span class="glyphicon glyphicon-off"></span> Deactivate</a>
+  {% else %}
+  <a class="btn btn-default" href="{{ url_for('activate_book_instance', book_instance_id=book_instance.id) }}"
+    role="button"><span class="glyphicon glyphicon-ok"></span> Activate</a>
+  {% endif %}
+  <a class="btn btn-default" href="{{ url_for('edit_book_instance', book_instance_id=book_instance.id) }}"
+    role="button"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+  <a class="btn btn-default" href="{{ url_for('delete_book_instance', book_instance_id=book_instance.id) }}"
+    role="button"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+</div>
+{% else %}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
+  Send message
+</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send message to seller </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" novalidate>
+          {{ form.hidden_tag() }}
+          <p>
             {{ form.message.label }}<br>
             {{ form.message(cols=50, rows=4) }}<br>
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    {% endif %}
+          </p>
+          <p>{{ form.submit() }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
 {% endblock %}

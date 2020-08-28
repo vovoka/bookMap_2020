@@ -2,14 +2,15 @@
 
 {% block app_content %}
 {% import "bootstrap/wtf.html" as wtf %}
+<div class="container">
 
-    {% include '_map.html' %}
-    <table class="table table-hover">
-        {% include '_book_instance_2_column.html' %}
-    </table>
+{% include '_map.html' %}
+<div class="table-responsive col-md-6">
+{% include '_book_instance_2_column.html' %}
+</div>
 
-        <div class="col-md-2">
-        {{ wtf.quick_form(form) }}
-        </div>
-
+<div class="table-responsive col-md-6">
+  {{ wtf.quick_form(form) }}
+</div>
+</div>
 {% endblock %}

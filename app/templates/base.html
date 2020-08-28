@@ -1,6 +1,6 @@
 <style>
     section {
-      width: 120px;
+      width: 180px;
       height: auto;
       border: 1px solid #a2a2a2;
       text-align: center;
@@ -11,12 +11,17 @@
       width: 70px;
     }
 
-    .parent--books {
+    .book-tile {
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
     }
-    </style>
+
+    .container{
+        max-width:980px;
+        margin:0 auto;/*make it centered*/
+    }
+</style>
 
 
 {% extends 'bootstrap/base.html' %}
@@ -50,9 +55,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('users') }}">Users</a></li>
-                    <li><a href="{{ url_for('index') }}">Explore</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}

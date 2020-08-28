@@ -2,31 +2,36 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-<h1>Add ISBN to existent Book</h1>
-<table>
-    <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
+
+<div class="container">
+  <h2 class="text-center">Add ISBN to existent Book</h2>
+  <div class="table-responsive col-md-6">
+
+    <table>
+      <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
         <td>
-            <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
-                onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+          <img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
+            onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
         </td>
         <td><b>{{ book.title }}</b><br>
-            by {{ book.author }}<br>
-            isbn_10: {{ book.isbn_10 }}<br>
-            isbn_13: {{ book.isbn_13 }}
+          by {{ book.author }}<br>
+          isbn_10: {{ book.isbn_10 }}<br>
+          isbn_13: {{ book.isbn_13 }}
         </td>
-    </tr>
-</table>
+      </tr>
+    </table>
 
-    <div class="parent--books">
-        {% for book in books %}
-            {% include '_book.html' %}
-        {% endfor %}
-      </div>
-
-<div class="container-sm">
-    <hr>
-    <div class="col-md-2">
-        {{ wtf.quick_form(form) }}
+    <div class='book-tile'>
+      {% for book in books %}
+      {% include '
+            book_tile.html' %}
+      {% endfor %}
     </div>
+  </div>
+
+  <div class="table-responsive col-md-6">
+        {{ wtf.quick_form(form) }}
+  </div>
 </div>
+
 {% endblock %}

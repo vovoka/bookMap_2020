@@ -3,25 +3,83 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-<h1>Add Book</h1>
-<hr>
-<div class="container-sm">
-  <div class="col-md-2">
-    <h4>Add book by ISBN</h4>
-    It's a simplest way:</br>
-    * Enter your book ISBN</br>
-    * We will search for the book name, author, cover... </br>
-    {{ wtf.quick_form(form_by_isbn) }}
-    <button type="button" onclick='window.location.href="{{ url_for('add_book_manual')}}"'>I don't have ISBN</button>
+
+<!-- Load to enable Modal -->
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+  #myBtn {
+    width: 300px;
+    padding: 10px;
+    font-size: 20px;
+    position: absolute;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    bottom: 50px;
+    z-index: 9999;
+  }
+</style>
+
+<script>
+  $(document).ready(function () {
+    // Show the Modal on load
+    $("#myModal").modal("show");
+
+    // Hide the Modal
+    $("#myBtn").click(function () {
+      $("#myModal").modal("hide");
+    });
+  });
+</script>
+<div class="container">
+
+  <h1>Add Book</h1>
+  <hr>
+  <div class="container-sm">
+      <h4>Add book by ISBN</h4>
+      It's a simplest way:</br>
+      * Enter your book ISBN</br>
+      * We will search for the book details </br>
+      {{ wtf.quick_form(form_by_isbn) }}
+      <button type="submit" class="btn btn-default" onclick='window.location.href="{{ url_for('add_book_manual')}}"'>I
+        don't have ISBN</button>
+    </div>
   </div>
 </div>
 
 {% if gbook %}
-<div class="card">
-  {% include '_gbook.html' %}
-  <button type="button" onclick='window.location.href="{{ url_for('add_book_by_data')}}"'>Yes, it's my book</button>
-  <button type="button" onclick='window.location.href="{{ url_for('delete_tmp_cover', gbook_id=gbook.gbook_id)}}"'>It's
-    not my book</button>
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Book found</h4>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            {% include '_gbook.html' %}
+            <button type="button" class="btn btn-success"
+              onclick='window.location.href="{{ url_for('add_book_by_data')}}"'>OK</button>
+            <button type="button" class="btn btn-danger"
+              onclick='window.location.href="{{ url_for('delete_tmp_cover', gbook_id=gbook.gbook_id)}}"'>Wrong
+              book</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 </br>
 {% else %}

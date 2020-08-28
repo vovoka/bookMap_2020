@@ -1,64 +1,77 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    {% if book_instances %}
-        {% include '_map.html' %}
 
-    {% else %}
-        Sorry, this book is not offered now.
-        <p><a href="{{ url_for('index') }}">Back</a></p>
-    {% endif %}
+{% if book_instances %}
 
-    <form action={{ basedir }}add_book_instance/{{ book.id }}>
-        <input type="submit" value="Sell the book" />
-    </form>
+<div class="container">
+  {% include '_map.html' %}
+{% else %}
+  Sorry, this book is not offered now.
+  <p><a href="{{ url_for('index') }}">Back</a></p>
+{% endif %}
 
-        <table class="table table-hover">
-            <tr>
-                <th>Cover</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" ></td>
-                <td>
-                    title:<b>{{ book.title }}</b></br>
-                    by: {{ book.author }}</br>
+<a class="btn btn-default"
+                    href="{{ basedir }}add_book_instance/{{ book.id }}"
+                    role="button">Sell the book</a>
 
-                    {% if book.isbn_10 %}
-                        isbn 10: {{ book.isbn_10 }}</br>
-                    {% endif %}
+</div>
 
-                    {% if book.isbn_13 %}
-                        isbn 13: {{ book.isbn_13 }}</br>
-                    {% endif %}
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" style="width: 10%">Cover</th>
+        <th scope="col" style="width: 30%">Description</th>
+      </tr>
+    </thead>
+    <tr>
+      <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
+          onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';"></td>
+      <td>
+        <b>{{ book.title }}</b></br>
+        by {{ book.author }}</br>
 
-                    {% if not (book.isbn_10 or book.isbn_13) %}
-                        isbn: not provided yet. <small><i> Click <a href={{ basedir }}add_isbn/{{ book.id }}">here</a> to add. </i></small>
-                    {% endif %}
-                </td>
-            </tr>
-
-        {% if book_instances %}
-            <tr>
-                <td><b>Book offers</b></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Price</td>
-                <td>Owner</td>
-            </tr>
-            <tr>
-                {% for book_instance in book_instances %}
-                    {% include '_book_instance_short.html' %}
-                {% endfor %}
-            </tr>
+        {% if book.isbn_10 %}
+        isbn 10: {{ book.isbn_10 }}</br>
         {% endif %}
-    </table>
 
-        {% if not book_instances %}
-        <form action={{ basedir }}add_book_instance/{{ book.id }}>
-            <input type="submit" value="Sell the book" />
-        </form>
+        {% if book.isbn_13 %}
+        isbn 13: {{ book.isbn_13 }}</br>
         {% endif %}
+
+        {% if not (book.isbn_10 or book.isbn_13) %}
+        isbn: not provided yet. <small><i> Click <a href={{ basedir }}add_isbn/{{ book.id }}>here</a> to add.
+          </i></small>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>
+
+{% if book_instances %}
+<div class="container">
+    <h3 class="text-center">Book offers</h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" style="width: 10%">Price</th>
+        <th scope="col" style="width: 20%">Condition</th>
+        <th scope="col" style="width: 20%">Owner</th>
+      </tr>
+    </thead>
+    <tr>
+      {% for book_instance in book_instances %}
+      {% include '_book_instance_short.html' %}
+      {% endfor %}
+    </tr>
+  </table>
+  {% else %}
+  <form action={{ basedir }}add_book_instance/{{ book.id }}>
+    <button type="submit" class="btn btn-default">Sell the book</button>
+  </form>
+</div>
+
+{% endif %}
 
 {% endblock %}

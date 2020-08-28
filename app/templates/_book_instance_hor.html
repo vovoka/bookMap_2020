@@ -1,0 +1,21 @@
+<section class="books" onclick='location.href="{{ url_for('book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+    <div class="book-card">
+      <table>
+        <tr>
+          <td>
+              <div class="book-image">
+              <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+              </div>
+          </td>
+          <td>
+            <div class="book-info">
+            <b>{{ book_instance.title|truncate(30,true) }}</b></br>
+            by {{ book_instance.author|truncate(30,true) }}</br>
+            <div class="book-info">{{ book_instance.price }} ₴</div>
+
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+</section>

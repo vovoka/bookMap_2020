@@ -1,47 +1,48 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h2>DEBUG all messages list</h2>
-    <table class="table table-hover">
-        <tr>
-            <th>id</th>
-            <th>author</th>
-            <th>recipient</th>
-            <th>body</th>
-            <th>exist for sender</th>
-            <th>exist for recipient</th>
-            <th>book_id</th>
-            <th>book_isntnace_id</th>
+<h2>DEBUG all messages list</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">author</th>
+      <th scope="col">recipient</th>
+      <th scope="col">body</th>
+      <th scope="col">exist for sender</th>
+      <th scope="col">exist for recipient</th>
+      <th scope="col">book_id</th>
+      <th scope="col">book_isntnace_id</th>
+    </tr>
+  </thead>
+  {% for msg in msgs %}
+  <tr>
+    <td>
+      {{ msg.id }}
+    </td>
+    <td>
+      {{ msg.author }}
+    </td>
+    <td>
+      {{ msg.recipient }}
+    </td>
+    <td>
+      {{ msg.body }}
+    </td>
+    <td>
+      {{ msg.exists_for_sender }}
+    </td>
+    <td>
+      {{ msg.exists_for_recipient }}
+    </td>
+    <td>
+      {{ msg.book_id }}
+    </td>
+    <td>
+      {{ msg.book_instance_id }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
-        </tr>
-        {% for msg in msgs %}
-        <tr>
-            <td>
-                {{ msg.id }}
-            </td>
-            <td>
-                {{ msg.author }}
-            </td>
-            <td>
-                {{ msg.recipient }}
-            </td>
-            <td>
-                {{ msg.body }}
-            </td>
-            <td>
-                {{ msg.exists_for_sender }}
-            </td>
-            <td>
-                {{ msg.exists_for_recipient }}
-            </td>
-            <td>
-                {{ msg.book_id }}
-            </td>
-            <td>
-                {{ msg.book_instance_id }}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    
 {% endblock %}

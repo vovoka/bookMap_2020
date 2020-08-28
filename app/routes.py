@@ -141,7 +141,6 @@ def user(username):
         'user.html',
         user=_user,
         book_instances=_book_instances,
-        total_instances=len(_book_instances),
     )
 
 
@@ -176,6 +175,7 @@ def book_instance(book_instance_id):
             sender_id=current_user.id,
             recipient_id=_book_instance.owner_id,
             body=form.message.data,
+            timestamp=datetime.utcnow(),
         )
         db.session.add(msg)
         db.session.commit()
@@ -574,13 +574,22 @@ def send_message(recipient, prev_message_id):
         prev_message = db_handlers.get_message(prev_message_id)
 
     if form.validate_on_submit():
+                #! DBG
+        print(f'--------------', flush=True)
+        print(f'book_instance_id={prev_message.book_instance_id}', flush=True)
+        print(f'book_id={prev_message.book_id}', flush=True)
+        print(f'author={current_user}', flush=True)
+        print(f'recipient={_user}', flush=True)
+        print(f'body={form.message.data}', flush=True)
+
         msg = Message(
             book_instance_id=prev_message.book_instance_id,
             book_id=prev_message.book_id,
             author=current_user,
-            recipient=user,
+            recipient=_user,
             body=form.message.data,
         )
+
         db.session.add(msg)
         db.session.commit()
 
@@ -671,9 +680,9 @@ def auth():
             )
         login_user(user_from_db)
         flash('Please, made an initial set up of your profile:')
-        flash('''* Edit your location.
+        flash('''Edit your location.
         (caffee or metro station convenient for you to meet buyers)''')
-        flash('* Add contact info, if you want (telegram... etc.)')
+        flash('Add contact info, if you want (telegram... etc.)')
         return redirect('/edit_profile')
 
 

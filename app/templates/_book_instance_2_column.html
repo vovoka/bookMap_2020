@@ -1,16 +1,18 @@
-<tr onclick='location.href="{{ url_for('book', book_id=book_instance.book_id) }}"' style="cursor:pointer;">
-    <td>
-        <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100"
-            onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
+<table class="table table-hover">
+  <tr onclick='location.href="{{ url_for('book', book_id=book_instance.book_id) }}"' style="cursor:pointer;">
+    <td style="width: 20%">
+      <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100"
+        onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';">
     </td>
-    <td><b>{{ book_instance.title }}</b><br>
-        by {{ book_instance.author }}<br>
-        {% if book_instance.isbn_10 %}
-            isbn 10: {{ book_instance.isbn_10 }}<br>
-        {% endif %}
-        {% if book_instance.isbn_13 %}
-            isbn 13: {{ book_instance.isbn_13 }}<br>
-        {% endif %}
+    <td style="width: 80%"><b>{{ book_instance.title }}</b><br>
+      by {{ book_instance.author }}<br>
+      {% if book_instance.isbn_10 %}
+      isbn 10: {{ book_instance.isbn_10 }}<br>
+      {% endif %}
+      {% if book_instance.isbn_13 %}
+      isbn 13: {{ book_instance.isbn_13 }}<br>
+      {% endif %}
 
     </td>
-</tr>
+  </tr>
+</table>

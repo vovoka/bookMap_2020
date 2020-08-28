@@ -101,7 +101,7 @@ def generate_map_by_book_id(book_ids: list):
                     str(bi.id) +
                     '><img src="/static/covers/' + str(cover_id) +
                     '.jpg" width="50" height="70" >' +
-                    '</a></br>' + str(bi.price) + ' uah'
+                    '</a></br>' + str(bi.price) + ' ₴'
                 )
                 folium.Marker(
                     location=list(users_coord_cache[bi.owner_id]),

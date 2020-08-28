@@ -1,0 +1,28 @@
+
+<section class="books"
+
+{% if book_instance.condition == 1 %}
+style="background:#ffe3e3"
+{% endif %}
+{% if book_instance.condition == 2 %}
+style="background:#fff2e3"
+{% endif %}
+{% if book_instance.condition == 3 %}
+style="background:#ffffe3"
+{% endif %}
+{% if book_instance.condition == 4 %}
+style="background:#eaffe3"
+{% endif %}
+onclick='location.href="{{ url_for('book_instance', book_instance_id=book_instance.id) }}"' style="cursor:pointer;">
+    <div class="book-card">
+      </br>
+      <div class="book-image">
+        <img src="/static/covers/{{ book_instance.book_id }}.jpg" width="70" height="100" onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';" >
+      </div>
+      <div class="book-info">
+        <h5>{{ book_instance.title }}</h5>
+        <h5>by {{ book_instance.author }}</h5>
+        <h5><b>{{ book_instance.price }}</b> ₴</h5>
+      </div>
+    </div>
+</section>

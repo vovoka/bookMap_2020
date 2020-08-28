@@ -51,6 +51,8 @@ Checking expired BookInstance made as cron task with `BackgroundScheduler()`
 
 ### TODO (unsorted ideas possible next steps and known bugs):
 * Less mess! :)
+* Add change name during initializating new account only.
+* Fix '' as ISBN (google books returns a book, but we don't need it)
 * Clasterize book instances by [location](https://geoalchemy-2.readthedocs.io/) ?
 * Add [Flask Admin](https://flask-admin.readthedocs.io/en/latest/)
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
@@ -61,3 +63,4 @@ Checking expired BookInstance made as cron task with `BackgroundScheduler()`
 * Data caching? For example hide 'new book' button for users who not `allow_to_create_a_book()` Store var 'show_add_new_book' in session?
 * Try to switch to GraphQL _(what for? models are not heavy... yet)_?
 * Gmail allows to send 100-150 messages daily. If out of the limit -> look at SendGrid или MailChimp.
+* Add footer
