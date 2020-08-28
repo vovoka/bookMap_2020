@@ -97,7 +97,7 @@ class AddBookForm(FlaskForm):
 class AddBookByIsbnForm(FlaskForm):
     isbn = StringField(
         'Find book by ISBN',
-        validators=[Optional(), isbn_validator]
+        validators=[DataRequired(), isbn_validator]
     )
     submit = SubmitField('Try to find a book by ISBN')
 

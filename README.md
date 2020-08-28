@@ -1,4 +1,4 @@
-# Booklib
+# BookMap
 
 Pet project for learning purposes.  
   
@@ -52,7 +52,6 @@ Checking expired BookInstance made as cron task with `BackgroundScheduler()`
 ### TODO (unsorted ideas possible next steps and known bugs):
 * Less mess! :)
 * Add change name during initializating new account only.
-* Fix '' as ISBN (google books returns a book, but we don't need it)
 * Clasterize book instances by [location](https://geoalchemy-2.readthedocs.io/) ?
 * Add [Flask Admin](https://flask-admin.readthedocs.io/en/latest/)
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
