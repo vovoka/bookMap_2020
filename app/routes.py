@@ -64,6 +64,9 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
         g.search_form = SearchForm()
+        if request.path.startswith('/admin'):
+            if not (current_user.id == 1 or current_user.is_admin):
+                return redirect(url_for('index'))
 
 
 @app.route('/search')
@@ -283,7 +286,6 @@ def add_book():
         )
     flash('Sorry, you are not allowed to create any more books today.')
     return redirect(url_for('index'))
-
 
 
 @app.route('/delete_tmp_cover/<gbook_id>')
@@ -574,14 +576,6 @@ def send_message(recipient, prev_message_id):
         prev_message = db_handlers.get_message(prev_message_id)
 
     if form.validate_on_submit():
-                #! DBG
-        print(f'--------------', flush=True)
-        print(f'book_instance_id={prev_message.book_instance_id}', flush=True)
-        print(f'book_id={prev_message.book_id}', flush=True)
-        print(f'author={current_user}', flush=True)
-        print(f'recipient={_user}', flush=True)
-        print(f'body={form.message.data}', flush=True)
-
         msg = Message(
             book_instance_id=prev_message.book_instance_id,
             book_id=prev_message.book_id,
@@ -589,12 +583,9 @@ def send_message(recipient, prev_message_id):
             recipient=_user,
             body=form.message.data,
         )
-
         db.session.add(msg)
         db.session.commit()
 
-        # TODO test it (not tested).
-        # send email nofication to msg recipient
         recipient_email = (db_handlers.get_user_by_id(prev_message.sender_id)
                            .email)
         book_title = db_handlers.get_book(prev_message.book_id).title

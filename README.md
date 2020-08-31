@@ -16,6 +16,7 @@ Add a book instance (book is found by isbn at google books) :
 * [Postgresql](https://www.postgresql.org/)
 * [Bootstrap3](https://getbootstrap.com/docs/3.3/)
 * [Folium](https://python-visualization.github.io/folium/)
+* [Flask-Admin](https://flask-admin.readthedocs.io/en/latest/)
 * [dotenv](https://pypi.org/project/python-dotenv/)
 
 ## Install
@@ -36,6 +37,7 @@ export MAIL_PORT=465
 export MAIL_USERNAME=email@gmail.com  
 export MAIL_PASSWORD=email_password  
 ```
+Note that Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
   
 The main objects are `Book` (object with `Title`, `Author`, `isbn` etc.) and derived object `BookInstance` (i.e. instance of a `Book`, have it's own `price`, `condition`, owner location). For example `Book` 'Tom Sawyer' might have some `BookInstance` from different `Users`, with different `price`, `condition` and location.  
   
@@ -47,13 +49,16 @@ When user wants to add new `Book` scrypt firstly checks by isbn if  such a `Book
 * User got a private message from other User; 
 * Users BookInstance reach 'expired' state (30 days from publishing) and have to be re-activated manually by User.  
 Checking expired BookInstance made as cron task with `BackgroundScheduler()`
+  
+  
+Map view is centered by User location which is received by IP from `ipapi` service.
+Users with Adiministrator privileges able to manage the DB with Flask-Admin interface.
 
 
 ### TODO (unsorted ideas possible next steps and known bugs):
 * Less mess! :)
 * Add change name during initializating new account only.
 * Clasterize book instances by [location](https://geoalchemy-2.readthedocs.io/) ?
-* Add [Flask Admin](https://flask-admin.readthedocs.io/en/latest/)
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
 * If noone or only you (as user) is `book_instance` owner then you can manage the related Book (title, cover etc.). How to? -> add `book.is_editable`
 * Add job to  clear tmp folder (if many files found there).
@@ -63,3 +68,7 @@ Checking expired BookInstance made as cron task with `BackgroundScheduler()`
 * Try to switch to GraphQL _(what for? models are not heavy... yet)_?
 * Gmail allows to send 100-150 messages daily. If out of the limit -> look at SendGrid или MailChimp.
 * Add footer
+
+
+### Note
+First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?

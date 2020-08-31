@@ -1,9 +1,7 @@
 
-from hashlib import md5
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import app, db, login
+from app import db, login
 
 
 class User(UserMixin, db.Model):
@@ -11,17 +9,16 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     avatar = db.Column(db.String(200))
-    is_active = db.Column(db.Boolean, default=False)
-    tokens = db.Column(db.Text) # need it?
+    is_active = db.Column(db.Boolean, default=True)
+    is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
-
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
-    BookInstance = db.relationship('BookInstance', backref='xxxx',
+    BookInstance = db.relationship('BookInstance', backref='owner',
                                    lazy='dynamic'
-                                   )  # ? TODO neet it? fix backref
+                                   )
     messages_sent = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
                                     backref='author', lazy='dynamic')
@@ -37,7 +34,7 @@ class User(UserMixin, db.Model):
             Message.timestamp > last_read_time).count()
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'User: {self.username}'
 
 
 class BookInstance(db.Model):
@@ -51,7 +48,7 @@ class BookInstance(db.Model):
     activation_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<BookInstance {}>'.format(self.description)
+        return f'BookInstance: {self.Book.title} {self.price}'
 
 
 class Book(db.Model):
@@ -65,10 +62,10 @@ class Book(db.Model):
     instance_counter = db.Column(db.Integer, default=0)
     # TODO fix backref
     BookInstance = db.relationship(
-        'BookInstance', backref='aaaaa', lazy='dynamic')
+        'BookInstance', backref='Book', lazy='dynamic')
 
     def __repr__(self):
-        return '<Book {}>'.format(self.title)
+        return f'Book: {self.title}'
 
 
 class Message(db.Model):

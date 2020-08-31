@@ -1,17 +1,22 @@
 # from flask import Flask
-from flask import Flask, request
-from config import Config
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager
-from flask_bootstrap import Bootstrap
-from flask_moment import Moment
-import os
 import logging
+import os
+import os.path as op
 from logging.handlers import RotatingFileHandler
-from authlib.integrations.flask_client import OAuth
-from config import Config
+
+from flask import Flask
+from flask_admin import Admin
+from flask_admin.contrib.fileadmin import FileAdmin
+from flask_admin.contrib.sqla import ModelView
+from flask_bootstrap import Bootstrap
+from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
+from flask_moment import Moment
+from flask_sqlalchemy import SQLAlchemy
+
+from app.models import Book, BookInstance, User
+from config import Config
 
 app = Flask(__name__)
 app.secret_key = '!secret'
@@ -21,14 +26,28 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
-# login.login_message = 'Please log in to access this page.'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 mail = Mail(app)
 
-# if not app.debug:
-if True:
 
+# Flask-Admin
+class AdminUserView(ModelView):
+    ''' Used as a view wrapper in Flask-admin view. '''
+    can_create = True
+    page_size = 50  # the number of entries to display on the list view
+
+
+admin = Admin(app, template_mode='bootstrap3')
+
+admin.add_view(AdminUserView(User, db.session, name='Users'))
+admin.add_view(AdminUserView(Book, db.session, name='Books'))
+admin.add_view(AdminUserView(BookInstance, db.session, name='BookInstances'))
+
+path = op.join(op.dirname(__file__), 'static')  # manage files
+admin.add_view(FileAdmin(path, '/static/', name='Files'))
+
+if not app.debug:
     # logger
     if not os.path.exists('logs'):
         os.mkdir('logs')
@@ -41,6 +60,3 @@ if True:
 
     app.logger.setLevel(logging.INFO)
     app.logger.info('BookLib startup')
-
-
-from app import routes, models, errors
