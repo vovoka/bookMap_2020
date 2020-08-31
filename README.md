@@ -14,6 +14,7 @@ Add a book instance (book is found by isbn at google books) :
 ## Tech stack
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 * [Postgresql](https://www.postgresql.org/)
+* [Flask-Admin](https://flask-admin.readthedocs.io/en/latest/)
 * [Bootstrap3](https://getbootstrap.com/docs/3.3/)
 * [Folium](https://python-visualization.github.io/folium/)
 * [dotenv](https://pypi.org/project/python-dotenv/)
@@ -46,14 +47,20 @@ When user wants to add new `Book` scrypt firstly checks by isbn if  such a `Book
 `.env` also contains mail settings vars. It's used to send email notification to Users. Currently a notification sent in two cases:
 * User got a private message from other User; 
 * Users BookInstance reach 'expired' state (30 days from publishing) and have to be re-activated manually by User.  
-Checking expired BookInstance made as cron task with `BackgroundScheduler()`
+Checking expired BookInstance made as cron task with  `BackgroundScheduler()`
+Map view is centered by User location which is received by IP from `ipapi` service.  
+Users with Adiministrator privileges able to manage the DB with Flask-Admin interface.  
+  
+  
 
-
+### Note
+First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?  
+Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
+  
 ### TODO (unsorted ideas possible next steps and known bugs):
 * Less mess! :)
 * Add change name during initializating new account only.
 * Clasterize book instances by [location](https://geoalchemy-2.readthedocs.io/) ?
-* Add [Flask Admin](https://flask-admin.readthedocs.io/en/latest/)
 * Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
 * If noone or only you (as user) is `book_instance` owner then you can manage the related Book (title, cover etc.). How to? -> add `book.is_editable`
 * Add job to  clear tmp folder (if many files found there).
