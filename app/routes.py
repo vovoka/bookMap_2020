@@ -586,6 +586,7 @@ def send_message(recipient, prev_message_id):
         db.session.add(msg)
         db.session.commit()
 
+        # send email nofication to msg recipient
         recipient_email = (db_handlers.get_user_by_id(prev_message.sender_id)
                            .email)
         book_title = db_handlers.get_book(prev_message.book_id).title

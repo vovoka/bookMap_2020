@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from flask_login import UserMixin
 from app import db, login
@@ -10,6 +9,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     avatar = db.Column(db.String(200))
     is_active = db.Column(db.Boolean, default=True)
+    tokens = db.Column(db.Text)
     is_admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     latitude = db.Column(db.Float)
@@ -60,7 +60,6 @@ class Book(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     instance_counter = db.Column(db.Integer, default=0)
-    # TODO fix backref
     BookInstance = db.relationship(
         'BookInstance', backref='Book', lazy='dynamic')
 

@@ -1,22 +1,18 @@
 # from flask import Flask
-import logging
-import os
-import os.path as op
-from logging.handlers import RotatingFileHandler
-
 from flask import Flask
-from flask_admin import Admin
-from flask_admin.contrib.fileadmin import FileAdmin
-from flask_admin.contrib.sqla import ModelView
+from config import Config
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+import logging
+import os
+import os.path as op
+from logging.handlers import RotatingFileHandler
+import os
 
-from app.models import Book, BookInstance, User
-from config import Config
 
 app = Flask(__name__)
 app.secret_key = '!secret'
@@ -30,6 +26,12 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 mail = Mail(app)
 
+
+# Flask-Admin
+from flask_admin import Admin
+from flask_admin.contrib.fileadmin import FileAdmin
+from flask_admin.contrib.sqla import ModelView
+from app.models import Book, BookInstance, User
 
 # Flask-Admin
 class AdminUserView(ModelView):
@@ -47,6 +49,7 @@ admin.add_view(AdminUserView(BookInstance, db.session, name='BookInstances'))
 path = op.join(op.dirname(__file__), 'static')  # manage files
 admin.add_view(FileAdmin(path, '/static/', name='Files'))
 
+# if not app.debug:
 if not app.debug:
     # logger
     if not os.path.exists('logs'):
@@ -60,3 +63,6 @@ if not app.debug:
 
     app.logger.setLevel(logging.INFO)
     app.logger.info('BookLib startup')
+
+
+from app import routes, models, errors

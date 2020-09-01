@@ -14,6 +14,7 @@ Add a book instance (book is found by isbn at google books) :
 ## Tech stack
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 * [Postgresql](https://www.postgresql.org/)
+* [Flask-Admin](https://flask-admin.readthedocs.io/en/latest/)
 * [Bootstrap3](https://getbootstrap.com/docs/3.3/)
 * [Folium](https://python-visualization.github.io/folium/)
 * [Flask-Admin](https://flask-admin.readthedocs.io/en/latest/)
@@ -48,13 +49,18 @@ When user wants to add new `Book` scrypt firstly checks by isbn if  such a `Book
 `.env` also contains mail settings vars. It's used to send email notification to Users. Currently a notification sent in two cases:
 * User got a private message from other User; 
 * Users BookInstance reach 'expired' state (30 days from publishing) and have to be re-activated manually by User.  
-Checking expired BookInstance made as cron task with `BackgroundScheduler()`
+Checking expired BookInstance made as cron task with  `BackgroundScheduler()`
+Map view is centered by User location which is received by IP from `ipapi` service.  
+Users with Adiministrator privileges able to manage the DB with Flask-Admin interface.  
   
   
-Map view is centered by User location which is received by IP from `ipapi` service.
-Users with Adiministrator privileges able to manage the DB with Flask-Admin interface.
+
+### Note
+First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?  
+Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
 
 
+  
 ### TODO (unsorted ideas possible next steps and known bugs):
 * Less mess! :)
 * Add change name during initializating new account only.
@@ -68,7 +74,3 @@ Users with Adiministrator privileges able to manage the DB with Flask-Admin inte
 * Try to switch to GraphQL _(what for? models are not heavy... yet)_?
 * Gmail allows to send 100-150 messages daily. If out of the limit -> look at SendGrid или MailChimp.
 * Add footer
-
-
-### Note
-First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?
