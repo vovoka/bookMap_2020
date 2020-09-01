@@ -9,24 +9,20 @@
 
         <td class="text-left">
             {% if current_user.username == message.author.username %}
-                	<b> You &#x21AA {{ message.recipient.username }}</b>
-                    at {{ message.timestamp.strftime('%d %b %Y %H:%M') }} UTC
-                    <br>
+                sent to <b>{{ message.recipient.username }}</b><br>
             {% else %}
-                <b>{{ message.author.username }} &#x21AA You </b> 
-                at {{ message.timestamp.strftime('%d %b %Y %H:%M') }} UTC
-                <br>
+                received from <b>{{ message.author.username }}</b><br>
             {% endif %}
             <br>
             {{ message.body }}<br>
 
             <form action="{{ basedir }}delete_message/{{ message.id }}">
-                <button type="submit" class="btn btn-default">Delete</button>
+                <input type="submit" value="Delete" />
             </form>
 
             {% if message.author.id != current_user.id %}
                 <form action="{{ basedir }}send_message/{{ message.author.username }}/{{ message.id }}">
-                    <button type="submit" class="btn btn-default">Reply</button>
+                    <input type="submit" value="Reply" />
                 </form>
             {% endif %}
         </td>
