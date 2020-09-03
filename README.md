@@ -51,26 +51,28 @@ When user wants to add new `Book` scrypt firstly checks by isbn if  such a `Book
 * Users BookInstance reach 'expired' state (30 days from publishing) and have to be re-activated manually by User.  
 Checking expired BookInstance made as cron task with  `BackgroundScheduler()`
 Map view is centered by User location which is received by IP from `ipapi` service.  
-Users with Adiministrator privileges able to manage the DB with Flask-Admin interface.  
-  
-  
-
-### Note
-First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?  
-Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
-
+Users with Adiministrator privileges able to manage the DB data with Flask-Admin interface.  
 
   
 ### TODO (unsorted ideas possible next steps and known bugs):
-* Less mess! :)
-* Add change name during initializating new account only.
-* Clasterize book instances by [location](https://geoalchemy-2.readthedocs.io/) ?
-* Connect oauth2_tokens with User.tokens to not re-authorize each time with google auth server.
-* If noone or only you (as user) is `book_instance` owner then you can manage the related Book (title, cover etc.). How to? -> add `book.is_editable`
-* Add job to  clear tmp folder (if many files found there).
-* Add 'blame for the book (incorrect/ violent data)'
-* Add 'offer book cover' (if no bookcover currently) -> 'Offer better book cover'(?)
-* Data caching? For example hide 'new book' button for users who not `allow_to_create_a_book()` Store var 'show_add_new_book' in session?
-* Try to switch to GraphQL _(what for? models are not heavy... yet)_?
+* Refactor and made more clean & concise :)
+* Add change user_name during initializating new account only.
+* Clasterize book instances by location with [geoalchemy-2](https://geoalchemy-2.readthedocs.io/)  or [h3](https://h3geo.org/)?
+* If noone or only you (as `User`) is a `BookInstance` owner then you can manage the related `Book` attributes (title, cover etc.). How to? -> add `book.is_editable`
+* Add cron job to  clear tmp folder (if many files found there).
+* Add _'blame for the book (incorrect/ violent data)'_
+* Add _'offer book cover'_ (if no bookcover currently) -> _'Offer better book cover'_(?)
+* Data caching? 
+    * Do not render _map.html for each User, render it with Scheduller in thread only if Book were added/removed ... or by time. 
+    * Hide 'new book' button for users who are not `allow_to_create_a_book()` any more (Limits included already). Store var 'show_add_new_book' in session?
+* Try to switch to GraphQL _(what for? Models are not heavy... yet. OK, do it jest for fun and experience)_
 * Gmail allows to send 100-150 messages daily. If out of the limit -> look at SendGrid или MailChimp.
 * Add footer
+* Made a messages view as threads (it's about indentation in html)
+* Separate css from html (now some mess is there).
+* Rename `BookInstance.Description` to `BookInstance.Comment`. It's better name for it.
+* Write a normal tests at last!
+
+### Note  
+First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). Fix it with bash-psql script for safety reasons?  
+Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
