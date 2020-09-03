@@ -5,7 +5,7 @@ Pet project for learning purposes.
 __General idea__ - create a marketplace for P2P selling books optimized by users location. It's much easier to buy used book if it's owner lives nearby.  
 
 
-[Demo] (https://bookmap-2020.herokuapp.com/) refresh if 'internal server error', free Heroku plan is not reliable for the load.
+[Demo](https://bookmap-2020.herokuapp.com/) refresh if 'internal server error', free Heroku plan is not reliable for the load.
 Main view:  
 ![GitHub Logo](screenshots/1.png)  
 Book Page:  
