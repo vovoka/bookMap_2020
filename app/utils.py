@@ -8,7 +8,8 @@ from flask_login import current_user
 
 from app.db_handlers import (book_counter_created_by_user,
                              deactivate_any_bi_if_expired,
-                             get_expired_bi_with_users)
+                             get_expired_bi_with_users,
+                             get_user_by_id)
 from app.email import send_email_bi_is_expired
 from app.models import Book, User
 
@@ -60,13 +61,22 @@ def generate_map_single_marker(
 def generate_map_by_book_id(book_ids: list):
     """ Show all active book instances locations """
 
-    location = current_app.config["DEFAULT_MAP_COORDINADES"]
+    def _generate_popup(bi, book_title: str) -> str:
+        """ Concatenate str & vars to generate html code of Marker popup """
+        parts = (book_title, '</br><a href=', current_app.config["BASEDIR"],
+                 'bi/', str(bi.id), '><img src="/static/covers/',
+                 str(bi.book_id), '.jpg" width="50" height="70" >',
+                 '</a></br>', str(bi.price), ' ₴')
+        popup = ''.join(parts)
+        return popup
+
+    map_location = current_app.config["DEFAULT_MAP_COORDINADES"]
     if not current_user.is_anonymous:
-        location = (current_user.latitude, current_user.longitude)
+        map_location = (current_user.latitude, current_user.longitude)
 
     m = folium.Map(
         height=500,
-        location=location,
+        location=map_location,
         zoom_start=12
     )
     books = Book.query.filter(Book.id.in_(book_ids)).all()
@@ -74,43 +84,31 @@ def generate_map_by_book_id(book_ids: list):
     marker_cluster = folium.plugins.MarkerCluster().add_to(m)
 
     # used to decrease db load
-    users_coord_cache = dict()
+    location_cache = dict()
 
     for book in books:
-        for bi in book.BookInstance:
-            if not users_coord_cache.get(bi.owner_id):
-                user = (User.query
-                        .filter(User.id == bi.owner_id)
-                        .first())
-                users_coord_cache[bi.owner_id] = (
-                    user.latitude, user.longitude)
+        for bi in [bi for bi in book.BookInstance if bi.is_active]:
+            try:
+                location = location_cache[bi.owner_id]
+            except KeyError:
+                user = get_user_by_id(bi.owner_id)
+                location = (user.latitude, user.longitude)
+                location_cache[bi.owner_id] = location
 
-            if bi.is_active:
+            # 'no-cover image' if no cover image found
+            cover_id = 0
+            if os.path.isfile(f'app/static/covers/{bi.book_id}.jpg'):
                 cover_id = bi.book_id
-                # use 'no-cover image' if no cover image found
-                if not os.path.isfile(f'app/static/covers/{cover_id}.jpg'):
-                    cover_id = 0
 
-                icon_url = (
-                    current_app.config["IMAGE_UPLOADS"] + '/'+
-                    str(cover_id) + '.jpg'
-                )
-                popup = (
-                    book.title + '</br><a href=' +
-                    current_app.config["BASEDIR"] + 'bi/' +
-                    str(bi.id) +
-                    '><img src="/static/covers/' + str(cover_id) +
-                    '.jpg" width="50" height="70" >' +
-                    '</a></br>' + str(bi.price) + ' ₴'
-                )
-                folium.Marker(
-                    location=list(users_coord_cache[bi.owner_id]),
-                    icon=folium.features.CustomIcon(
-                        icon_url,
-                        icon_size=(30, 50)
-                    ),
-                    popup=popup
-                ).add_to(marker_cluster)
+            icon_url = (''.join((current_app.config["IMAGE_UPLOADS"], '/',
+                                 str(cover_id), '.jpg'))
+                        )
+
+            folium.Marker(
+                location=list(location),
+                icon=folium.features.CustomIcon(icon_url, icon_size=(30, 50)),
+                popup=_generate_popup(bi, book.title)
+            ).add_to(marker_cluster)
     m.save('app/templates/_map.html')
 
 
@@ -154,18 +152,18 @@ def expired_bi_handler():
         ]}
     """
 
-    # Get expired bi & pack expired_bi to dict:
+    # Get & pack expired_bi to dict{email: [bi_1, bi_2...], ...}:
     expired_bis = dict()
-    for user_email, bi_id, bi_title, bi_author in get_expired_bi_with_users():
-        if(user_email in expired_bis.keys()):
-            expired_bi = {'id': bi_id, 'title': bi_title, 'author': bi_author}
-            expired_bis[user_email].append(expired_bi)
+    for email, bi_id, title, author in get_expired_bi_with_users():
+        expired_bi = {'id': bi_id, 'title': title, 'author': author}
+        if expired_bis.get(email) is None:
+            expired_bis[email] = [expired_bi]
         else:
-            expired_bis[user_email] = [expired_bi]
+            expired_bis[email].append(expired_bi)
 
     # Send an email to each user
-    for user_email, user_expired_bis in expired_bis.items():
-        send_email_bi_is_expired(user_email, user_expired_bis)
+    for email, expired_bis in expired_bis.items():
+        send_email_bi_is_expired(email, expired_bis)
 
     # Deactivate all expired books
     deactivate_any_bi_if_expired()

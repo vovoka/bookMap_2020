@@ -207,8 +207,8 @@ def decr_instance_counter(book_id) -> int:
 
 
 def book_counter_created_by_user(
-        user_id,
-        exp_period_days=1) -> int:
+        user_id: int,
+        exp_period_days: int = 1) -> int:
     """ Returns how many Books created by User during last day """
     exp_time = datetime.today() - timedelta(days=exp_period_days)
     exp_time_timestamp = datetime.timestamp(exp_time)
@@ -225,7 +225,7 @@ def book_counter_created_by_user(
 
 
 def get_all_book_instances() -> List[BookInstance]:
-    """ Returns all BookInstances """
+    """ Returns all BookInstances with its owners and Book details """
     book_instances = (db.session.query(
         User.username,
         Book.title,

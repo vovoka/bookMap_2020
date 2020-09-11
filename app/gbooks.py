@@ -83,12 +83,11 @@ def get_book_by_isbn(isbn: str) -> Union[dict, None]:
                 parsed_data['ISBN_10'] = rec.get('identifier')
             if rec.get('type') == 'ISBN_13':
                 parsed_data['ISBN_13'] = rec.get('identifier')
-        parsed_data['imageLinks'] = None
 
-        if volumeInfo:  # TODO find a way to pythonize it
-            imageLinks = volumeInfo.get('imageLinks')
-            if imageLinks:
-                parsed_data['imageLinks'] = imageLinks.get('smallThumbnail')
+        try:
+            parsed_data['imageLinks'] = volumeInfo.get('imageLinks').get('smallThumbnail')
+        except KeyError:
+            parsed_data['imageLinks'] = None
 
         return parsed_data
 
