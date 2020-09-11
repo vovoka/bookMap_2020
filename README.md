@@ -4,6 +4,8 @@ Pet project for learning purposes.
   
 __General idea__ - create a marketplace for P2P selling books optimized by users location. It's much easier to buy used book if it's owner lives nearby.  
 
+
+[Demo](https://bookmap-2020.herokuapp.com/) refresh if 'internal server error', free Heroku plan is not reliable for the load.
 Main view:  
 ![GitHub Logo](screenshots/1.png)  
 Book Page:  
@@ -40,11 +42,10 @@ export MAIL_PASSWORD=email_password
 ```
 Note that Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
   
-The main objects are `Book` (object with `Title`, `Author`, `isbn` etc.) and derived object `BookInstance` (i.e. instance of a `Book`, have it's own `price`, `condition`, owner location). For example `Book` 'Tom Sawyer' might have some `BookInstance` from different `Users`, with different `price`, `condition` and location.  
+Main objects are `Book` (has `title`, `author`, `isbn` etc.) and derived object `BookInstance` (i.e. instance of a `Book`, it has it's own `price`, `condition`, owner location). For example `Book` 'Tom Sawyer' might has some `BookInstance` offered from different `Users`, with different `price`, `condition` and location.  
   
-When user wants to add new `Book` scrypt firstly checks by isbn if  such a `Book` already in local DB, secondly check if Google Books 
-(by [google books API](https://developers.google.com/books/docs/v1/using))
- has an informatinon about the book with the `isbn`. If Google books has the information that the info (`isbn`, `title`, `authors`, `cover`) offered to the `User` for use. Otherwise `User` is able to add a `Book` in fully manual mode. When `Book` created in DB `User` is able to add `BookInstance` of it.  
+When a user wants to add new `Book` the ccrypt firstly checks by isbn if  such `Book` is already exist in local DB, secondly check  
+(by [google books API](https://developers.google.com/books/docs/v1/using)) if Google Books has an informatinon about the book with the `isbn`. If Google books has the information that the info (`isbn`, `title`, `authors`, `cover`) offered to the `User` for use. Otherwise `User` is able to add a `Book` in fully manual mode. When `Book` created in DB `User` is able to add `BookInstance` of it.  
   
 `.env` also contains mail settings vars. It's used to send email notification to Users. Currently a notification sent in two cases:
 * User got a private message from other User; 
