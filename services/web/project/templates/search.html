@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div class="container">
+    {% include '_map.html' %}
+    </div>
+    <div class="container">
+    <h2>Search Results for key-phrase "{{ key_word }}"</h2>
+    <div class='book-tile'>
+        {% for book in books %}
+            {% include 'book_tile.html' %}
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}
