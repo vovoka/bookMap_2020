@@ -24,23 +24,26 @@ Add a book instance (book is found by isbn at google books) :
 
 
 ## Development
-1. Rename *.env.dev-sample* to *.env.dev*.
-1. Update the environment variables in the *docker-compose.yml* and *.env.dev* files.
-1.  
+* Rename *.env.dev-sample* to *.env.dev*.
+* Rename *Docker.dev* to *Docker*.
+* Update the environment variables in the *docker-compose.yml* and *.env.dev* files.
+*  
     ```sh
     docker-compose up -d --build  # Build the images and run the containers
     docker-compose exec web python manage.py create_db # Create new empty database
     docker-compose exec web python manage.py seed_db # Fill db with fake users, books, book instances
     ```
 
+hint: if you want to have Admin access quick then login  with your google account (via browser) 
+before `seed_db`. This way your User has id=1 and Admin access.
 
-## Production (never tested!)
+## Production (not fully tested)
 
 Uses gunicorn + nginx.
 
-1. Rename *.env.prod-sample* to *.env.prod* and *.env.prod.db-sample* to *.env.prod.db*. 
-1. Update the environment variables.
-1. Build the images and run the containers:
+* Rename *.env.prod-sample* to *.env.prod* and *.env.prod.db-sample* to *.env.prod.db*. 
+* Update the environment variables.
+* Build the images and run the containers:
 
     ```sh
     $ docker-compose -f docker-compose.prod.yml up -d --build
@@ -55,17 +58,17 @@ Uses gunicorn + nginx.
 ## Notes
 * Main objects are `Book` (has `title`, `author`, `isbn` etc.) and derived object `BookInstance` (i.e. instance of a `Book`, it has it's own `price`, `condition`, owner location). For example `Book` 'Tom Sawyer' might has some `BookInstance` offered from different `Users`, with different `price`, `condition` and location.  
 * When a user wants to add new `Book` the script:  
-    1. checks by isbn if such `Book` is already exist in local DB,
-    1. check (by [google books API](https://developers.google.com/books/docs/v1/using)) if Google Books has an informatinon about the book with the `isbn`. If Google books has the information that the info (`isbn`, `title`, `authors`, `cover`) offered to the `User` for use. 
-    1. Otherwise `User` is welcomed to add a `Book` in fully manual mode. When `Book` is created in DB, `User` can to add `BookInstance`.  
+    * checks by isbn if such `Book` is already exist in local DB,
+    * check (by [google books API](https://developers.google.com/books/docs/v1/using)) if Google Books has an informatinon about the book with the `isbn`. If Google books has the information that the info (`isbn`, `title`, `authors`, `cover`) offered to the `User` for use. 
+    * Otherwise `User` is welcomed to add a `Book` in fully manual mode. When `Book` is created in DB, `User` can to add `BookInstance`.  
 * `.env` also contains mail settings vars. It's used to send email-notifications to Users. Currently a notification sent in two cases:
-    1. User got a private message from other User; 
-    1. Users BookInstance reach 'expired' state (30 days from publishing by deafault) and have to be re-activated manually by User.  
+    * User got a private message from other User; 
+    * Users BookInstance reach 'expired' state (30 days from publishing by deafault) and have to be re-activated manually by User.  
 * Google's SMTP server requires the configuration of "less secure apps". See https://support.google.com/accounts/answer/6010255?hl=en
 * BookInstance expiration check is made as cron task with  `BackgroundScheduler()`  
 * Map view is centered by User location which is received by IP from `ipapi` service.  
 * Users with Adiministrator privileges able to manage the DB data with Flask-Admin interface.  
-* First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). It's fos dev conviniency only. Fix it with modified 'create_db' by adding new admin?  
+* First created User (User.id == 1) has Admin access (i.e. has access to http://127.0.0.1:5000/admin/). It's for dev conviniency only. Fix it with modified 'create_db' by adding new admin?  
 
   
 ### TODO (unsorted ideas possible next steps and known bugs):

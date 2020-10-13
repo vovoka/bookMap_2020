@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     is_active = db.Column(db.Boolean, default=True)
     tokens = db.Column(db.Text)
     is_admin = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow())
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     about_me = db.Column(db.String(140))
@@ -46,7 +46,7 @@ class BookInstance(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     is_active = db.Column(db.Boolean(), default=True)
-    activation_time = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'BookInstance: {self.Book.title} {self.price}'

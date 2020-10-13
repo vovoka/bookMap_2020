@@ -1,0 +1,51 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+  <p>Here I'm going to display some data.</p>
+
+<!--Table-->
+<table id="tablePreview" class="table">
+<!--Table head-->
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Users (active/all)</th>
+      <th>Books</th>
+      <th>Book instances (active/all)</th>
+    </tr>
+  </thead>
+  <!--Table head-->
+  <!--Table body-->
+  <tbody>
+    <tr>
+      <th scope="row">Total</th>
+      <td>{{ total_active_users }}/{{ total_users }}</td>
+      <td>{{ total_books }}</td>
+      <td>{{ total_active_bis }}/{{ total_bis }}</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Month</th>
+      <td>{{ month_active_users }}/{{ month_users }}</td>
+      <td>{{ month_books }}</td>
+      <td>{{ month_active_bis }}/{{ month_bis }}</td>
+    </tr>
+
+    <tr>
+      <th scope="row">Week</th>
+      <td>{{ week_active_users }}/{{ week_users }}</td>
+      <td>{{ week_books }}</td>
+      <td>{{ week_active_bis }}/{{ week_bis }}</td>
+
+    </tr>
+    <tr>
+      <th scope="row">Day</th>
+      <td>{{ day_active_users }}/{{ day_users }}</td>
+      <td>{{ day_books }}</td>
+      <td>{{ day_active_bis }}/{{ day_bis }}</td>
+
+    </tr>
+  </tbody>
+  <!--Table body-->
+</table>
+<!--Table-->
+{% endblock %}

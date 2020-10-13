@@ -17,9 +17,9 @@ def make_db_data(
         db,
         # filepath='project/test_books_data.csv',
         filepath='project/data_example/example_data.csv',
-        users=6,
-        books=15,
-        book_instances=30,
+        users=15,
+        books=15,  # data example is prepared for 15 books only
+        book_instances=60,
         latitude=50.4547,
         longitude=30.520) -> None:
     """ Fill DB with Users, Books, BookInstances
@@ -91,7 +91,20 @@ def delete_all_files_in_dir(folder: str):
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
+#  ------------  COMMON ------------------
+
+def obj_counter(_class, days: int = 0) -> int:
+    ''' Returns quantity of the class objects created during last X days.
+    if days == 0 --> count all objects.
+    '''
+    if days:
+        time_from = (datetime.today() - timedelta(days))
+        return _class.query.filter(_class.timestamp > time_from).count()
+    return _class.query.count()
+
+
 #  ------------  BOOK ------------------
+
 def get_books_by_kw(key_word) -> List[Book]:
     """ Returns list of book instances founded by key_words
 
@@ -110,7 +123,7 @@ def get_books_by_kw(key_word) -> List[Book]:
 
     def search_attempt(search):
         books_by_title = Book.query.filter(Book.title.like(search)).all()
-        if books_by_title == []:
+        if not books_by_title:
             books_by_author = Book.query.filter(Book.author.like(search)).all()
             return books_by_author
         return books_by_title
@@ -232,19 +245,13 @@ def decr_instance_counter(book_id) -> int:
 
 def book_counter_created_by_user(
         user_id: int,
-        exp_period_days: int = 1) -> int:
+        days: int = 1) -> int:
     """ Returns how many Books created by User during last day """
-    exp_time = datetime.today() - timedelta(days=exp_period_days)
-    exp_time_timestamp = datetime.timestamp(exp_time)
-    print(f'type(Book.timestamp) = {type(Book.timestamp)}', flush=True)
-    print(f'type(exp_time_timestamp) = {type(exp_time_timestamp)}', flush=True)
-
-    _books = (db.session.query(
-        Book.title
-    )
-        .filter(Book.created_by == user_id)
-        # .filter(Book.timestamp > exp_time_timestamp)
-        .count())
+    time_from = (datetime.today() - timedelta(days))
+    _books = (db.session.query(Book.title)
+              .filter(Book.created_by == user_id)
+              .filter(Book.timestamp > time_from)
+              .count())
     return _books
 
 #  ------------  BOOK INSTANCE ------------------
@@ -282,10 +289,10 @@ def get_freshest_book_instances(items: int) -> List[BookInstance]:
         BookInstance.price,
         BookInstance.condition,
         BookInstance.description,
-        BookInstance.activation_time)
+        BookInstance.timestamp)
         .filter(BookInstance.owner_id == User.id)
         .filter(BookInstance.book_id == Book.id)
-        .order_by(desc(BookInstance.activation_time)).limit(items).all())
+        .order_by(desc(BookInstance.timestamp)).limit(items).all())
     return book_instances
 
 
@@ -432,7 +439,7 @@ def get_expired_bi_with_users(expiration_period_days=30) -> List[BookInstance]:
     )
         .filter(BookInstance.book_id == Book.id)
         .filter(BookInstance.is_active is True)
-        .filter(BookInstance.activation_time <= expiration_time_timestamp)
+        .filter(BookInstance.timestamp <= expiration_time_timestamp)
         .filter(BookInstance.owner_id == User.id)
         .order_by(BookInstance.id.desc())
         .all())
@@ -446,7 +453,7 @@ def deactivate_any_bi_if_expired(expiration_period_days=30) -> None:
     expiration_time_timestamp = datetime.timestamp(expiration_time)
     (db.session.query(BookInstance)
      .filter(BookInstance.is_active is True)
-     .filter(BookInstance.activation_time <= expiration_time_timestamp)
+     .filter(BookInstance.timestamp <= expiration_time_timestamp)
      .update({
          BookInstance.is_active: False,
      }, synchronize_session=False))
@@ -458,7 +465,7 @@ def activate_book_instance(book_instance_id) -> None:
      .filter(BookInstance.id == book_instance_id)
      .update({
          BookInstance.is_active: True,
-         BookInstance.activation_time: datetime.utcnow()
+         BookInstance.timestamp: datetime.utcnow()
      }, synchronize_session=False))
     db.session.commit()
 
@@ -468,6 +475,21 @@ def deactivate_book_instance(book_instance_id) -> None:
      .filter(BookInstance.id == book_instance_id)
      .update({BookInstance.is_active: False}, synchronize_session=False))
     db.session.commit()
+
+
+def get_active_bi_count(days: int = 0) -> int:
+    ''' Returns quantity of active BookInstance objects created during last X days.
+    if days == 0 --> count all active BookInstances.
+    '''
+    if days:
+        time_from = (datetime.today() - timedelta(days))
+        return (BookInstance.query
+                .filter(BookInstance.timestamp > time_from)
+                .filter(BookInstance.is_active == True)
+                .count())
+    return (BookInstance.query
+            .filter(BookInstance.is_active == True)
+            .count())
 
 #  ------------ USER ------------------
 
@@ -527,8 +549,20 @@ def delete_user(user_id) -> None:
     # (no recepient for exmpl)
     db.session.commit()
 
-#  ------------ MESSAGE ------------------
 
+def get_count_active_users(days: int = 0) -> int:
+    ''' Returns quantity of active Users during last X days.
+    if days == 0 --> count all active Users.
+    '''
+    if days:
+        time_from = (datetime.today() - timedelta(days))
+        return (User.query
+                .filter(User.last_seen > time_from)
+                .count())
+    return User.query.count()
+
+
+#  ------------ MESSAGE ------------------
 
 def get_message(message_id) -> Message:
     """ Returns Message object """

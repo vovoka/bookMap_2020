@@ -8,7 +8,11 @@ cli = FlaskGroup(app)
 
 @cli.command("create_db")
 def create_db():
+    # try:
     db.drop_all()
+    # except FileNotFoundError:
+    #     print('No DB to drop')
+
     delete_all_files_in_dir('project/static/covers')
     db.create_all()
 

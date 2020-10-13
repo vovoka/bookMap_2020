@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_admin import Admin
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -7,15 +8,14 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 import logging
 import os
-import os.path as op
 from logging.handlers import RotatingFileHandler
 from .config import Config
-
 
 app = Flask(__name__)
 app.secret_key = '!secret'
 
 app.config.from_object(Config)
+admin = Admin(app, template_mode='bootstrap3')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
@@ -25,31 +25,11 @@ moment = Moment(app)
 mail = Mail(app)
 
 # Flask-Admin
-from flask_admin import Admin
-from flask_admin.contrib.fileadmin import FileAdmin
-from flask_admin.contrib.sqla import ModelView
-from .models import Book, BookInstance, User
+from .init_flask_admin import create_admin_views
+create_admin_views()
 
-
-# Flask-Admin
-class AdminUserView(ModelView):
-    ''' Used as a view wrapper in Flask-admin view. '''
-    can_create = True
-    page_size = 50  # the number of entries to display on the list view
-
-
-admin = Admin(app, template_mode='bootstrap3')
-
-admin.add_view(AdminUserView(User, db.session, name='Users'))
-admin.add_view(AdminUserView(Book, db.session, name='Books'))
-admin.add_view(AdminUserView(BookInstance, db.session, name='BookInstances'))
-
-path = op.join(op.dirname(__file__), 'static')  # manage files
-admin.add_view(FileAdmin(path, '/static/', name='Files'))
-
-# if not app.debug:
+# Logger
 if not app.debug:
-    # logger
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/booklib.log', maxBytes=10240,
