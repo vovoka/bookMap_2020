@@ -26,8 +26,7 @@
       </tr>
     </thead>
     <tr>
-      <td><img src="/static/covers/{{ book.id }}.jpg" width="70" height="100"
-          onerror="if (this.src != '/static/covers/0.jpg') this.src = '/static/covers/0.jpg';"></td>
+      <td><img src={{ filepath }} width="70" height="100"></td>
       <td>
         <b>{{ book.title }}</b></br>
         by {{ book.author }}</br>
@@ -39,7 +38,11 @@
         {% if book.isbn_13 %}
         isbn 13: {{ book.isbn_13 }}</br>
         {% endif %}
-
+        
+        {% if not cover_id  %}
+          cover: not provided yet. <small><i> Click <a href={{ basedir }}add_cover/{{ book.id }}>here</a> to add.</i></small>
+        {% endif %}
+        <br>
         {% if not (book.isbn_10 or book.isbn_13) %}
         isbn: not provided yet. <small><i> Click <a href={{ basedir }}add_isbn/{{ book.id }}>here</a> to add.
           </i></small>

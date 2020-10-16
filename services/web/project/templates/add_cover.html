@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+
+<div class="container">
+  <h2 class="text-center">Add book cover</h2>
+  <div class="table-responsive col-md-6">
+
+    <table>
+      <tr onclick='location.href="{{ url_for('book', book_id=book.id) }}"' style="cursor:pointer;">
+        <td>
+        </td>
+        <td><b>{{ book.title }}</b><br>
+          by {{ book.author }}<br>
+          isbn_10: {{ book.isbn_10 }}<br>
+          isbn_13: {{ book.isbn_13 }}
+        </td>
+      </tr>
+    </table>
+
+    <div class='book-tile'>
+      {% for book in books %}
+      {% include '
+            book_tile.html' %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="table-responsive col-md-6">
+        {{ wtf.quick_form(form) }}
+  </div>
+</div>
+
+{% endblock %}

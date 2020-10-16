@@ -11,7 +11,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from . import app, db, db_handlers, utils
 from .email import send_email_got_new_message
-from .forms import (AddBookByIsbnForm, AddBookForm, AddIsbnForm,
+from .forms import (AddBookByIsbnForm, AddBookForm, AddIsbnForm, AddCoverForm,
                     EditBookInstanceForm, EditProfileForm, MessageForm,
                     SearchForm)
 from .gbooks import get_book_by_isbn
@@ -137,9 +137,16 @@ def book(book_id):
     book_instances = db_handlers.get_book_instances_by_book_id(book_id)
     book_instances = sorted(book_instances, key=lambda x: x[4])
     utils.generate_map_by_book_id([book_id])
+    cover_id = 0
+    if os.path.exists(os.path.join(
+            current_app.config["IMAGE_UPLOADS"], str(_book.id) + '.jpg')):
+        cover_id = _book.id
+    filepath = "/static/covers/" + str(cover_id) + ".jpg"
     return render_template(
         'book_page.html',
         book=_book,
+        filepath=filepath,
+        cover_id=cover_id,
         book_instances=book_instances,
         basedir=current_app.config['BASEDIR'],
     )
@@ -397,6 +404,36 @@ def add_book_instance(book_id):
         form=form,
         book=_book,
         bi=_book,
+    )
+
+
+@app.route('/add_cover/<book_id>', methods=['GET', 'POST'])
+@login_required
+def add_cover_to_book(book_id):
+    _book = db_handlers.get_book(book_id)
+    filepath = os.path.join(
+            current_app.config["IMAGE_UPLOADS"],
+            str(_book.id) + '.jpg')
+
+    #  check if cover already exist, do not allow upload.
+    if os.path.exists(filepath):
+        return redirect(url_for('book', book_id=_book.id))
+
+    form = AddCoverForm()
+    if form.validate_on_submit():
+        cover = form.cover.data
+        utils.cover_upload(cover, _book.id)
+        cover = thumbnail(
+            filepath,
+            current_app.config["IMAGE_TARGET_SIZE"],
+        )
+        utils.cover_upload(cover, _book.id)
+        return redirect(url_for('book', book_id=_book.id))
+
+    return render_template(
+        'add_cover.html',
+        form=form,
+        book=_book,
     )
 
 

@@ -114,6 +114,13 @@ class AddIsbnForm(FlaskForm):
     submit = SubmitField('Check book by ISBN')
 
 
+class AddCoverForm(FlaskForm):
+    cover = FileField('Book cover', validators=[
+        FileAllowed(['jpg', 'jpeg'], '*.jpeg Images only!')
+    ])
+    submit = SubmitField('Add Book Cover')
+
+
 class EditBookInstanceForm(FlaskForm):
     price = IntegerField(
         'My price, ₴',
