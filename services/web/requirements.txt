@@ -11,7 +11,7 @@ ipapi==0.5.2
 WTForms==2.2.1
 Flask_Bootstrap==3.3.7.1
 Flask_Migrate==2.5.2
-Flask==1.1.2
+Flask==2.3.2
 APScheduler==3.6.3
 Flask_WTF==0.14.3
 google_api_python_client==1.11.0
