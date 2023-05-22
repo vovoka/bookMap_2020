@@ -5,7 +5,7 @@ SQLAlchemy==1.3.13
 Authlib==0.14.3
 Flask_Login==0.5.0
 folium==0.10.1
-requests==2.23.0
+requests==2.31.0
 Flask_SQLAlchemy==2.4.1
 ipapi==0.5.2
 WTForms==2.2.1
